@@ -3,7 +3,7 @@
 The lab exercises for RX-M courses are designed for completion on a base Ubuntu 16.04 64 bit system. The 
 system should have 2+ CPUs, 2+ GBs of RAM and 30+ GB of disk. Students who have access to an appropriate 
 existing system (e.g. a typical cloud instance) can perform the lab exercises on that system, however, 
-RX-M provides a prebuilt lab VM wich offers a more reliable and safe environment for experimentation.
+RX-M provides a prebuilt lab VM which offers a more reliable and safe environment for experimentation.
 
 The RX-M lab VM can be run on any of these virtualization platforms:
 - VMware Player (free) [Windows/Linux] https://my.vmware.com/web/vmware/free#desktop_end_user_computing/vmware_workstation_player/12_0
