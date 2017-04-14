@@ -1,8 +1,8 @@
 # RX-M - Lab System Setup
 
-The lab exercises for RX-M courses are designed for completion on a base Ubuntu 16.04 64 bit system. The 
-system should have 2+ CPUs, 2+ GBs of RAM and 30+ GB of disk. Students who have access to an appropriate 
-existing system (e.g. a typical cloud instance) can perform the lab exercises on that system, however, 
+The lab exercises for RX-M courses are designed for completion on a base Ubuntu 16.04 64 bit system. The
+system should have 2+ CPUs, 2+ GBs of RAM and 30+ GB of disk. Students who have access to an appropriate
+existing system (e.g. a typical cloud instance) can perform the lab exercises on that system, however,
 RX-M provides a prebuilt lab VM which offers a more reliable and safe environment for experimentation.
 
 The RX-M lab VM can be run on any of these virtualization platforms:
@@ -17,8 +17,10 @@ The RX-M VirtualBoxconfigured lab virtual machine is 1GB in OVA compressed forma
 
 To run the lab VM:
 - Download the lab system fully (do not attempt to manipulate the file until it has completely downloaded)
-- If using the .7z file, uncompress the file (you can use a 7zip compatible archiver or download 7zip here: http://www.7-zip.org/download.html)
+- If using the .7z file, use any 7Zip compatible archiver:
+     - __Windows:__ download 7zip here: http://www.7-zip.org/download.html)
+     - __Mac:__ search for the freeware "The Unarchiver" in the Mac app store
 - Launch the VM:
-     - If using VMware, double click the .vmx file (e.g. "Ubuntu 64-bit.vmx") inside the decompressed folder (if asked, say you copied the VM))
+     - If using VMware, double click the .vmx file (e.g. `Ubuntu_Xenial_Xerus.vmx`) inside the decompressed folder (if asked, say you __copied__ the VM))
      - If using Virtual Box, double click the OVA file (if asked, agree to import the VM)
-- Login to the VM with the user name "user" and the password "user"
+- Login to the VM with the username "user" and the password "user"
