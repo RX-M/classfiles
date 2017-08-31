@@ -18,7 +18,7 @@ The RX-M **VirtualBox** configured lab virtual machine is 1GB in OVA compressed 
 To run the lab VM:
 - Download the lab system fully (do not attempt to manipulate the file until it has completely downloaded)
 - If using the .7z file, use any 7Zip compatible archiver:
-     - __Windows:__ download 7zip here: http://www.7-zip.org/download.html)
+     - __Windows:__ download 7zip here: http://www.7-zip.org/download.html
      - __Mac:__ search for the freeware "The Unarchiver" in the Mac app store
 - Launch the VM:
      - If using VMware, double click the .vmx file (e.g. `Ubuntu_Xenial_Xerus.vmx`) inside the decompressed folder (if asked, say you __copied__ the VM))
