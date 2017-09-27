@@ -39,7 +39,7 @@ lab virtual machine (which is easily fixed):
      system. This is not generally a problem on Macs but many PCs (Lenovo laptops in particular) come with VTx
      disabled. To fix this, simply enter the BIOS configuration and enable VTx (your BIOS may call it "Virtualization
      Technology", "Intel VT", "AMD-V", "VT-d" or something else depending on your CPU and chipset). To enter the BIOS
-     configuration you will need to reboot your computer and then press a key (usually <Enter>, <F10> or something
+     configuration you will need to reboot your computer and then press a key (usually \<Enter\>, \<F10\> or something
      similar) quickly before the OS starts. Every BIOS configuration menu is different but the settings are often found
      under "general" or "security" menus. Enable all of the virtualization features (there may be one or more options to
      enable), save the changes and reboot. You should now be able to run the lab VM.
