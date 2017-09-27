@@ -5,15 +5,25 @@ system should have 2+ CPUs, 2+ GBs of RAM and 30+ GB of disk. Students who have 
 existing system (e.g. a typical cloud instance) can perform the lab exercises on that system, however,
 RX-M provides a prebuilt lab VM which offers a more reliable and safe environment for experimentation.
 
+
+#### Supported Platforms
+
 The RX-M lab VM can be run on any of these virtualization platforms:
+
 - VMware Player (free) [Windows/Linux] https://my.vmware.com/web/vmware/free#desktop_end_user_computing/vmware_workstation_player/12_0
 - VMware Workstation (requires a commercial license) [Windows]
 - VMware Fusion (requires a commercial license) [Mac]
 - Virtual Box (free) [Mac/Windows/Linux] https://www.virtualbox.org/wiki/Downloads
 
+
+#### Download the VM
+
 The RX-M **VMware** configured lab virtual machine is 770MB in 7z compressed format and can be downloaded here: https://s3-us-west-1.amazonaws.com/rx-m-vms/ubuntu-16.04.7z
 
 The RX-M **VirtualBox** configured lab virtual machine is 1GB in OVA compressed format and can be downloaded here: https://s3-us-west-1.amazonaws.com/rx-m-vms/Ubuntu_Xenial_Xerus.vbvm.ova
+
+
+#### Run the VM
 
 To run the lab VM:
 1. Download the lab system fully (do not attempt to manipulate the file until it has completely downloaded)
