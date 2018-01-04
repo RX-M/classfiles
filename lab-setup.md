@@ -39,8 +39,7 @@ To run the lab VM:
 
 ## What could go wrong?
 
-For most people (95%) the above steps work perfectly. However there is one common issue that may keep you from running the
-lab virtual machine (which is easily fixed):
+For most people (95%) the above steps work perfectly. However there are some common issues that may keep you from running the lab virtual machine (which are easily fixed):
 
 - The virtualization system (VMware/VirtualBox) says it can not run a 64 bit virtual machine because "VTx is not
   enabled" (or similar message).
@@ -53,3 +52,17 @@ lab virtual machine (which is easily fixed):
      similar) quickly before the OS starts. Every BIOS configuration menu is different but the settings are often found
      under "general" or "security" menus. Enable all of the virtualization features (there may be one or more options to
      enable), save the changes and reboot. You should now be able to run the lab VM.
+
+- VMware complains that the VM was created by a VMware product that is incompatible with your version of VMware and cannot
+be used
+
+     - For Player and/or Workstation: open the file: `Ubuntu_Xenial_Xerus.vmx` with a text editor, find the property:
+     `virtualHW.version = "12"` and change it to your version.
+     
+     - For Fusion:
+       - Select the VM from the list in the Virtual Machine Library
+       - Open Settings by either: using the Command + E shortcut (⌘E), clicking on the wrench icon, or right-clicking and 
+       choosing "Settings..." from the right-click menu, or opening the "Virtual Machine" menu and selecting "Settings..."
+       - In the Settings dialog, select "Compatibility" (icon looks like a motherboard)
+       - Open the "Advanced Options" drop-down option
+       - Under the "Use Hardware Version" selector, select your hardware version
