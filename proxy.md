@@ -24,6 +24,8 @@ In `/etc/apt/apt.conf`:
 
 ## Docker
 
+The following Docker configuration should be completed after installing Docker (in lab).
+
 Create directory for the proxy config file:
 
 `sudo mkdir /etc/systemd/system/docker.service.d`
@@ -48,6 +50,8 @@ See: http://stackoverflow.com/questions/23111631/cannot-download-docker-images-b
 
 
 ## Kubernetes
+
+The following Kubernetes configuration should be completed after install Kubernetes (in lab).
 
 Setting for K8s service vips when deployed w/kubeadm (K8s Foundation classes):
 
