@@ -2,25 +2,26 @@ These steps are meant to assist setup of local proxy settings for labs when prox
 
 ## General settings
 
-ex. curl random.website.com
+ex. curl http://random.website.com
 
 `export http_proxy=http://proxy.example.net:8080`
 
-and: `export https_proxy=http://proxy.example.net:8080`
+and
 
-If `http_proxy(s)` is set with `export` (as above) as "user", must be done again after `sudo su -` (or append export to `/etc/profile`)
+`export https_proxy=http://proxy.example.net:8080`
+
+To persist, either add previous commands to `/etc/profile` or use `sudo -E ...` to pass environment variables along.
 
 
 ## Package installation
 
 ex. `sudo apt-get install packageX`
 
-In `/etc/apt/apt.conf`:
-
-`Acquire::http::proxy "http://proxy.example.net:8080";`
-
-`Acquire::https::proxy "http://proxy.example.net:8080";`
-
+```
+vi /etc/apt/apt.conf
+Acquire::http::proxy "http://proxy.example.net:8080";
+Acquire::https::proxy "http://proxy.example.net:8080;
+```
 
 ## Docker
 
@@ -38,11 +39,11 @@ sudo vi /etc/systemd/system/docker.service.d/http-proxy.conf
 Environment="HTTP_PROXY=http://web-proxy.example.net:8080" "HTTPS_PROXY=http://web-proxy.example.net:8080"
 ```
 
-Flush changes:
+flush changes:
 
 `sudo systemctl daemon-reload`
 
-Restart docker:
+restart docker:
 
 `sudo systemctl restart docker`
 
@@ -56,6 +57,8 @@ The following Kubernetes configuration should be completed after install Kuberne
 Setting for K8s service vips when deployed w/kubeadm (K8s Foundation classes):
 
 `export no_proxy=10.96.0.0/12,<your VM IP>`
+
+Retrieve your IP by reviewing `ip a s` (depending on host OS, the interface may be ens33, eth0, or something else)
 
 
 ## Weave
