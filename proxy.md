@@ -1,8 +1,8 @@
+These steps are meant to assist setup of local proxy settings for labs when proxy usage is enforced.
+
 ## General settings
 
-Also captured from chats:
-
-for the curl command, try: 
+ex. curl random.website.com
 
 `export http_proxy=http://proxy.example.net:8080`
 
@@ -10,13 +10,17 @@ and: `export https_proxy=http://proxy.example.net:8080`
 
 If `http_proxy(s)` is set with `export` (as above) as "user", must be done again after `sudo su -` (or append export to `/etc/profile`)
 
+
 ## Package installation
+
+ex. `sudo apt-get install packageX`
 
 In `/etc/apt/apt.conf`:
 
 `Acquire::http::proxy "http://proxy.example.net:8080";`
 
 `Acquire::https::proxy "http://proxy.example.net:8080";`
+
 
 ## Docker
 
