@@ -1,4 +1,24 @@
-## Docker - configure Docker to use http proxy
+## General settings
+
+Also captured from chats:
+
+for the curl command, try: 
+
+`export http_proxy=http://proxy.example.net:8080`
+
+and: `export https_proxy=http://proxy.example.net:8080`
+
+If `http_proxy(s)` is set with `export` (as above) as "user", must be done again after `sudo su -` (or append export to `/etc/profile`)
+
+## Package installation
+
+In `/etc/apt/apt.conf`:
+
+`Acquire::http::proxy "http://proxy.example.net:8080";`
+
+`Acquire::https::proxy "http://proxy.example.net:8080";`
+
+## Docker
 
 Create directory for the proxy config file:
 
@@ -29,25 +49,6 @@ Setting for K8s service vips when deployed w/kubeadm (K8s Foundation classes):
 
 `export no_proxy=10.96.0.0/12,<your VM IP>`
 
-## General/Other settings
-
-Also captured from chats:
-
-for the curl command, try: 
-
-`export http_proxy=http://proxy.example.net:8080`
-
-and: `export https_proxy=http://proxy.example.net:8080`
-
-If `http_proxy(s)` is set with `export` (as above) as "user", must be done again after `sudo su -` (or append export to `/etc/profile`)
-
-## Installs
-
-In `/etc/apt/apt.conf`:
-
-`Acquire::http::proxy "http://proxy.example.net:8080";`
-
-`Acquire::https::proxy "http://proxy.example.net:8080";`
 
 ## Weave
 
