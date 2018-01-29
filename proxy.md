@@ -20,7 +20,7 @@ ex. `sudo apt-get install packageX`
 ```
 vi /etc/apt/apt.conf
 Acquire::http::proxy "http://proxy.example.net:8080";
-Acquire::https::proxy "http://proxy.example.net:8080;
+Acquire::https::proxy "http://proxy.example.net:8080";
 ```
 
 ## Docker
