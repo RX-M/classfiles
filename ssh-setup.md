@@ -22,6 +22,6 @@ $ ssh -i key.pem ubuntu@host.ip.ad.dr
 Where "ubuntu" is the default user name (the instructor may supply students with a different user name 
 in class) and "host.ip.ad.dr" is the host IP address of the student lab system supplied by the instructor 
 during class (e.g. 54.23.87.45). The -i switch (for identity) is optional and may be required in some 
-classes. This allows you to pass a key file to the ssh client ("key.pem" in the example) for extra seurity.
+classes. This allows you to pass a key file to the ssh client ("key.pem" in the example) for extra security.
 
 Student lab system IP addresses and passwords are passed out on day one of classes with cloud based labs.
