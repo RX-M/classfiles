@@ -32,9 +32,7 @@ To run the lab VM:
      - __Mac:__ search for the freeware "The Unarchiver" in the Mac app store
 3. Launch the VM:
      - **VMware** startup: 
-       - Windows: double click the .vmx file (e.g. `Ubuntu_Xenial_Xerus.vmx`) inside the decompressed folder (when
-       asked, say you __copied__ the VM)
-       - Mac: double click the .vmwarevm file (e.g. `Ubuntu_Xenial_Xerus.vmwarevm`) inside the decompressed folder (when
+       - double click the .vmx file (e.g. `Ubuntu_Xenial_Xerus.vmx`) inside the decompressed folder (when
        asked, say you __copied__ the VM)
      - **VirtualBox** startup: double click the OVA file (when asked, agree to import the VM)
 4. Login to the VM with the username "user" and the password "user"
