@@ -12,7 +12,7 @@ Here are some suggested ssh client tools for Windows systems:
 - MobaXTerm (free and paid) [Windows] https://mobaxterm.mobatek.net/download.html
 - GitBash ssh command line client (free, part of Git distribution) [Windows/OSX/Linux] https://git-scm.com/downloads
 
-GUI clients like Putty and MobaXTerm have thier own help systems and client access configuration. 
+GUI clients like Putty and MobaXTerm have their own help systems and client access configuration. 
 Command line clients can generally access the cloud lab site with a command something like this:
 
 ```
