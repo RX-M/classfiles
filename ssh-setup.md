@@ -8,7 +8,7 @@ Any mainstream ssh client will work and OSX/Linux computer systems have a good s
 
 Here are some suggested ssh client tools for Windows systems:
 
-- Putty (free) [Windows] https://www.putty.org/
+- PuTTY (free) [Windows] \* https://www.putty.org/
 - MobaXTerm (free and paid) [Windows] https://mobaxterm.mobatek.net/download.html
 - GitBash ssh command line client (free, part of Git distribution) [Windows/OSX/Linux] https://git-scm.com/downloads
 
@@ -25,3 +25,6 @@ during class (e.g. 54.23.87.45). The -i switch (for identity) is optional and ma
 classes. This allows you to pass a key file to the ssh client ("key.pem" in the example) for extra security.
 
 Student lab system IP addresses and passwords are passed out on day one of classes with cloud based labs.
+
+\* Though PuTTY does not directly support the pem key format used in typical cloud instances, you can use the 
+PuTTYgen.exe command line tool to convert .pem keys into .ppk keys for use with PuTTY. 
