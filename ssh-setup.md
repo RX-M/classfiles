@@ -38,28 +38,28 @@ PuTTY Private Key) before gaining access to AWS. To do this, you use the PuTTYge
 
 To start the utility you can type `puttygen` in the Windows start dialog box.
 
-<img alt="start" width="150px" src="./images/p01.png"/>
+<img alt="start" width="250px" src="./images/p01.png"/>
 
 In the PuTTYgen dialog box, click the [Load] button:
 
-<img alt="puttygen" width="250px" src="./images/p02.png"/>
+<img alt="puttygen" width="350px" src="./images/p02.png"/>
 
 When browsing for your pem file be sure to select **All Files** in the dropdown list that is located to the right of the
 File name field:
 
-<img alt="key" width="250px" src="./images/p03.png"/>
+<img alt="key" width="350px" src="./images/p03.png"/>
 
 Select the .pem file that you received (called "student.pem" in the screenshot above) and click [Open].
 
 Read the PuTTYgen Notice and then click [Ok].
 
-<img alt="notice" width="150px" src="./images/p04.png"/>
+<img alt="notice" width="250px" src="./images/p04.png"/>
 
 As the notice states, click on [Save private key]:
 
 > N.B. if you are asked if you want to save they key without a passphrase you can safely click "Yes".
 
-<img alt="save" width="250px" src="./images/p05.png"/>
+<img alt="save" width="350px" src="./images/p05.png"/>
 
 Name the private key file and save it to a path that is easy to remember (we will use the path to the file in putty).
 
@@ -74,7 +74,7 @@ information in the "Host Name" text field:
 
 The format should look similar to: `ubuntu@15.16.17.18` (substituting your assigned IP for the example)
 
-<img alt="hostname" width="250px" src="./images/p06.png"/>
+<img alt="hostname" width="350px" src="./images/p06.png"/>
 
 Next, in the "Category" column on the left, click on the "+" icon next to the SSH field to expand the section.
 
@@ -84,7 +84,7 @@ In the "Private key file for authentication" text field, either type the path to
 "Browse..." button to open the "Select private key file" dialog which will let you navigate to the location where you
 saved it using Windows explorer.
 
-<img alt="auth" width="250px" src="./images/p07.png"/>
+<img alt="auth" width="350px" src="./images/p07.png"/>
 
 Click the [Open] button to start your SSH session.
 
@@ -102,6 +102,6 @@ In the "Session settings" window, click on SSH and enter the following informati
 3. Check the box next to "Use private key" and type the path to your .pem file or click on the browse icon which will
 let you navigate to the location where you saved it using Windows explorer.
 
-<img alt="auth" width="400px" src="./images/m01.png"/>
+<img alt="auth" width="500px" src="./images/m01.png"/>
 
 Click on the [OK] button to start your SSH session.
