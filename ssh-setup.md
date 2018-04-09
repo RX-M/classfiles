@@ -9,11 +9,15 @@ Any mainstream ssh client will work and OSX/Linux computer systems have a good s
 Here are some suggested ssh client tools for Windows systems (you do _not_ need to install all of them;
 choose one that works best for you):
 
-- PuTTY (free) [Windows] \* https://www.putty.org/
-- MobaXTerm (free and paid) [Windows] https://mobaxterm.mobatek.net/download.html
 - GitBash ssh command line client (free, part of Git distribution) [Windows/OSX/Linux] https://git-scm.com/downloads
+- MobaXTerm (free and paid) [Windows] https://mobaxterm.mobatek.net/download.html
+- PuTTY (free) [Windows] \* https://www.putty.org/
 
 GUI clients like Putty and MobaXTerm have their own help systems and client access configuration.
+
+
+### Command Line Client
+
 Command line clients can generally access the cloud lab site with a command something like this:
 
 ```
@@ -26,6 +30,24 @@ Where "ubuntu" is the default user name (the instructor may supply students with
 key file to the ssh client ("key.pem" in the example) for extra security.
 
 Student lab system IP addresses and passwords are passed out on day one of classes with cloud based labs.
+
+
+### MobaXTerm
+
+Start MobaXTerm and add a new session by clicking on the "Session" icon in the top-left corner or by selecting the
+"Sessions" menu and clicking on "New session".
+
+In the "Session settings" window, click on SSH and enter the following information:
+
+1. In the "Remote host" text box, enter the IP address assigned to you (sent via email or assigned in class)
+  - Check the box next to "Specify username" and enter `ubuntu`
+2. Click on the "Advanced SSH settings" tab
+3. Check the box next to "Use private key" and type the path to your .pem file or click on the browse icon which will
+let you navigate to the location where you saved it using Windows explorer.
+
+<img alt="auth" width="500px" src="./images/m01.png"/>
+
+Click on the [OK] button to start your SSH session.
 
 
 ### PuTTY
@@ -87,21 +109,3 @@ saved it using Windows explorer.
 <img alt="auth" width="350px" src="./images/p07.png"/>
 
 Click the [Open] button to start your SSH session.
-
-
-### MobaXTerm
-
-Start MobaXTerm and add a new session by clicking on the "Session" icon in the top-left corner or by selecting the
-"Sessions" menu and clicking on "New session".
-
-In the "Session settings" window, click on SSH and enter the following information:
-
-1. In the "Remote host" text box, enter the IP address assigned to you (sent via email or assigned in class)
-  - Check the box next to "Specify username" and enter `ubuntu`
-2. Click on the "Advanced SSH settings" tab
-3. Check the box next to "Use private key" and type the path to your .pem file or click on the browse icon which will
-let you navigate to the location where you saved it using Windows explorer.
-
-<img alt="auth" width="500px" src="./images/m01.png"/>
-
-Click on the [OK] button to start your SSH session.
