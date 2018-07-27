@@ -25,9 +25,17 @@ $ ssh -i key.pem ubuntu@host.ip.ad.dr
 ```
 
 Where "ubuntu" is the default user name (the instructor may supply students with a different user name  in class) and
-"host.ip.ad.dr" is the host IP address of the student lab system supplied by the instructor  during class (e.g.
-54.23.87.45). The `-i` switch (for identity) is optional and may be required in some  classes. This allows you to pass a
+"host.ip.ad.dr" is the host IP address of the student lab system supplied by the instructor during class (e.g.
+54.23.87.45). The `-i` switch (for identity) is optional and may be required in some classes. This allows you to pass a
 key file to the ssh client ("key.pem" in the example) for extra security.
+
+In order to use this private key file with ssh on Linux systems, you must change its security attributes so that you alone have READ-ONLY access. Use the following bash command to achieve this result:
+
+```
+$ chmod 400 key.pem
+```
+
+The file will retain these permissions after you perform this step once.
 
 Student lab system IP addresses and passwords are passed out on day one of classes with cloud based labs.
 
