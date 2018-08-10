@@ -29,11 +29,12 @@ A list of resources for those who want to learn more about Kubernetes and studen
 
 ### Self-Paced Online Trainings
 
-These self-paced online courses provide a good introduction to developers and systems administrators that are getting started.   
+The Linux Foundation offers self-paced online courses as a good introduction for developers and systems administrators that are getting started.
 
 - Introduction to Kubernetes (LFS158) (**free** edX course): https://www.edx.org/course/introduction-to-kubernetes
 - Kubernetes Fundamentals (LFS258): https://training.linuxfoundation.org/training/kubernetes-fundamentals/
 - Kubernetes for Developers (LFD259): https://training.linuxfoundation.org/training/kubernetes-for-developers/
+   - Get a 25% discount for these courses on the RX-M website: https://rx-m.com/training/cka-discount-registration/
 
 
 ## Direct from Kubernetes
