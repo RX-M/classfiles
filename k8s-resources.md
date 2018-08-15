@@ -1,3 +1,6 @@
+![RX-M LLC][RX-M LLC]
+
+
 # Kubernetes Resources
 
 A list of resources for those who want to learn more about Kubernetes and students of our [Certified Kubernetes Administrator](https://rx-m.com/training/cka-sessions/) and [Certified Kubernetes Application Developer](https://rx-m.com/training/ckad-sessions/) boot camps.
@@ -20,7 +23,7 @@ A list of resources for those who want to learn more about Kubernetes and studen
 - Exam Registration: https://training.linuxfoundation.org/certification/certified-kubernetes-administrator-cka/
 
 
-### Certified Kubernetes Administrator (CKA)
+### Certified Kubernetes Application Developer (CKAD)
 
 - About the CKAD Program: https://www.cncf.io/certification/ckad/
 - Exam Curriculum: https://github.com/cncf/curriculum/blob/master/certified_kubernetes_application_developer_exam_v1.0.pdf
@@ -62,3 +65,7 @@ The Linux Foundation offers self-paced online courses as a good introduction for
 
 - Helm (Package Manager): https://www.helm.sh/
 - KOPS: https://github.com/kubernetes/kops
+
+
+
+[RX-M LLC]: http://rx-m.io/rxm-cnc.svg "RX-M LLC"
