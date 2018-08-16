@@ -1,8 +1,3 @@
-![RX-M LLC][RX-M LLC]
-
-
-# Kubernetes Resources
-
 A list of resources for those who want to learn more about Kubernetes and students of our [Certified Kubernetes Administrator](https://rx-m.com/training/cka-sessions/) and [Certified Kubernetes Application Developer](https://rx-m.com/training/ckad-sessions/) boot camps.
 
 
@@ -65,7 +60,3 @@ The Linux Foundation offers self-paced online courses as a good introduction for
 
 - Helm (Package Manager): https://www.helm.sh/
 - KOPS: https://github.com/kubernetes/kops
-
-
-
-[RX-M LLC]: http://rx-m.io/rxm-cnc.svg "RX-M LLC"
