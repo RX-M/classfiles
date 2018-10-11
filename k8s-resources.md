@@ -40,6 +40,7 @@ The Linux Foundation offers self-paced online courses as a good introduction for
 - GitHub: <https://github.com/kubernetes/kubernetes>
 - Releases: <https://github.com/kubernetes/kubernetes/releases>
 - Documentation: <https://kubernetes.io/docs/>
+- Tutorials: <https://kubernetes.io/docs/tutorials/>
 - Case Studies: <https://kubernetes.io/case-studies/>
 - Community: <https://github.com/kubernetes/community>
 - Blog: <https://kubernetes.io/blog/>
