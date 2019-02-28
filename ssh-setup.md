@@ -60,8 +60,8 @@ Click on the [OK] button to start your SSH session.
 
 ### PuTTY
 
-PuTTY does not natively support the PEM format that AWS uses, so you need to convert your PEM file to a PPK file (PPK =
-PuTTY Private Key) before gaining access to AWS. To do this, you use the PuTTYgen utility.
+PuTTY does not natively support the PEM format that cloud environments use, so you need to convert your PEM file to a PPK file (PPK =
+PuTTY Private Key) before gaining access. To do this, you use the PuTTYgen utility.
 
 
 #### PuTTYgen
@@ -99,7 +99,7 @@ Name the private key file and save it to a path that is easy to remember (we wil
 Now that you have converted the pem file to a ppk file, you are ready to use PuTTY. Open putty and type connection
 information in the "Host Name" text field:
 
-- The user name for ubuntu VMs running on AWS is "ubuntu"
+- The user name for ubuntu VMs running in the cloud is "ubuntu"
 - The IP address assigned to you (sent via email or assigned in class)
 
 The format should look similar to: `ubuntu@15.16.17.18` (substituting your assigned IP for the example)
