@@ -1,35 +1,49 @@
 # RX-M - SSH setup for Cloud Lab Access
 
-RX-M courses can be delivered in conjunction with a cloud based lab environment. To access a cloud lab
-system, students will need to have an ssh client installed on their computer and internet ssh access
-(port 22).
+RX-M courses can be delivered in conjunction with a cloud based lab environment. To access a cloud labsystem, students will 
+need to have an ssh client installed on their computer and internet ssh access (port 22).
 
-Any mainstream ssh client will work and OSX/Linux computer systems have a good ssh client preinstalled.
+
+### macOS/Linux
+
+Any mainstream ssh client will work and macOS/Linux computer systems have a good ssh client preinstalled. To support browser
+GUI sessions over ssh the "X Window System" (or X11, or simply X), a windowing system for bitmap displays, is required. X11 
+is no longer included with Mac (see [this support article](https://support.apple.com/en-us/HT201341), but X11 server and 
+client libraries are available from the [XQuartz project](https://www.xquartz.org/), which Apple created and contribues to.
+
+
+#### X11 server on macOS:
+
+1. Open a browser and navigate to https://www.xquartz.org/
+2. Download the .dmg file and install
+3. Open the xQuartz program
+4. To launch an xQuartz terminal select the Applications menu > Terminal (shortcut: ⌘N)
+
+
+### Windows
 
 Here are some suggested ssh client tools for Windows systems (you do _not_ need to install all of them;
 choose one that works best for you):
 
 - GitBash ssh command line client (free, part of Git distribution) [Windows/OSX/Linux] https://git-scm.com/downloads
 - MobaXTerm (free and paid) [Windows] https://mobaxterm.mobatek.net/download.html
+  - Configure MobaXTerm [here](https://github.com/RX-M/classfiles/blob/master/ssh-setup.md#configuring-mobaxterm)
 - PuTTY (free) [Windows] \* https://www.putty.org/
+  - Configure PuTTY [here](https://github.com/RX-M/classfiles/blob/master/ssh-setup.md#putty)
+
 
 GUI clients like Putty and MobaXTerm have their own help systems and client access configuration.
 
 
-### Command Line Client
+#### X11 server on Windows
 
-Command line clients can generally access the cloud lab site with a command something like this:
+X11 is supported natively on Windows and does not require any further install or configuration.
 
-```
-$ ssh -i key.pem ubuntu@host.ip.ad.dr
-```
 
-Where "ubuntu" is the default user name (the instructor may supply students with a different user name  in class) and
-"host.ip.ad.dr" is the host IP address of the student lab system supplied by the instructor during class (e.g.
-54.23.87.45). The `-i` switch (for identity) is optional and may be required in some classes. This allows you to pass a
-key file to the ssh client ("key.pem" in the example) for extra security.
+### SSH Keys
 
-In order to use this private key file with ssh on Linux systems, you must change its security attributes so that you alone have READ-ONLY access. Use the following bash command to achieve this result:
+In order to use private key files with ssh on Linux systems, you must change the security attributes so that you alone 
+have READ-ONLY access. Use the following bash command to achieve this result:
 
 ```
 $ chmod 400 key.pem
@@ -37,10 +51,46 @@ $ chmod 400 key.pem
 
 The file will retain these permissions after you perform this step once.
 
-Student lab system IP addresses and passwords are passed out on day one of classes with cloud based labs.
+
+### Command Line Client
+
+Command line clients can generally access the cloud lab site with a command something like this:
+
+```
+$ ssh -i key.pem -X ubuntu@host.ip.ad.dr
+```
+
+Where "ubuntu" is the default user name (the instructor may supply students with a different user name  in class) and
+"host.ip.ad.dr" is the host IP address of the student lab system supplied by the instructor during class (e.g.
+54.23.87.45). 
+
+- The `-i` switch (for identity) is optional and may be required in some classes. This allows you to pass a key file to the 
+ssh client ("key.pem" in the example) for extra security.
+- The `-X` switch is also optional, but enables the X11 Window System for using remote GUI applications.
 
 
-### MobaXTerm
+#### X11 server on remote VMs
+
+If using GUI applications on the remote server, on the remote machine export the `DISPLAY` variable:
+
+```
+ubuntu@remote-host:~$ export DISPLAY=localhost:10
+```
+
+Install, and launch firefox
+
+```
+ubuntu@remote-host:~$ sudo apt-get install firefox -y
+
+...
+
+ubuntu@remote-host:~$ firefox &
+```
+
+A window on your local system should open with an instance of the Firefox browser from the remote system.
+
+
+### Configuring MobaXTerm
 
 Start MobaXTerm and add a new session by clicking on the "Session" icon in the top-left corner or by selecting the
 "Sessions" menu and clicking on "New session".
