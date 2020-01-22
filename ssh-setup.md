@@ -37,7 +37,15 @@ GUI clients like Putty and MobaXTerm have their own help systems and client acce
 
 #### X11 server on Windows
 
-X11 is supported natively on Windows and does not require any further install or configuration.
+Windows does not include builtin X support. Solutions are per client.
+
+- Mobaxterm: X11 is supported natively by mobaxterm and does not require any further installation.
+- putty: Requires an external xserver and enabling via: Connection->SSH->X11->Enable X11 Forwarding
+- git bash ssh: Requires an external xserver.
+
+Windows X servers
+- VcXsrv: Free Windows X-server based on xorg git sources (like xming or cygwin's xwin, build with Visual Studio) https://sourceforge.net/projects/vcxsrv/files/
+- XMing: Freemium Windows X-server based on xorg git sources: https://sourceforge.net/projects/xming/files/Xming/
 
 
 ### SSH Keys
