@@ -7,12 +7,12 @@ need to have an ssh client installed on their computer and internet ssh access (
 ### macOS/Linux
 
 Any mainstream ssh client will work and macOS/Linux computer systems have a good ssh client preinstalled. To support browser
-GUI sessions over ssh the "X Window System" (X11 or simply X), a windowing system for bitmap displays, is required. X11 
-is no longer included with Mac systems (see [this support article](https://support.apple.com/en-us/HT201341)), but X11 server and 
-client libraries are available from the [XQuartz project](https://www.xquartz.org/), which Apple created and contribues to.
+GUI sessions over ssh the "X Window System" (X11 or simply X), a windowing system for bitmap displays, is required. 
 
 
 #### X11 server on macOS:
+X11 is no longer included with Mac systems (see [this support article](https://support.apple.com/en-us/HT201341)), but X11 server and 
+client libraries are available from the [XQuartz project](https://www.xquartz.org/), which Apple created and contribues to.
 
 1. Open a browser and navigate to https://www.xquartz.org/
 2. Download the .dmg file and install
