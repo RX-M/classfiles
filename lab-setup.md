@@ -66,3 +66,7 @@ be used
        - In the Settings dialog, select "Compatibility" (icon looks like a motherboard)
        - Open the "Advanced Options" drop-down option
        - Under the "Use Hardware Version" selector, select your hardware version
+
+- DNS causes problems when the VM suspends on Virtual Box
+
+    - On some (older?) versions of Virtual Box DNS issues can occur after suspending the VM and or moving between networks (e.g. wifi hot spots). Solution (on OSX) is to run: VBoxManage modifyvm "VM name" --natdnshostresolver1 on
