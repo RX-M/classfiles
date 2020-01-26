@@ -16,8 +16,7 @@ client libraries are available from the [XQuartz project](https://www.xquartz.or
 
 1. Open a browser and navigate to https://www.xquartz.org/
 2. Download the .dmg file and install
-3. Open the xQuartz program
-4. To launch an xQuartz terminal select the Applications menu > Terminal (shortcut: ⌘N)
+3. Any time an SSH session is launched with the `-X` argument in the normal macOS terminal, the xQuartz program will automatically launch to support the X window.
 
 
 ### Windows
