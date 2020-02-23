@@ -18,9 +18,9 @@ The RX-M lab VM can be run on any of these virtualization platforms:
 
 #### Download the VM
 
-The RX-M **VMware** configured lab virtual machine is 770MB in 7z compressed format and can be downloaded here: https://s3-us-west-1.amazonaws.com/rx-m-vms/ubuntu-16.04.7z
+The RX-M **VMware** configured lab virtual machine is 770MB in 7z compressed format and can be downloaded here: https://s3-us-west-1.amazonaws.com/rx-m-vms/ubuntu-16.04.7z (shasum b8f0b56170324cd616e5d58bea1c11a29ccb39bf)
 
-The RX-M **VirtualBox** configured lab virtual machine is 1GB in OVA compressed format and can be downloaded here: https://s3-us-west-1.amazonaws.com/rx-m-vms/Ubuntu_Xenial_Xerus.vbvm.ova
+The RX-M **VirtualBox** configured lab virtual machine is 1GB in OVA compressed format and can be downloaded here: https://s3-us-west-1.amazonaws.com/rx-m-vms/Ubuntu_Xenial_Xerus.vbvm.ova (shasum 18fe67e3e88e06207c54316be79d898a1a1cc6b9)
 
 
 #### Run the VM
