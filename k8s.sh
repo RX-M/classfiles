@@ -1,4 +1,8 @@
-# Script to install K8s on an RX-M Lab VM
+# Script to install a single node K8s cluster on an RX-M Lab VM
+#
+# N.B. The script turns off swap for the K8s control plane install but does
+#      not disable swap permenantly. Please comment out any swap volumes in 
+#      the /etc/fstab before rebooting the VM.
 #
 # Copyright (c) RX-M LLC 2020, all rights reserved
 
