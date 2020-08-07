@@ -3,6 +3,11 @@
 # N.B. The script turns off swap for the K8s control plane install but does
 #      not disable swap permenantly. Please comment out any swap volumes in 
 #      the /etc/fstab before rebooting the VM.
+# 
+#      This script will fail to run if the apt db is locked (wait 10 mins 
+#      and retry or reboot and retry). 
+#
+#      Kubernetes single node clusters require a 4GB ram VM to run properly.
 #
 # Copyright (c) RX-M LLC 2020, all rights reserved
 
