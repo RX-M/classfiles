@@ -1,6 +1,7 @@
 # K8s Setup Instructions for RX-M Lab VM
-# You can run this as a script if you like:
-# $ wget -O- https://raw.githubusercontent.com/RX-M/classfiles/master/k8s.sh | sh
+
+You can run this as a script if you like:
+`$ wget -O- https://raw.githubusercontent.com/RX-M/classfiles/master/k8s.sh | sh`
 
 Quick and dirty installation of Docker and Kubernetes on an RX-M lab VM.
 
