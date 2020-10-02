@@ -10,7 +10,7 @@ RX-M provides a prebuilt lab VM which offers a more reliable and safe environmen
 
 The RX-M lab VM can be run on any of these virtualization platforms:
 
-- VMware Player (free) [Windows/Linux] https://my.vmware.com/web/vmware/free#desktop_end_user_computing/vmware_workstation_player/12_0
+- VMware Workstation Player (free) [Windows/Linux] https://my.vmware.com/web/vmware/downloads/info/slug/desktop_end_user_computing/vmware_workstation_player/16_0
 - VMware Workstation (requires a commercial license) [Windows]
 - VMware Fusion (requires a commercial license) [Mac]
 - Virtual Box (free) [Mac/Windows/Linux] https://www.virtualbox.org/wiki/Downloads
@@ -58,10 +58,10 @@ be used
 
      - For Player and/or Workstation: open the file: `Ubuntu_Xenial_Xerus.vmx` with a text editor, find the property:
      `virtualHW.version = "12"` and change it to your version.
-     
+
      - For Fusion:
        - Select the VM from the list in the Virtual Machine Library
-       - Open Settings by either: using the Command + E shortcut (⌘E), clicking on the wrench icon, or right-clicking and 
+       - Open Settings by either: using the Command + E shortcut (⌘E), clicking on the wrench icon, or right-clicking and
        choosing "Settings..." from the right-click menu, or opening the "Virtual Machine" menu and selecting "Settings..."
        - In the Settings dialog, select "Compatibility" (icon looks like a motherboard)
        - Open the "Advanced Options" drop-down option
