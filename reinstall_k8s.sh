@@ -8,7 +8,8 @@ set -e
 
 sudo kubeadm reset -f
 sudo systemctl stop docker.service
-sudo rm -rf /etc/cni /opt/cni /etc/kubernetes /var/lib/dockershim /var/lib/etcd /var/lib/kubelet /var/run/kubernetes ~/.kube/*
+# leave /opt/cni due to portmap - installed via kubernetes-cni
+sudo rm -rf /etc/cni /etc/kubernetes /var/lib/dockershim /var/lib/etcd /var/lib/kubelet /var/run/kubernetes ~/.kube/*
 sudo iptables -F && sudo iptables -X
 sudo iptables -t nat -F && sudo iptables -t nat -X
 sudo iptables -t raw -F && sudo iptables -t raw -X
