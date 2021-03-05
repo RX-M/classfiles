@@ -1,11 +1,11 @@
 # Script to install a single node K8s cluster on an RX-M Lab VM
 #
 # N.B. The script turns off swap for the K8s control plane install but does
-#      not disable swap permenantly. Please comment out any swap volumes in 
+#      not disable swap permenantly. Please comment out any swap volumes in
 #      the /etc/fstab before rebooting the VM.
-# 
-#      This script will fail to run if the apt db is locked (wait 10 mins 
-#      and retry or reboot and retry). 
+#
+#      This script will fail to run if the apt db is locked (wait 10 mins
+#      and retry or reboot and retry).
 #
 #      Kubernetes single node clusters require a 4GB ram VM to run properly.
 #
@@ -31,7 +31,7 @@ sudo apt-get update
 sudo apt-get install -y kubeadm
 sudo swapoff -a
 if [ -z ${K8S_VERSION+x} ]; then K8S_VERSION="--kubernetes-version=stable-1" ; else K8S_VERSION="--kubernetes-version=$K8S_VERSION"; fi
-echo sudo kubeadm init $K8S_VERSION
+sudo kubeadm init $K8S_VERSION
 mkdir -p $HOME/.kube
 sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
 sudo chown $(id -u):$(id -g) $HOME/.kube/config
