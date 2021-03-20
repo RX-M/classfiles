@@ -21,7 +21,7 @@ sudo systemctl start docker.service
 
 # now start over (install kubeadm version if it was removed, then init; otherwise just init)
 
-if [ -z ${K8S_VERSION+x} ]; then K8S_VERSION="--kubernetes-version=1.20.2" ; else K8S_VERSION="--kubernetes-version=$K8S_VERSION"; fi
+if [ -z ${K8S_VERSION+x} ]; then K8S_VERSION="--kubernetes-version=v1.20.2" ; else K8S_VERSION="--kubernetes-version=$K8S_VERSION"; fi
 sudo kubeadm init $K8S_VERSION
 mkdir -p $HOME/.kube
 sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
