@@ -48,11 +48,11 @@ attributes so that you alone have READ-ONLY access. Use the following procedure 
   - (3) _Only if the "Owner" is not your account_, change the owner to you by clicking the "Change" link.
   - (4) Click on the [ Disable Inheritance ] button in the lower left corner.
 
-<img alt="Advanced Security Settings" width="700px" src="./images/cp-ps02.png"/>
+<img alt="Advanced Security Settings" width="900px" src="./images/cp-ps02.png"/>
 
 - In the "Block Inheritance" pop-up, select, "Remove all inherited permissions from this object"
 
-<img alt="Block Inheritance" width="500px" src="./images/cp-ps03.png"/>  
+<img alt="Block Inheritance" width="450px" src="./images/cp-ps03.png"/>  
 
   - (1) In the "Permission entries" pane, select an existing permission and (2) click the [ Remove ] button.
   - Repeat steps 1 & 2 for each permission, deleting all existing permissions.
@@ -102,7 +102,7 @@ retain these permissions after you perform this step once.
 
 ### Windows SSH key permissions: MobaXTerm
 
-MobaXTerm understands the pem format; no configuration necessary.
+MobaXTerm understands the PEM format; no configuration necessary.
 
 
 ### Windows SSH key permissions: PuTTY
@@ -114,22 +114,22 @@ To start PuTTYgen the utility you can type `puttygen` in the Windows start dialo
 
 <img alt="start" width="350px" src="./images/p01.png"/>
 
-In the PuTTYgen dialog box, click the [Load] button:
+In the PuTTYgen dialog box, click the [ Load ] button:
 
 <img alt="puttygen" width="500px" src="./images/p02.png"/>
 
-When browsing for your pem file be sure to select **All Files** in the dropdown list that is located to the right of the
+When browsing for your pem file be sure to select _All Files_ in the dropdown list that is located to the right of the
 File name field:
 
 <img alt="key" width="500px" src="./images/p03.png"/>
 
-Select the .pem file that you received (called "student.pem" in the screenshot above) and click [Open].
+Select the .pem file that you received (called "student.pem" in the screenshot above) and click [ Open ].
 
-Read the PuTTYgen Notice and then click [Ok].
+Read the PuTTYgen Notice and then click [ Ok ].
 
 <img alt="notice" width="400px" src="./images/p04.png"/>
 
-As the notice states, click on [Save private key]:
+As the notice states, click on [ Save private key ]:
 
 > N.B. if you are asked if you want to save they key without a passphrase you can safely click "Yes".
 
@@ -143,18 +143,20 @@ Name the private key file and save it to a path that is easy to remember (we wil
 
 ### macOS/Linux -OR- Windows Command Prompt or PowerShell SSH
 
-Command line clients can generally access the cloud lab site with a command something like this:
+Command line clients like a Linux shell terminal, macOS Terminal app, Windows Command Prompt or PowerShell can generally
+access the cloud lab site by opening the related app/shell and typing a command like this:
 
 ```
 $ ssh -i key.pem ubuntu@host.ip.ad.dr
 ```
 
-Where "`ubuntu`" is the default user name (the instructor may supply students with a different user name  in class) and
-"host.ip.ad.dr" is the host IP address of the student lab system supplied by the instructor during class (e.g.
-54.23.87.45).
+Where:
 
-- The `-i` switch (for identity) is typically required in classes. This allows you to pass a key file to the ssh client
-  ("`key.pem`" in the example) for extra security.
+- The `-i` switch (for identity) is typically required and allows you to pass a key file to the ssh client ("`key.pem`"
+  in the example) for extra security.
+- "`ubuntu`" is the default username (the instructor may supply students with a different username in class)
+- "`host.ip.ad.dr`" is the host IP address of the student lab system supplied by the instructor during class (e.g.
+  54.23.87.45).
 
 
 ### Windows MobaXTerm SSH
@@ -172,12 +174,12 @@ let you navigate to the location where you saved it using Windows explorer.
 
 <img alt="auth" width="700px" src="./images/m01.png"/>
 
-Click on the [OK] button to start your SSH session.
+Click on the [ OK ] button to start your SSH session.
 
 
 ### Windows PuTTY SSH
 
-Now that you have converted the pem file to a ppk file, you are ready to use PuTTY. Open putty and type connection
+Once you have converted the pem file to a ppk file, you are ready to use PuTTY. Open putty and type connection
 information in the "Host Name" text field:
 
 - The user name for ubuntu VMs running in the cloud is "ubuntu"
@@ -187,17 +189,20 @@ The format should look similar to: `ubuntu@15.16.17.18` (substituting your assig
 
 <img alt="hostname" width="550px" src="./images/p06.png"/>
 
-Next, in the "Category" column on the left, click on the "+" icon next to the SSH field to expand the section.
+Next, in the "Category" column on the left, click on the "`+`" icon next to the SSH field to expand the section.
 
 In the newly expanded section, click on "Auth".
 
 In the "Private key file for authentication" text field, either type the path to your ppk file or click on the
-"Browse..." button to open the "Select private key file" dialog which will let you navigate to the location where you
+[ Browse... ] button to open the "Select private key file" dialog which will let you navigate to the location where you
 saved it using Windows explorer.
 
 <img alt="auth" width="550px" src="./images/p07.png"/>
 
-Click the [Open] button to start your SSH session.
+After setting the path to the private key file, you can _optionally_ return to the "Session" category, and under the
+"Saved Sessions" text box you can name your session and save it by clicking the [ Save ] button.
+
+Click the [ Open ] button to start your SSH session.
 
 
 ## OPTIONAL X11 Server
