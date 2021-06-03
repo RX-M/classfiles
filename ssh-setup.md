@@ -114,7 +114,7 @@ Both GitBash and MobaXTerm understand the PEM format; no configuration necessary
 
 Next, start an ssh session:
 
-- [GitBash](https://github.com/RX-M/classfiles/blob/master/ssh-setup.md#macoslinux--or--windows-gitbash-command-prompt-or-powershell-ssh)
+- [GitBash shell](https://github.com/RX-M/classfiles/blob/master/ssh-setup.md#macoslinux--or--windows-gitbash-command-prompt-or-powershell-ssh)
 - [MobaXTerm](https://github.com/RX-M/classfiles/blob/master/ssh-setup.md#windows-mobaxterm-ssh)
 
 
@@ -158,7 +158,7 @@ Next, start an ssh session with [PuTTY](https://github.com/RX-M/classfiles/blob/
 
 ### macOS/Linux -OR- Windows GitBash, Command Prompt, or PowerShell SSH
 
-Command line clients like a Linux shell terminal, macOS Terminal app, Windows GitBash, Command Prompt, or PowerShell can
+Command line clients like a Linux shell, the macOS Terminal app, or Windows GitBash, Command Prompt, or PowerShell can
 generally access the cloud lab site by opening the related app/shell and typing a command like this:
 
 ```
