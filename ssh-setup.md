@@ -33,8 +33,9 @@ Links to 3rd party installers:
 
 Next, configure SSH key permissions based on your platform of choice:
 
-- [Command Prompt or Powershell](https://github.com/RX-M/classfiles/blob/master/ssh-setup.md#windows-ssh-key-permissions-command-prompt-and-powershell)
-- [MobaXTerm](https://github.com/RX-M/classfiles/blob/master/ssh-setup.md#windows-ssh-key-permissions-mobaxterm)
+- [Command Prompt or PowerShell](https://github.com/RX-M/classfiles/blob/master/ssh-setup.md#windows-ssh-key-permissions-command-prompt-and-powershell)
+- [GitBash](https://github.com/RX-M/classfiles/blob/master/ssh-setup.md#windows-ssh-key-permissions-gitbash--mobaxterm)
+- [MobaXTerm](https://github.com/RX-M/classfiles/blob/master/ssh-setup.md#windows-ssh-key-permissions-gitbash--mobaxterm)
 - [PuTTY](https://github.com/RX-M/classfiles/blob/master/ssh-setup.md#windows-ssh-key-permissions-putty)
 
 
@@ -104,14 +105,17 @@ attributes so that you alone have READ-ONLY access. Use the following procedure 
 Now SSH will not complain about file permissions being too open and you can ssh from Windows natively. The file will
 retain these permissions after you perform this step once.
 
-Next, start an ssh session with instructions [here](https://github.com/RX-M/classfiles/blob/master/ssh-setup.md#macoslinux--or--windows-command-prompt-or-powershell-ssh).
+Next, start an ssh session with a [shell](https://github.com/RX-M/classfiles/blob/master/ssh-setup.md#macoslinux--or--gitbash-windows-command-prompt-or-powershell-ssh).
 
 
-### Windows SSH key permissions: MobaXTerm
+### Windows SSH key permissions: GitBash & MobaXTerm
 
-MobaXTerm understands the PEM format; no configuration necessary.
+Both GitBash and MobaXTerm understand the PEM format; no configuration necessary.
 
-Next, start an ssh session with [MobaXTerm](https://github.com/RX-M/classfiles/blob/master/ssh-setup.md#windows-mobaxterm-ssh).
+Next, start an ssh session:
+
+- [GitBash](https://github.com/RX-M/classfiles/blob/master/ssh-setup.md#macoslinux--or--gitbash-windows-command-prompt-or-powershell-ssh)
+- [MobaXTerm](https://github.com/RX-M/classfiles/blob/master/ssh-setup.md#windows-mobaxterm-ssh).
 
 
 ### Windows SSH key permissions: PuTTY
@@ -152,7 +156,7 @@ Next, start an ssh session with [PuTTY](https://github.com/RX-M/classfiles/blob/
 ## SSH
 
 
-### macOS/Linux -OR- Windows Command Prompt or PowerShell SSH
+### macOS/Linux -OR- Windows GitBash, Command Prompt, or PowerShell SSH
 
 Command line clients like a Linux shell terminal, macOS Terminal app, Windows Command Prompt or PowerShell can generally
 access the cloud lab site by opening the related app/shell and typing a command like this:
