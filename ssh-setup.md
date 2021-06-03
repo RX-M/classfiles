@@ -17,20 +17,25 @@ $ chmod 400 key.pem
 
 The file will retain these permissions after you perform this step once.
 
+Next, start an ssh session with instructions [here](https://github.com/RX-M/classfiles/blob/master/ssh-setup.md#macoslinux--or--windows-command-prompt-or-powershell-ssh).
+
 
 ## Windows SSH client(s) & key permissions
 
 Windows 10 supports ssh natively via Command Prompt and PowerShell but also supports 3rd party ssh client tools (you do
 _not_ need to install any or all of them; use what works best for you).
 
+Links to 3rd party installers:
+
 - GitBash ssh command line client (free, part of Git distribution) [Windows/OSX/Linux] https://git-scm.com/downloads
 - MobaXTerm (free and paid) [Windows] https://mobaxterm.mobatek.net/download.html
-  - Configure MobaXTerm [here](https://github.com/RX-M/classfiles/blob/master/ssh-setup.md#configuring-mobaxterm)
-- PuTTY (free) [Windows] \* https://www.putty.org/
-  - Configure PuTTY [here](https://github.com/RX-M/classfiles/blob/master/ssh-setup.md#putty)
+- PuTTY (free) [Windows] https://www.putty.org/
 
+Next, configure SSH key permissions based on your platform of choice:
 
-GUI clients like Putty and MobaXTerm have their own help systems and client access configuration.
+- [Command Prompt or Powershell](https://github.com/RX-M/classfiles/blob/master/ssh-setup.md#windows-ssh-key-permissions-command-prompt-and-powershell)
+- [MobaXTerm](https://github.com/RX-M/classfiles/blob/master/ssh-setup.md#windows-ssh-key-permissions-mobaxterm)
+- [PuTTY](https://github.com/RX-M/classfiles/blob/master/ssh-setup.md#windows-ssh-key-permissions-putty)
 
 
 ### Windows SSH key permissions: Command Prompt and PowerShell
@@ -99,10 +104,14 @@ attributes so that you alone have READ-ONLY access. Use the following procedure 
 Now SSH will not complain about file permissions being too open and you can ssh from Windows natively. The file will
 retain these permissions after you perform this step once.
 
+Next, start an ssh session with instructions [here](https://github.com/RX-M/classfiles/blob/master/ssh-setup.md#macoslinux--or--windows-command-prompt-or-powershell-ssh).
+
 
 ### Windows SSH key permissions: MobaXTerm
 
 MobaXTerm understands the PEM format; no configuration necessary.
+
+Next, start an ssh session with [MobaXTerm](https://github.com/RX-M/classfiles/blob/master/ssh-setup.md#windows-mobaxterm-ssh).
 
 
 ### Windows SSH key permissions: PuTTY
@@ -137,6 +146,8 @@ As the notice states, click on [ Save private key ]:
 
 Name the private key file and save it to a path that is easy to remember (we will use the path to the file in putty).
 
+
+Next, start an ssh session with [PuTTY](https://github.com/RX-M/classfiles/blob/master/ssh-setup.md#windows-putty-ssh).
 
 ## SSH
 
