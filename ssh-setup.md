@@ -50,7 +50,7 @@ attributes so that you alone have READ-ONLY access. Use the following procedure 
 
 <img alt="Advanced Security Settings" width="700px" src="./images/cp-ps02.png"/>
 
-    - In the "Block Inheritance" pop-up, select, "Remove all inherited permissions from this object"
+- In the "Block Inheritance" pop-up, select, "Remove all inherited permissions from this object"
 
 <img alt="Block Inheritance" width="500px" src="./images/cp-ps03.png"/>  
 
@@ -94,7 +94,7 @@ attributes so that you alone have READ-ONLY access. Use the following procedure 
 - Finally, back in the "Properties" window, under "Group or user names:", only your user should appear.
   - Click the [ OK ] button.
 
-<img alt="Final properties" width="500px" src="./images/cp-ps11.png"/>
+<img alt="Final properties" width="400px" src="./images/cp-ps11.png"/>
 
 Now SSH will not complain about file permissions being too open and you can ssh from Windows natively. The file will
 retain these permissions after you perform this step once.
@@ -170,7 +170,7 @@ In the "Session settings" window, click on SSH and enter the following informati
 3. Check the box next to "Use private key" and type the path to your .pem file or click on the browse icon which will
 let you navigate to the location where you saved it using Windows explorer.
 
-<img alt="auth" width="600px" src="./images/m01.png"/>
+<img alt="auth" width="700px" src="./images/m01.png"/>
 
 Click on the [OK] button to start your SSH session.
 
@@ -185,7 +185,7 @@ information in the "Host Name" text field:
 
 The format should look similar to: `ubuntu@15.16.17.18` (substituting your assigned IP for the example)
 
-<img alt="hostname" width="600px" src="./images/p06.png"/>
+<img alt="hostname" width="550px" src="./images/p06.png"/>
 
 Next, in the "Category" column on the left, click on the "+" icon next to the SSH field to expand the section.
 
@@ -195,7 +195,7 @@ In the "Private key file for authentication" text field, either type the path to
 "Browse..." button to open the "Select private key file" dialog which will let you navigate to the location where you
 saved it using Windows explorer.
 
-<img alt="auth" width="600px" src="./images/p07.png"/>
+<img alt="auth" width="550px" src="./images/p07.png"/>
 
 Click the [Open] button to start your SSH session.
 
