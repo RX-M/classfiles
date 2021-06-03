@@ -40,7 +40,7 @@ attributes so that you alone have READ-ONLY access. Use the following procedure 
 
 - Locate the pem file in Windows Explorer, right-click on it then select "Properties".
 
-<img alt="Windows Explorer" width="600px" src="./images/cp-ps01.png"/>
+<img alt="Windows Explorer" width="700px" src="./images/cp-ps01.png"/>
 
 - In the "Properties" window, (1) Navigate to the "Security" tab and (2) click "Advanced".
 
@@ -48,53 +48,53 @@ attributes so that you alone have READ-ONLY access. Use the following procedure 
   - (3) _Only if the "Owner" is not your account_, change the owner to you by clicking the "Change" link.
   - (4) Click on the [ Disable Inheritance ] button in the lower left corner.
 
-<img alt="Advanced Security Settings" width="600px" src="./images/cp-ps02.png"/>
+<img alt="Advanced Security Settings" width="700px" src="./images/cp-ps02.png"/>
 
     - In the "Block Inheritance" pop-up, select, "Remove all inherited permissions from this object"
 
-<img alt="Block Inheritance" width="400px" src="./images/cp-ps03.png"/>  
+<img alt="Block Inheritance" width="500px" src="./images/cp-ps03.png"/>  
 
   - (1) In the "Permission entries" pane, select an existing permission and (2) click the [ Remove ] button.
   - Repeat steps 1 & 2 for each permission, deleting all existing permissions.
 
-<img alt="Permission entries" width="500px" src="./images/cp-ps04.png"/>
+<img alt="Permission entries" width="600px" src="./images/cp-ps04.png"/>
 
   - After all existing permissions are removed, select the [ Add ] button.
 
-<img alt="Permission add" width="500px" src="./images/cp-ps05.png"/>
+<img alt="Permission add" width="600px" src="./images/cp-ps05.png"/>
 
 - In the "Permission Entry" window:
   - Select the "Select a Principal" link.
 
-<img alt="Permission Entry" width="500px" src="./images/cp-ps06.png"/>
+<img alt="Permission Entry" width="600px" src="./images/cp-ps06.png"/>
 
 - In the "Select User or Group" window:
   - (1) In the "Enter the object name to select (examples)" text box, type _your username_.
   - (2) Click the [ Check Names ] button to autofill and/or check the username.
 
-<img alt="Select User or Group" width="400px" src="./images/cp-ps07.png"/>
+<img alt="Select User or Group" width="500px" src="./images/cp-ps07.png"/>
 
   - After checking the name, the proper syntax should be applied
   - Click the [ OK ] button.
 
-<img alt="Username properly formatted" width="400px" src="./images/cp-ps08.png"/>
+<img alt="Username properly formatted" width="500px" src="./images/cp-ps08.png"/>
 
 - Back in the "Permission Entry" window:
   - (1) Under "Principal", make sure your user is present.
   - (2) Under "Basic Permissions", add a check (√) to the "Full control" option.
   - (3) Click the [ OK ] button.
 
-<img alt="Full control" width="400px" src="./images/cp-ps09.png"/>
+<img alt="Full control" width="600px" src="./images/cp-ps09.png"/>
 
 - Back in the "Advanced Security Settings" window, your user should be the only permission in the "Permission entries" field.
   - Click the [ OK ] button.
 
-<img alt="Permissions set" width="500px" src="./images/cp-ps10.png"/>
+<img alt="Permissions set" width="600px" src="./images/cp-ps10.png"/>
 
 - Finally, back in the "Properties" window, under "Group or user names:", only your user should appear.
   - Click the [ OK ] button.
 
-<img alt="Final properties" width="400px" src="./images/cp-ps11.png"/>
+<img alt="Final properties" width="500px" src="./images/cp-ps11.png"/>
 
 Now SSH will not complain about file permissions being too open and you can ssh from Windows natively. The file will
 retain these permissions after you perform this step once.
@@ -112,28 +112,28 @@ PPK file (PPK = PuTTY Private Key) before gaining access. To do this, you use th
 
 To start PuTTYgen the utility you can type `puttygen` in the Windows start dialog box.
 
-<img alt="start" width="250px" src="./images/p01.png"/>
+<img alt="start" width="350px" src="./images/p01.png"/>
 
 In the PuTTYgen dialog box, click the [Load] button:
 
-<img alt="puttygen" width="350px" src="./images/p02.png"/>
+<img alt="puttygen" width="500px" src="./images/p02.png"/>
 
 When browsing for your pem file be sure to select **All Files** in the dropdown list that is located to the right of the
 File name field:
 
-<img alt="key" width="350px" src="./images/p03.png"/>
+<img alt="key" width="500px" src="./images/p03.png"/>
 
 Select the .pem file that you received (called "student.pem" in the screenshot above) and click [Open].
 
 Read the PuTTYgen Notice and then click [Ok].
 
-<img alt="notice" width="250px" src="./images/p04.png"/>
+<img alt="notice" width="400px" src="./images/p04.png"/>
 
 As the notice states, click on [Save private key]:
 
 > N.B. if you are asked if you want to save they key without a passphrase you can safely click "Yes".
 
-<img alt="save" width="350px" src="./images/p05.png"/>
+<img alt="save" width="500px" src="./images/p05.png"/>
 
 Name the private key file and save it to a path that is easy to remember (we will use the path to the file in putty).
 
@@ -146,16 +146,15 @@ Name the private key file and save it to a path that is easy to remember (we wil
 Command line clients can generally access the cloud lab site with a command something like this:
 
 ```
-$ ssh -i key.pem -X ubuntu@host.ip.ad.dr
+$ ssh -i key.pem ubuntu@host.ip.ad.dr
 ```
 
-Where "ubuntu" is the default user name (the instructor may supply students with a different user name  in class) and
+Where "`ubuntu`" is the default user name (the instructor may supply students with a different user name  in class) and
 "host.ip.ad.dr" is the host IP address of the student lab system supplied by the instructor during class (e.g.
 54.23.87.45).
 
 - The `-i` switch (for identity) is typically required in classes. This allows you to pass a key file to the ssh client
-  ("key.pem" in the example) for extra security.
-- The `-X` switch is also optional, but enables the X11 Window System for using remote GUI applications.
+  ("`key.pem`" in the example) for extra security.
 
 
 ### Windows MobaXTerm SSH
@@ -171,7 +170,7 @@ In the "Session settings" window, click on SSH and enter the following informati
 3. Check the box next to "Use private key" and type the path to your .pem file or click on the browse icon which will
 let you navigate to the location where you saved it using Windows explorer.
 
-<img alt="auth" width="500px" src="./images/m01.png"/>
+<img alt="auth" width="600px" src="./images/m01.png"/>
 
 Click on the [OK] button to start your SSH session.
 
@@ -186,7 +185,7 @@ information in the "Host Name" text field:
 
 The format should look similar to: `ubuntu@15.16.17.18` (substituting your assigned IP for the example)
 
-<img alt="hostname" width="350px" src="./images/p06.png"/>
+<img alt="hostname" width="600px" src="./images/p06.png"/>
 
 Next, in the "Category" column on the left, click on the "+" icon next to the SSH field to expand the section.
 
@@ -196,7 +195,7 @@ In the "Private key file for authentication" text field, either type the path to
 "Browse..." button to open the "Select private key file" dialog which will let you navigate to the location where you
 saved it using Windows explorer.
 
-<img alt="auth" width="350px" src="./images/p07.png"/>
+<img alt="auth" width="600px" src="./images/p07.png"/>
 
 Click the [Open] button to start your SSH session.
 
