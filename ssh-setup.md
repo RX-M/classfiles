@@ -40,7 +40,7 @@ attributes so that you alone have READ-ONLY access. Use the following procedure 
 
 - Locate the pem file in Windows Explorer, right-click on it then select "Properties".
 
-<img alt="Windows Explorer" width="500px" src="./images/cp-ps01.png"/>
+<img alt="Windows Explorer" width="600px" src="./images/cp-ps01.png"/>
 
 - In the "Properties" window, (1) Navigate to the "Security" tab and (2) click "Advanced".
 
@@ -48,53 +48,53 @@ attributes so that you alone have READ-ONLY access. Use the following procedure 
   - (3) _Only if the "Owner" is not your account_, change the owner to you by clicking the "Change" link.
   - (4) Click on the [ Disable Inheritance ] button in the lower left corner.
 
-<img alt="Advanced Security Settings" width="500px" src="./images/cp-ps02.png"/>
+<img alt="Advanced Security Settings" width="600px" src="./images/cp-ps02.png"/>
 
     - In the "Block Inheritance" pop-up, select, "Remove all inherited permissions from this object"
 
-<img alt="Block Inheritance" width="300px" src="./images/cp-ps03.png"/>  
+<img alt="Block Inheritance" width="400px" src="./images/cp-ps03.png"/>  
 
   - (1) In the "Permission entries" pane, select an existing permission and (2) click the [ Remove ] button.
   - Repeat steps 1 & 2 for each permission, deleting all existing permissions.
 
-<img alt="Permission entries" width="400px" src="./images/cp-ps04.png"/>
+<img alt="Permission entries" width="500px" src="./images/cp-ps04.png"/>
 
   - After all existing permissions are removed, select the [ Add ] button.
 
-<img alt="Permission add" width="400px" src="./images/cp-ps05.png"/>
+<img alt="Permission add" width="500px" src="./images/cp-ps05.png"/>
 
 - In the "Permission Entry" window:
   - Select the "Select a Principal" link.
 
-<img alt="Permission Entry" width="400px" src="./images/cp-ps06.png"/>
+<img alt="Permission Entry" width="500px" src="./images/cp-ps06.png"/>
 
 - In the "Select User or Group" window:
   - (1) In the "Enter the object name to select (examples)" text box, type _your username_.
   - (2) Click the [ Check Names ] button to autofill and/or check the username.
 
-<img alt="Select User or Group" width="300px" src="./images/cp-ps07.png"/>
+<img alt="Select User or Group" width="400px" src="./images/cp-ps07.png"/>
 
   - After checking the name, the proper syntax should be applied
   - Click the [ OK ] button.
 
-<img alt="Username properly formatted" width="300px" src="./images/cp-ps08.png"/>
+<img alt="Username properly formatted" width="400px" src="./images/cp-ps08.png"/>
 
 - Back in the "Permission Entry" window:
   - (1) Under "Principal", make sure your user is present.
   - (2) Under "Basic Permissions", add a check (√) to the "Full control" option.
   - (3) Click the [ OK ] button.
 
-<img alt="Full control" width="300px" src="./images/cp-ps09.png"/>
+<img alt="Full control" width="400px" src="./images/cp-ps09.png"/>
 
 - Back in the "Advanced Security Settings" window, your user should be the only permission in the "Permission entries" field.
   - Click the [ OK ] button.
 
-<img alt="Permissions set" width="400px" src="./images/cp-ps10.png"/>
+<img alt="Permissions set" width="500px" src="./images/cp-ps10.png"/>
 
 - Finally, back in the "Properties" window, under "Group or user names:", only your user should appear.
   - Click the [ OK ] button.
 
-<img alt="Final properties" width="300px" src="./images/cp-ps11.png"/>
+<img alt="Final properties" width="400px" src="./images/cp-ps11.png"/>
 
 Now SSH will not complain about file permissions being too open and you can ssh from Windows natively. The file will
 retain these permissions after you perform this step once.
