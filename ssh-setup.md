@@ -17,7 +17,7 @@ $ chmod 400 key.pem
 
 The file will retain these permissions after you perform this step once.
 
-Next, start an ssh session with instructions [here](https://github.com/RX-M/classfiles/blob/master/ssh-setup.md#macoslinux--or--windows-command-prompt-or-powershell-ssh).
+Next, start an ssh session with a [shell](https://github.com/RX-M/classfiles/blob/master/ssh-setup.md#macoslinux--or--windows-gitbash-command-prompt-or-powershell-ssh).
 
 
 ## Windows SSH client(s) & key permissions
@@ -105,7 +105,7 @@ attributes so that you alone have READ-ONLY access. Use the following procedure 
 Now SSH will not complain about file permissions being too open and you can ssh from Windows natively. The file will
 retain these permissions after you perform this step once.
 
-Next, start an ssh session with a [shell](https://github.com/RX-M/classfiles/blob/master/ssh-setup.md#macoslinux--or--gitbash-windows-command-prompt-or-powershell-ssh).
+Next, start an ssh session with a [shell](https://github.com/RX-M/classfiles/blob/master/ssh-setup.md#macoslinux--or--windows-gitbash-command-prompt-or-powershell-ssh).
 
 
 ### Windows SSH key permissions: GitBash & MobaXTerm
@@ -114,8 +114,8 @@ Both GitBash and MobaXTerm understand the PEM format; no configuration necessary
 
 Next, start an ssh session:
 
-- [GitBash](https://github.com/RX-M/classfiles/blob/master/ssh-setup.md#macoslinux--or--gitbash-windows-command-prompt-or-powershell-ssh)
-- [MobaXTerm](https://github.com/RX-M/classfiles/blob/master/ssh-setup.md#windows-mobaxterm-ssh).
+- [GitBash](https://github.com/RX-M/classfiles/blob/master/ssh-setup.md#macoslinux--or--windows-gitbash-command-prompt-or-powershell-ssh)
+- [MobaXTerm](https://github.com/RX-M/classfiles/blob/master/ssh-setup.md#windows-mobaxterm-ssh)
 
 
 ### Windows SSH key permissions: PuTTY
@@ -150,16 +150,16 @@ As the notice states, click on [ Save private key ]:
 
 Name the private key file and save it to a path that is easy to remember (we will use the path to the file in putty).
 
-
 Next, start an ssh session with [PuTTY](https://github.com/RX-M/classfiles/blob/master/ssh-setup.md#windows-putty-ssh).
+
 
 ## SSH
 
 
 ### macOS/Linux -OR- Windows GitBash, Command Prompt, or PowerShell SSH
 
-Command line clients like a Linux shell terminal, macOS Terminal app, Windows Command Prompt or PowerShell can generally
-access the cloud lab site by opening the related app/shell and typing a command like this:
+Command line clients like a Linux shell terminal, macOS Terminal app, Windows GitBash, Command Prompt, or PowerShell can
+generally access the cloud lab site by opening the related app/shell and typing a command like this:
 
 ```
 $ ssh -i key.pem ubuntu@host.ip.ad.dr
