@@ -6,3 +6,4 @@ sudo mv ~/go/ /usr/local/
 echo "export PATH=/usr/local/go/bin:$PATH" >> .bashrc							
 echo "[[ -r ~/.bashrc ]] && . ~/.bashrc" >> ~/.bash_profile							
 . ~/.bash_profile							
+go version
