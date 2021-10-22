@@ -1,9 +1,9 @@
 # RX-M - Lab System Setup
 
-The lab exercises for RX-M courses are designed for completion on a base Ubuntu 16.04 64 bit system. The
-system should have 2+ CPUs, 2+ GBs of RAM and 30+ GB of disk. Students who have access to an appropriate
-existing system (e.g. a typical cloud instance) can perform the lab exercises on that system, however,
-RX-M provides a prebuilt lab VM which offers a more reliable and safe environment for experimentation.
+The lab exercises for RX-M courses are designed for completion on a base Ubuntu 64 bit system (ideally the latest LTS
+version). The system should have 2+ CPUs, 2+ GBs of RAM and 30+ GB of disk. Students who have access to an appropriate
+existing system (e.g. a typical cloud instance) can perform the lab exercises on that system, however, RX-M provides a
+prebuilt lab VM which offers a more reliable and safe environment for experimentation.
 
 
 #### Supported Platforms
@@ -12,15 +12,13 @@ The RX-M lab VM can be run on any of these virtualization platforms:
 
 - VMware Workstation Player (free) [Windows/Linux] https://my.vmware.com/web/vmware/downloads/info/slug/desktop_end_user_computing/vmware_workstation_player/16_0
 - VMware Workstation (requires a commercial license) [Windows]
+- VMware Fusion Player (Free for personal use but requires a VMWare Account) [Mac]
 - VMware Fusion (requires a commercial license) [Mac]
-- Virtual Box (free) [Mac/Windows/Linux] https://www.virtualbox.org/wiki/Downloads
 
 
 #### Download the VM
 
-The RX-M **VMware** configured lab virtual machine is 770MB in 7z compressed format and can be downloaded here: https://s3-us-west-1.amazonaws.com/rx-m-vms/ubuntu-16.04.7z (shasum b8f0b56170324cd616e5d58bea1c11a29ccb39bf)
-
-The RX-M **VirtualBox** configured lab virtual machine is 1GB in OVA compressed format and can be downloaded here: https://s3-us-west-1.amazonaws.com/rx-m-vms/Ubuntu_Xenial_Xerus.vbvm.ova (shasum 18fe67e3e88e06207c54316be79d898a1a1cc6b9)
+The RX-M **VMware** configured lab virtual machine is 770MB in 7z compressed format and can be downloaded here: https://rx-m-vms.s3.us-west-1.amazonaws.com/rx-m-lab-vm.7z (sha256 0bd8e76b38f9ba56403a151eff7a62d3ccfb044af656a1418282e1a7e6482386)
 
 
 #### Run the VM
@@ -31,7 +29,7 @@ To run the lab VM:
      - __Windows:__ download 7zip here: http://www.7-zip.org/download.html
      - __Mac:__ search for the freeware "The Unarchiver" in the Mac app store
 3. Launch the VM:
-     - **VMware:** double click the .vmx file (e.g. `Ubuntu_Xenial_Xerus.vmx`) inside the decompressed folder (when
+     - **VMware:** double click the .vmx file (e.g. `rx-m-lab-vm.vmx`) inside the decompressed folder (when
        asked, say you __copied__ the VM)
      - **VirtualBox:** double click the OVA file (when asked, agree to import the VM)
 4. Login to the VM with the username "user" and the password "user"
@@ -56,7 +54,7 @@ For most people (95%) the above steps work perfectly. However there are some com
 - VMware complains that the VM was created by a VMware product that is incompatible with your version of VMware and cannot
 be used
 
-     - For Player and/or Workstation: open the file: `Ubuntu_Xenial_Xerus.vmx` with a text editor, find the property:
+     - For Player and/or Workstation: open the file: `rx-m-lab-vm.vmx` with a text editor, find the property:
      `virtualHW.version = "12"` and change it to your version.
 
      - For Fusion:
