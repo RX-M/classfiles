@@ -14,11 +14,13 @@ The RX-M lab VM can be run on any of these virtualization platforms:
 - VMware Workstation (requires a commercial license) [Windows]
 - VMware Fusion Player (Free for personal use but requires a VMWare Account) [Mac]
 - VMware Fusion (requires a commercial license) [Mac]
-
+-  Virtual Box (free) [Mac/Windows/Linux] https://www.virtualbox.org/wiki/Downloads
 
 #### Download the VM
 
-The RX-M **VMware** configured lab virtual machine is 770MB in 7z compressed format and can be downloaded here: https://rx-m-vms.s3.us-west-1.amazonaws.com/rx-m-lab-vm.7z (sha256 0bd8e76b38f9ba56403a151eff7a62d3ccfb044af656a1418282e1a7e6482386)
+The RX-M **VMware** configured lab virtual machine is 1.3GB in 7z compressed format and can be downloaded here: https://rx-m-vms.s3.us-west-1.amazonaws.com/rx-m-lab-vm.7z (sha256 0bd8e76b38f9ba56403a151eff7a62d3ccfb044af656a1418282e1a7e6482386)
+
+The RX-M **VirtualBox** configured lab virtual machine is 1GB in OVA compressed format and can be downloaded here: https://rx-m-vms.s3.us-west-1.amazonaws.com/rx-m-lab-ubuntu-20.04-virtualbox.7z (sha256 58BEE8A0E23FAF300FB2F687B16C9DD900CEC51DDEB490D9EFAD0DD99FC374CB)
 
 
 #### Run the VM
