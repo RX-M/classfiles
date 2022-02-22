@@ -26,7 +26,7 @@ sudo apt-get update
 
 if [ -z ${K8S_VERSION+x} ]; then K8S_VERSION="--kubernetes-version=stable-1" ; else K8S_VERSION="--kubernetes-version=$K8S_VERSION"; fi
 
-sudo apt install -y kubeadm=$K8S_VERSION kubectl=$K8S_VERSION kubelet=$K8S_VERSION kubernetes-cni
+sudo apt-get install -y kubeadm
 sudo swapoff -a
 
 printf "To retrieve join command, run on control plane:\nkubeadm token create --print-join-command\n"
