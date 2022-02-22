@@ -23,7 +23,9 @@ sudo systemctl restart docker
 curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -
 echo "deb http://apt.kubernetes.io/ kubernetes-xenial main" | sudo tee -a /etc/apt/sources.list.d/kubernetes.list
 sudo apt-get update
-if [ -z ${K8S_VERSION+x} ]; then K8S_VERSION="1.22.3-00" ; else K8S_VERSION="$K8S_VERSION"; fi
+
+if [ -z ${K8S_VERSION+x} ]; then K8S_VERSION="--kubernetes-version=stable-1" ; else K8S_VERSION="--kubernetes-version=$K8S_VERSION"; fi
+
 sudo apt install -y kubeadm=$K8S_VERSION kubectl=$K8S_VERSION kubelet=$K8S_VERSION kubernetes-cni
 sudo swapoff -a
 
