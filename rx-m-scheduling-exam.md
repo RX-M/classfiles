@@ -14,7 +14,7 @@ When you are able to select the "Schedule"  button, you will be redirected to ht
 
 ## Scheduling an Exam
 
-1. After completing the steps above, you will be redirected to <https://www.examslocal.com/>. Make sure your email is correct at the top right ("You are signed in as [your email here]") to ensure you are in the system correctly for scheduling.
+1. After completing the steps above, you will be redirected to <https://www.examslocal.com/>. You will be asked to log in again using your Linux Foundation ID. Make sure your email is correct at the top right ("You are signed in as [your email here]") to ensure you are in the system correctly for scheduling.
 
 2. Click on the "Schedule an Exam" link at the top.
 
