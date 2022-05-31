@@ -167,4 +167,49 @@ spec:
           - -default-server-tls-secret=$(POD_NAMESPACE)/default-server-secret
           - -enable-custom-resources=false
 ---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: apache-web
+  name: apache-web
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: apache-web
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: apache-web
+    spec:
+      containers:
+      - image: httpd
+        name: httpd
+        ports:
+        - containerPort: 80
+        resources: {}
+status: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  creationTimestamp: null
+  labels:
+    app: apache-web
+  name: apache-web
+spec:
+  ports:
+  - name: 80-80
+    port: 80
+    protocol: TCP
+    targetPort: 80
+  selector:
+    app: apache-web
+  type: NodePort
+status:
+  loadBalancer: {}
 # Not for Production Use!
