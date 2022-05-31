@@ -44,7 +44,7 @@ sudo systemctl restart docker
 
 # Install cri-dockerd
 VER=$(curl -s https://api.github.com/repos/Mirantis/cri-dockerd/releases/latest|grep tag_name | cut -d '"' -f 4 | cut -b 2-)
-wget https://github.com/Mirantis/cri-dockerd/releases/download/${VER}/cri-dockerd-${VER}.amd64.tgz
+wget https://github.com/Mirantis/cri-dockerd/releases/download/v${VER}/cri-dockerd-${VER}.amd64.tgz
 tar xvf cri-dockerd-${VER}.amd64.tgz
 sudo mv cri-dockerd /usr/local/bin/
 sudo wget https://raw.githubusercontent.com/Mirantis/cri-dockerd/50c048cb54e52cd9058f044671e309e9fbda82e4/packaging/systemd/cri-docker.service
@@ -55,7 +55,7 @@ sudo mkdir -p /etc/systemd/system/cri-docker.service.d/
 cat <<EOF | sudo tee /etc/systemd/system/cri-docker.service.d/cni.conf
 [Service]
 ExecStart=
-ExecStart=/usr/local/bin/cri-dockerd --container-runtime-endpoint fd:// --network-plugin=cni --cni-bin-dir=/opt/cni/bin --cni-cache-dir=/var/lib/cni/cache --cni-conf-dir=/etc/cni/net.d
+ExecStart=/usr/local/bin/cri-dockerd/cri-dockerd --container-runtime-endpoint fd:// --network-plugin=cni --cni-bin-dir=/opt/cni/bin --cni-cache-dir=/var/lib/cni/cache --cni-conf-dir=/etc/cni/net.d
 EOF
 sudo systemctl daemon-reload
 sudo systemctl enable cri-docker.service

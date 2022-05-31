@@ -31,7 +31,7 @@ $ sudo mkdir -p /etc/systemd/system/cri-docker.service.d/
 $ cat <<EOF | sudo tee /etc/systemd/system/cri-docker.service.d/cni.conf
 [Service]
 ExecStart=
-ExecStart=/usr/bin/cri-dockerd --container-runtime-endpoint fd:// --network-plugin=cni --cni-bin-dir=/opt/cni/bin --cni-cache-dir=/var/lib/cni/cache --cni-conf-dir=/etc/cni/net.d
+ExecStart=/usr/bin/cri-dockerd/cri-dockerd --container-runtime-endpoint fd:// --network-plugin=cni --cni-bin-dir=/opt/cni/bin --cni-cache-dir=/var/lib/cni/cache --cni-conf-dir=/etc/cni/net.d
 EOF
 
 ...
