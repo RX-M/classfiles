@@ -33,6 +33,18 @@ javac 11.0.15
 ~$
 ```
 
+Now install Scala:
+
+```
+sudo apt install scala
+
+$ scala -version
+
+Scala code runner version 2.11.12 -- Copyright 2002-2017, LAMP/EPFL
+
+$
+```
+
 
 ### 2 - Download Spark
 
@@ -42,6 +54,8 @@ https://spark.apache.org/downloads.html
 
 * 3.2.1
 * Pre-built for Apache Hadoop 3.3 and later (Scala 2.13) // latest greatest as of 24-March-2022
+
+> N.B. Spark installs its own version of scala
 
 ```
 ~$ curl -sLO https://dlcdn.apache.org/spark/spark-3.2.1/spark-3.2.1-bin-hadoop3.2-scala2.13.tgz
