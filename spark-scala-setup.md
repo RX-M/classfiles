@@ -1,4 +1,4 @@
-![rx-m llc][RX-M LLC]
+![alt text][RX-M LLC]
 
 
 # Spark
@@ -11,7 +11,7 @@ This lab demonstrates a simple local deployment where there is one master and on
 
 ### 1 - Install Java
 
-Spark is based on Java, here we leverage Java 11.
+Spark runs in the Java virtual machine (JVM), we will install Java 11 to support our Spark work.
 
 ```
 ~$ sudo apt update
@@ -36,7 +36,7 @@ javac 11.0.15
 
 ### 2 - Download Spark
 
-We are leveraging the latesting Spark for this lab.
+We are using a very recent version of Spark for this lab.
 
 https://spark.apache.org/downloads.html
 
@@ -83,7 +83,7 @@ Of note are the sbin scripts to start and stop the related processes.
 We will use Spark Shell for our client application.
 
 ```
-~$ spark-shell 
+~$ spark-shell
 
 WARNING: An illegal reflective access operation has occurred
 WARNING: Illegal reflective access by org.apache.spark.unsafe.Platform (file:/home/ubuntu/spark/jars/spark-unsafe_2.13-3.2.1.jar) to constructor java.nio.DirectByteBuffer(long,int)
@@ -99,7 +99,7 @@ Welcome to
     _\ \/ _ \/ _ `/ __/  '_/
    /___/ .__/\_,_/_/ /_/\_\   version 3.2.1
       /_/
-         
+
 Using Scala version 2.13.5 (OpenJDK 64-Bit Server VM, Java 11.0.15)
 Type in expressions to have them evaluated.
 Type :help for more information.
@@ -143,8 +143,8 @@ starting org.apache.spark.deploy.master.Master, logging to /home/ubuntu/spark/lo
 ~$ tail $HOME/spark/logs/spark-ubuntu-org.apache.spark.deploy.master.Master*
 
 22/06/18 18:54:45 INFO SecurityManager: Changing modify acls to: ubuntu
-22/06/18 18:54:45 INFO SecurityManager: Changing view acls groups to: 
-22/06/18 18:54:45 INFO SecurityManager: Changing modify acls groups to: 
+22/06/18 18:54:45 INFO SecurityManager: Changing view acls groups to:
+22/06/18 18:54:45 INFO SecurityManager: Changing modify acls groups to:
 22/06/18 18:54:45 INFO SecurityManager: SecurityManager: authentication disabled; ui acls disabled; users  with view permissions: Set(ubuntu); groups with view permissions: Set(); users  with modify permissions: Set(ubuntu); groups with modify permissions: Set()
 22/06/18 18:54:46 INFO Utils: Successfully started service 'sparkMaster' on port 7077.
 22/06/18 18:54:46 INFO Master: Starting Spark master at spark://0.0.0.0:7077
@@ -276,7 +276,7 @@ Welcome to
     _\ \/ _ \/ _ `/ __/  '_/
    /___/ .__/\_,_/_/ /_/\_\   version 3.2.1
       /_/
-         
+
 Using Scala version 2.13.5 (OpenJDK 64-Bit Server VM, Java 11.0.15)
 Type in expressions to have them evaluated.
 Type :help for more information.
@@ -319,7 +319,7 @@ The client has its own UI on port 4040.
 ### 11 - Stopping Spark
 
 ```
-scala> 
+scala> ^d
 
 :quit
 
@@ -327,7 +327,7 @@ scala>
 
 stopping org.apache.spark.deploy.worker.Worker
 
-~$ stop-master.sh
+  ~$ stop-master.sh
 
 stopping org.apache.spark.deploy.master.Master
 
