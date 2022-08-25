@@ -43,3 +43,20 @@ spec:
     - /dev/null
     image: busybox
     name: client
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  creationTimestamp: null
+  labels:
+    run: metadata-test
+  name: metadata-test
+  namespace: default
+spec:
+  containers:
+  - command:
+    - /usr/bin/tail
+    - -f
+    - /dev/null
+    image: giantswarm/tiny-tools
+    name: metadata-test
