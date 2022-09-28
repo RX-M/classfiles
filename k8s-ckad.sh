@@ -74,6 +74,4 @@ mkdir -p $HOME/.kube
 sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
 sudo chown $(id -u):$(id -g) $HOME/.kube/config
 kubectl apply -f "https://cloud.weave.works/k8s/net?k8s-version=$(kubectl version | base64 | tr -d '\n')"
-kubectl taint node --all node-role.kubernetes.io/master-
-# Uncomment when the test goes to 1.24
-# kubectl taint node --all node-role.kubernetes.io/control-plane-
+kubectl taint node --all node-role.kubernetes.io/control-plane-
