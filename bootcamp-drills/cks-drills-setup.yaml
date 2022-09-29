@@ -137,3 +137,27 @@ metadata:
 spec: {}
 status: {}
 ---
+apiVersion: v1
+kind: Namespace
+metadata:
+  creationTimestamp: null
+  name: readers
+spec: {}
+status: {}
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  creationTimestamp: null
+  labels:
+    run: metadata-test
+  name: metadata-test
+  namespace: readers
+spec:
+  containers:
+  - command:
+    - /usr/bin/tail
+    - -f
+    - /dev/null
+    image: giantswarm/tiny-tools
+    name: metadata-test
