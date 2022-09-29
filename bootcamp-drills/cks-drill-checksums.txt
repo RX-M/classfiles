@@ -1,0 +1,1 @@
+291a4d24a400666ec0e3d91fbaae0605de438abf4878ca81e4e8e923beefa8a434ade3a98e8538f654dfe7d32c2038a1610ca6863efe91d2649ea11c28a20a49  kubernetes-client-linux-amd64.tar.gz
