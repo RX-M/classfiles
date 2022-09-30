@@ -151,6 +151,7 @@ metadata:
   creationTimestamp: null
   labels:
     run: metadata-test
+    test: metadata
   name: metadata-test
   namespace: readers
 spec:
