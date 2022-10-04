@@ -72,6 +72,6 @@ sudo kubeadm init --cri-socket=unix:///run/cri-dockerd.sock  $K8S_VERSION
 mkdir -p $HOME/.kube
 sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
 sudo chown $(id -u):$(id -g) $HOME/.kube/config
-kubectl apply -f "https://cloud.weave.works/k8s/net?k8s-version=$(kubectl version | base64 | tr -d '\n')"
+kubectl apply -f https://github.com/weaveworks/weave/releases/download/v2.8.1/weave-daemonset-k8s-1.11.yaml
 kubectl taint node --all node-role.kubernetes.io/control-plane-
 kubectl taint node --all node-role.kubernetes.io/master-
