@@ -65,7 +65,7 @@ sudo systemctl enable --now cri-docker.socket
 curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -
 echo "deb http://apt.kubernetes.io/ kubernetes-xenial main" | sudo tee -a /etc/apt/sources.list.d/kubernetes.list
 sudo apt-get update
-sudo apt-get install -y kubeadm=1.24.4-00 kubectl=1.24.4-00 kubelet=1.24.4-00
+sudo apt-get install -y kubeadm=1.25.4-00 kubectl=1.25.4-00 kubelet=1.25.4-00
 sudo swapoff -a
 if [ -z ${K8S_VERSION+x} ]; then K8S_VERSION="--kubernetes-version=stable-1" ; else K8S_VERSION="--kubernetes-version=$K8S_VERSION"; fi
 #sudo kubeadm init $K8S_VERSION --kubernetes-version=1.23.6
