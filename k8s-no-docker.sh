@@ -28,8 +28,19 @@
 # This script assumes you have Docker already installed
 set -e
 
+# Configure Docker's bundled containerd to enable cni
+sudo cp /etc/containerd/config.toml /etc/containerd/config.bak
+sudo sed -i -e 's/disabled_plugins/#disabled_plugins/' /etc/containerd/config.toml
+sudo systemctl restart containerd
 
+# Install crictl
+CRICTL_VERSION=$(curl -s https://api.github.com/repos/kubernetes-sigs/cri-tools/releases/latest|grep tag_name | cut -d '"' -f 4 | cut -b 2-)
+wget https://github.com/kubernetes-sigs/cri-tools/releases/download/v$CRICTL_VERSION/crictl-v$CRICTL_VERSION-linux-amd64.tar.gz
+sudo tar zxvf crictl-v$CRICTL_VERSION-linux-amd64.tar.gz -C /usr/local/bin
+rm -f crictl-v$CRICTL_VERSION-linux-amd64.tar.gz
+echo "runtime-endpoint: unix:///run/containerd/containerd.sock" | sudo tee /etc/crictl.yaml
 
+# Initialize a control plane node
 curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -
 echo "deb http://apt.kubernetes.io/ kubernetes-xenial main" | sudo tee -a /etc/apt/sources.list.d/kubernetes.list
 sudo apt-get update
@@ -41,4 +52,4 @@ mkdir -p $HOME/.kube
 sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
 sudo chown $(id -u):$(id -g) $HOME/.kube/config
 kubectl apply -f https://github.com/weaveworks/weave/releases/download/v2.8.1/weave-daemonset-k8s-1.11.yaml
-kubectl taint node --all node-role.kubernetes.io/master-
+kubectl patch $(kubectl get nodes -o name) -p '{"spec":{"taints":[]}}'
