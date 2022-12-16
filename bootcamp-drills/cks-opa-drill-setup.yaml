@@ -69,4 +69,3 @@ spec:
     repos:
       - "docker.io/"
       - "quay.io/"
-      - "public.ecr.aws/"
