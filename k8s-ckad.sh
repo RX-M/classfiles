@@ -11,7 +11,7 @@
 #
 #      Kubernetes single node clusters require a 4GB ram VM to run properly.
 #
-# Copyright (c) 2021 RX-M LLC
+# Copyright (c) 2021-2023 RX-M LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -68,4 +68,4 @@ mkdir -p $HOME/.kube
 sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
 sudo chown $(id -u):$(id -g) $HOME/.kube/config
 kubectl apply -f https://github.com/weaveworks/weave/releases/download/v2.8.1/weave-daemonset-k8s-1.11.yaml
-kubectl patch $(kubectl get nodes -o name) -p '{"spec":{"taints":[]}}'
+kubectl patch node $(hostname) -p '{"spec":{"taints":[]}}'
