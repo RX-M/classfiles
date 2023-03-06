@@ -27,7 +27,7 @@
 
 set -e
 
-export K8S_VERSION=1.25.5
+export K8S_VERSION=1.26.2
 
 # Install Docker
 wget -qO- https://get.docker.com/ | sh
