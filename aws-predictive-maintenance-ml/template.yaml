@@ -1,0 +1,316 @@
+#
+# Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+# SPDX-License-Identifier: MIT-0
+#
+
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: >
+  streaming inferences using Glue
+
+  Be sure to upload the script found in the glue_streaming folder using the aws cli:
+  aws s3 cp glue_streaming/app.py s3://your-s3-glue-script-bucket/glue_streaming/app.py
+
+# More info about Globals: https://github.com/awslabs/serverless-application-model/blob/master/docs/globals.rst
+
+Globals:
+  Function:
+    Timeout: 3
+
+Parameters:
+  GlueScriptsBucket:
+    Type: String
+    Description: The bucket name where your glue scripts have been uploaded
+    Default: your-s3-bucket
+
+Resources:
+  EventsBucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      LoggingConfiguration: 
+        LogFilePrefix: s3logs
+      BucketEncryption:
+        ServerSideEncryptionConfiguration:
+          - BucketKeyEnabled: True
+            ServerSideEncryptionByDefault: 
+              SSEAlgorithm: AES256
+
+  EventsBucketPolicy:
+    Type: AWS::S3::BucketPolicy
+    Properties: 
+      Bucket: !Ref EventsBucket
+      PolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Action: 
+              - s3:PutObject
+              - s3:GetObject
+              - s3:DeleteObject
+            Effect: Allow
+            Resource: 
+              - !Sub "arn:aws:s3:::${EventsBucket}/*"
+            Principal:
+              AWS: 
+                - !GetAtt GlueJobRole.Arn
+          - Action: s3:GetObject
+            Effect: Allow
+            Resource: 
+              - !Sub "arn:aws:s3:::${EventsBucket}/*"
+            Principal: 
+              AWS:
+                - !GetAtt InferenceLambdaFunctionServiceRole.Arn
+
+  SensorKinesisStream:
+    Type: AWS::Kinesis::Stream
+    Properties:
+      Name: !Sub "${AWS::StackName}-sensor-data-stream"
+      RetentionPeriodHours: 24
+      ShardCount: 1
+      StreamEncryption:
+        EncryptionType: KMS
+        KeyId: alias/aws/kinesis
+      StreamModeDetails:
+        StreamMode: PROVISIONED
+
+  InferenceLambdaFunctionServiceRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Statement:
+          - Action: sts:AssumeRole
+            Effect: Allow
+            Principal:
+              Service: lambda.amazonaws.com
+        Version: "2012-10-17"
+      ManagedPolicyArns:
+        - arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole
+
+  InferenceLambdaFunctionServiceRolePolicy:
+    Type: AWS::IAM::Policy
+    Properties:
+      PolicyDocument:
+        Statement:
+          - Action: sagemaker:InvokeEndpointAsync
+            Effect: Allow
+            Resource: !Sub "arn:aws:sagemaker:${AWS::Region}:${AWS::AccountId}:endpoint/${AWS::StackName}-predictive-maintainance-xgboost"
+        Version: "2012-10-17"
+      PolicyName: !Sub "${AWS::StackName}-ILFSRPolicy"
+      Roles:
+        - !Ref InferenceLambdaFunctionServiceRole
+
+  InferenceLambdaFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: !Sub "${AWS::StackName}-invoke-endpoint-async"
+      CodeUri: invoke_endpoint_async
+      Handler: app.lambda_handler
+      Role: !GetAtt InferenceLambdaFunctionServiceRole.Arn
+      Handler: app.lambda_handler
+      Runtime: python3.10
+      ReservedConcurrentExecutions: 10
+      Timeout: 900 # 15 minutes
+    DependsOn:
+      - InferenceLambdaFunctionServiceRolePolicy
+      - InferenceLambdaFunctionServiceRole
+
+  GlueJobRolePolicy:
+    Type: AWS::IAM::Policy
+    Properties:
+      PolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Action: 
+              - s3:PutObject
+              - s3:GetObject
+              - s3:DeleteObject
+            Effect: Allow
+            Resource: 
+              - !Sub "arn:aws:s3:::${EventsBucket}/*"
+              - !Sub "arn:aws:s3:::${GlueScriptsBucket}/*"
+          - Action: 
+              - s3:ListBucket
+              - s3:ListAllMyBuckets
+            Effect: Allow
+            Resource: 
+              - !Sub "arn:aws:s3:::${EventsBucket}"
+              - !Sub "arn:aws:s3:::${GlueScriptsBucket}"
+      PolicyName: !Sub "${AWS::StackName}-GlueJobRolePolicy"
+      Roles:
+        - !Ref GlueJobRole
+
+  GlueJobRole:
+    Type: AWS::IAM::Role
+    Properties:
+      RoleName: !Sub "${AWS::StackName}-GlueKinesisS3"
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Action: sts:AssumeRole
+            Effect: Allow
+            Principal:
+              Service: glue.amazonaws.com
+      ManagedPolicyArns:
+        - arn:aws:iam::aws:policy/AmazonKinesisReadOnlyAccess
+        - arn:aws:iam::aws:policy/service-role/AWSGlueServiceRole
+
+  SensorDatabase:
+    Type: AWS::Glue::Database
+    Properties:
+      CatalogId: !Ref AWS::AccountId
+      DatabaseInput:
+        Name: !Sub "${AWS::StackName}-sensordb"
+
+  SensorStreamTable:
+    Type: AWS::Glue::Table
+    Properties:
+      CatalogId: !Ref AWS::AccountId
+      DatabaseName: !Ref SensorDatabase
+      TableInput:
+        Name: !Sub "${AWS::StackName}-sensor-stream"
+        Description: temperature readings
+        Parameters:
+          classification: json
+        PartitionKeys: []
+        Retention: 0
+        StorageDescriptor:
+          Columns:
+            - Name: air_temperature
+              Type: double
+            - Name: process_temperature
+              Type: double
+            - Name: rotational_speed
+              Type: bigint
+            - Name: torque
+              Type: double
+            - Name: tool_wear
+              Type: bigint
+            - Name: type
+              Type: string
+          Compressed: false
+          InputFormat: org.apache.hadoop.mapred.TextInputFormat
+          NumberOfBuckets: 0
+          OutputFormat: org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat
+          Parameters:
+            streamARN: !GetAtt SensorKinesisStream.Arn
+            typeOfData: kinesis
+          SerdeInfo:
+            Parameters:
+              paths: air_temperature,process_temperature,rotational_speed,tool_wear,torque,type
+            SerializationLibrary: org.openx.data.jsonserde.JsonSerDe
+          StoredAsSubDirectories: false
+        TableType: EXTERNAL_TABLE
+
+  GlueStreamingJob:
+    Type: AWS::Glue::Job
+    Properties:
+      Name: !Sub "${AWS::StackName}-GlueStreaming-Kinesis-S3"
+      Command:
+        Name: glueetl
+        PythonVersion: "3"
+        ScriptLocation: !Sub "s3://${GlueScriptsBucket}/glue_streaming/app.py"
+      Role: !GetAtt GlueJobRole.Arn
+      DefaultArguments:
+        --job-bookmark-option: job-bookmark-disable
+        --class: GlueApp
+        --enable-continuous-cloudwatch-log: "true"
+        --enable-glue-datacatalog: "true"
+        --enable-job-insights: "true"
+        --enable-metrics: "true"
+        --job-language: python
+        --out_bucket_name: !Ref EventsBucket
+        --glue_table_name: !Ref SensorStreamTable
+        --glue_database_name: !Ref SensorDatabase
+      Description: Invokes ML inferences on streaming data source
+      GlueVersion: "3.0"
+      MaxRetries: 1
+      NumberOfWorkers: 2
+      WorkerType: G.1X
+
+  AsyncErrorsTopic:
+    Type: AWS::SNS::Topic
+    Properties:
+      TopicName: !Sub "${AWS::StackName}-async-error"
+      DisplayName: !Sub "${AWS::StackName}-async-error"
+
+  AsyncSuccessTopic:
+    Type: AWS::SNS::Topic
+    Properties:
+      TopicName: !Sub "${AWS::StackName}-async-success"
+      DisplayName: !Sub "${AWS::StackName}-async-success"
+
+  SagemakerNotebook:
+    Type: AWS::SageMaker::NotebookInstance
+    Properties: 
+      VolumeSizeInGB: 5
+      DefaultCodeRepository: https://github.com/aws-samples/amazon-sagemaker-predictive-maintenance
+      DirectInternetAccess: "Enabled"
+      InstanceType: "ml.t2.2xlarge"
+      RoleArn: !GetAtt SageMakerNotebookRole.Arn
+      NotebookInstanceName: !Sub "${AWS::StackName}-notebook"
+
+  SageMakerSnsPolicy:
+    Type: AWS::IAM::Policy
+    Properties: 
+      PolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Action: 
+              - sns:Publish
+            Effect: Allow
+            Resource: 
+              - !Ref AsyncErrorsTopic
+              - !Ref AsyncSuccessTopic
+      PolicyName: !Sub "${AWS::StackName}-${AWS::AccountId}-GlueJobRolePolicy"
+      Roles:
+        - !Ref SageMakerNotebookRole
+
+  SageMakerEventsS3Policy:
+    Type: AWS::IAM::Policy
+    Properties:
+      PolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Action: 
+              - s3:PutObject
+              - s3:GetObject
+              - s3:DeleteObject
+            Effect: Allow
+            Resource: 
+              - !Sub "arn:aws:s3:::${EventsBucket}/*"
+          - Action: 
+              - s3:ListBucket
+              - s3:ListAllMyBuckets
+            Effect: Allow
+            Resource: 
+              - !Sub "arn:aws:s3:::${EventsBucket}"
+      PolicyName: !Sub "${AWS::StackName}-SmEventsS3"
+      Roles:
+        - !Ref SageMakerNotebookRole
+
+  SageMakerNotebookRole:
+    Type: AWS::IAM::Role
+    Properties:
+      RoleName: !Sub "${AWS::StackName}-SageMakerNotebook"
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Action: sts:AssumeRole
+            Effect: Allow
+            Principal:
+              Service: sagemaker.amazonaws.com
+      ManagedPolicyArns:
+        - arn:aws:iam::aws:policy/AmazonSageMakerFullAccess
+
+
+Outputs:
+  EventsBucket:
+    Description: Add your S3 event notifications to this bucket
+    Value: !Ref EventsBucket
+  
+  AsyncSuccessTopic:
+    Description: SNS Topic for successes
+    Value: !Ref AsyncSuccessTopic
+
+  AsyncErrorsTopic:
+    Description: SNS Topic for errors
+    Value: !Ref AsyncErrorsTopic
