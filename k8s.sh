@@ -50,13 +50,13 @@ sudo sed -i -e 's/SystemdCgroup = false/SystemdCgroup = true/' /etc/containerd/c
 sudo systemctl restart containerd
 
 # Initialize a control plane node
-curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -
+curl -fsSL https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo gpg --dearmour -o /etc/apt/trusted.gpg.d/kubernetes-xenial.gpg
 echo "deb http://apt.kubernetes.io/ kubernetes-xenial main" | sudo tee -a /etc/apt/sources.list.d/kubernetes.list
 sudo apt-get update
 sudo apt-get install -y kubeadm
 sudo swapoff -a
-if [ -z ${K8S_VERSION+x} ]; then K8S_VERSION="--kubernetes-version=stable-1" ; else K8S_VERSION="--kubernetes-version=$K8S_VERSION"; fi
-sudo kubeadm init --cri-socket=unix:///var/run/containerd/containerd.sock  $K8S_VERSION
+if [ -z ${K8S_VERSION+x} ]; then K8S_VERSION="--kubernetes-version=stable-1"; else K8S_VERSION="--kubernetes-version=$K8S_VERSION"; fi
+sudo kubeadm init --cri-socket=unix:///var/run/containerd/containerd.sock $K8S_VERSION
 mkdir -p $HOME/.kube
 sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
 sudo chown $(id -u):$(id -g) $HOME/.kube/config
@@ -64,7 +64,7 @@ kubectl apply -f https://github.com/weaveworks/weave/releases/download/v2.8.1/we
 kubectl patch node $(hostname) -p '{"spec":{"taints":[]}}'
 
 # Install the latest crictl (cni-tools package is not always the latest)
-CRICTL_VERSION=$(curl -s https://api.github.com/repos/kubernetes-sigs/cri-tools/releases/latest|grep tag_name | cut -d '"' -f 4 | cut -b 2-)
+CRICTL_VERSION=$(curl -s https://api.github.com/repos/kubernetes-sigs/cri-tools/releases/latest | grep tag_name | cut -d '"' -f 4 | cut -b 2-)
 wget https://github.com/kubernetes-sigs/cri-tools/releases/download/v$CRICTL_VERSION/crictl-v$CRICTL_VERSION-linux-amd64.tar.gz
 sudo tar zxvf crictl-v$CRICTL_VERSION-linux-amd64.tar.gz -C /usr/local/bin
 rm -f crictl-v$CRICTL_VERSION-linux-amd64.tar.gz
