@@ -42,27 +42,14 @@ cat <<EOF | sudo tee /etc/docker/daemon.json
 EOF
 sudo systemctl restart docker
 
-# Install cri-dockerd
-VER=$(curl -s https://api.github.com/repos/Mirantis/cri-dockerd/releases/latest|grep tag_name | cut -d '"' -f 4 | cut -b 2-)
-wget https://github.com/Mirantis/cri-dockerd/releases/download/v${VER}/cri-dockerd-${VER}.amd64.tgz
-tar xvf cri-dockerd-${VER}.amd64.tgz
-sudo mv cri-dockerd /usr/local/bin/
-sudo wget https://raw.githubusercontent.com/Mirantis/cri-dockerd/50c048cb54e52cd9058f044671e309e9fbda82e4/packaging/systemd/cri-docker.service
-sudo wget https://raw.githubusercontent.com/Mirantis/cri-dockerd/50c048cb54e52cd9058f044671e309e9fbda82e4/packaging/systemd/cri-docker.socket
-sudo mv cri-docker.socket cri-docker.service /etc/systemd/system/
-sudo sed -i -e 's,/usr/bin/cri-dockerd,/usr/local/bin/cri-dockerd,' /etc/systemd/system/cri-docker.service
-sudo mkdir -p /etc/systemd/system/cri-docker.service.d/
-cat <<EOF | sudo tee /etc/systemd/system/cri-docker.service.d/cni.conf
-[Service]
-ExecStart=
-ExecStart=/usr/local/bin/cri-dockerd/cri-dockerd --container-runtime-endpoint fd:// --network-plugin=cni --cni-bin-dir=/opt/cni/bin --cni-cache-dir=/var/lib/cni/cache --cni-conf-dir=/etc/cni/net.d
-EOF
-sudo systemctl daemon-reload
-sudo systemctl enable cri-docker.service
-sudo systemctl enable --now cri-docker.socket
+# Configure Docker's bundled containerd to enable cni & use systemd for cgroups
+sudo cp /etc/containerd/config.toml /etc/containerd/config.bak
+sudo containerd config default | sudo tee /etc/containerd/config.toml
+sudo sed -i -e 's/SystemdCgroup = false/SystemdCgroup = true/' /etc/containerd/config.toml
+sudo systemctl restart containerd
 
-# Initialize a control plane node
-curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -
-echo "deb http://apt.kubernetes.io/ kubernetes-xenial main" | sudo tee -a /etc/apt/sources.list.d/kubernetes.list
+# Prepare the binaries to init a control plane node
+curl -fsSL https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo gpg --dearmor -o /etc/apt/keyrings/kubernetes-archive-keyring.gpg
+echo "deb [signed-by=/etc/apt/keyrings/kubernetes-archive-keyring.gpg] https://apt.kubernetes.io/ kubernetes-xenial main" | sudo tee /etc/apt/sources.list.d/kubernetes.list
 sudo apt-get update
-sudo apt-get install -y kubeadm=1.24.0-00 kubectl=1.24.0-00 kubelet=1.24.0-00
+sudo apt-get install -y kubeadm=1.26.0-00 kubectl=1.26.0-00 kubelet=1.26.0-00

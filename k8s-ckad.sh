@@ -27,7 +27,7 @@
 
 set -e
 
-export K8S_VERSION=1.26.2
+export K8S_VERSION=1.27.4
 
 # Install Docker
 wget -qO- https://get.docker.com/ | sh
@@ -51,8 +51,8 @@ sudo sed -i -e 's/SystemdCgroup = false/SystemdCgroup = true/' /etc/containerd/c
 sudo systemctl restart containerd
 
 # Initialize a control plane node
-curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -
-echo "deb http://apt.kubernetes.io/ kubernetes-xenial main" | sudo tee -a /etc/apt/sources.list.d/kubernetes.list
+curl -fsSL https://pkgs.k8s.io/core:/stable:/v1.28/deb/Release.key | sudo gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg
+echo "deb [signed-by=/etc/apt/keyrings/kubernetes-archive-keyring.gpg] https://apt.kubernetes.io/ kubernetes-xenial main" | sudo tee /etc/apt/sources.list.d/kubernetes.list
 sudo apt-get update
 sudo apt-get install -y kubeadm=$K8S_VERSION-00 kubectl=$K8S_VERSION-00 kubelet=$K8S_VERSION-00
 sudo swapoff -a

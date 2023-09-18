@@ -51,8 +51,8 @@ sudo sed -i -e 's/SystemdCgroup = false/SystemdCgroup = true/' /etc/containerd/c
 sudo systemctl restart containerd
 
 # Initialize a control plane node
-curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -
-echo "deb http://apt.kubernetes.io/ kubernetes-xenial main" | sudo tee -a /etc/apt/sources.list.d/kubernetes.list
+curl -fsSL https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo gpg --dearmor -o /etc/apt/keyrings/kubernetes-archive-keyring.gpg
+echo "deb [signed-by=/etc/apt/keyrings/kubernetes-archive-keyring.gpg] https://apt.kubernetes.io/ kubernetes-xenial main" | sudo tee /etc/apt/sources.list.d/kubernetes.list
 sudo apt-get update
 sudo apt-get install -y kubeadm=$K8S_VERSION-00 kubectl=$K8S_VERSION-00 kubelet=$K8S_VERSION-00
 sudo swapoff -a
