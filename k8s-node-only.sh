@@ -27,7 +27,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-
 echo "Basic worker node setup"
 echo "This script works in conjunction with https://github.com/RX-M/classfiles/blob/master/k8s.sh"
 sudo mkdir -p /etc/docker
@@ -53,17 +52,17 @@ sudo sed -i -e 's/SystemdCgroup = false/SystemdCgroup = true/' /etc/containerd/c
 sudo systemctl restart containerd
 
 # kubeadm, kubelet, and company
-curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -
+curl -fsSL https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo gpg --dearmour -o /etc/apt/trusted.gpg.d/kubernetes-xenial.gpg
 echo "deb http://apt.kubernetes.io/ kubernetes-xenial main" | sudo tee -a /etc/apt/sources.list.d/kubernetes.list
 sudo apt-get update
 
-if [ -z ${K8S_VERSION+x} ]; then K8S_VERSION="--kubernetes-version=stable-1" ; else K8S_VERSION="--kubernetes-version=$K8S_VERSION"; fi
+if [ -z ${K8S_VERSION+x} ]; then K8S_VERSION="--kubernetes-version=stable-1"; else K8S_VERSION="--kubernetes-version=$K8S_VERSION"; fi
 
 sudo apt-get install -y kubeadm
 sudo swapoff -a
 
 # Install the latest crictl (cni-tools package is not always the latest)
-CRICTL_VERSION=$(curl -s https://api.github.com/repos/kubernetes-sigs/cri-tools/releases/latest|grep tag_name | cut -d '"' -f 4 | cut -b 2-)
+CRICTL_VERSION=$(curl -s https://api.github.com/repos/kubernetes-sigs/cri-tools/releases/latest | grep tag_name | cut -d '"' -f 4 | cut -b 2-)
 wget https://github.com/kubernetes-sigs/cri-tools/releases/download/v$CRICTL_VERSION/crictl-v$CRICTL_VERSION-linux-amd64.tar.gz
 sudo tar zxvf crictl-v$CRICTL_VERSION-linux-amd64.tar.gz -C /usr/local/bin
 rm -f crictl-v$CRICTL_VERSION-linux-amd64.tar.gz
