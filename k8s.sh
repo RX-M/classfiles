@@ -50,10 +50,15 @@ sudo sed -i -e 's/SystemdCgroup = false/SystemdCgroup = true/' /etc/containerd/c
 sudo systemctl restart containerd
 
 # Initialize a control plane node
-curl -fsSL https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo gpg --dearmour -o /etc/apt/trusted.gpg.d/kubernetes-xenial.gpg
-echo "deb http://apt.kubernetes.io/ kubernetes-xenial main" | sudo tee -a /etc/apt/sources.list.d/kubernetes.list
 sudo apt-get update
-sudo apt-get install -y kubeadm
+sudo apt-get install -y apt-transport-https ca-certificates curl gpg
+sudo mkdir -p -m 755 /etc/apt/keyrings
+curl -fsSL https://pkgs.k8s.io/core:/stable:/v1.29/deb/Release.key | sudo gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg
+echo 'deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/v1.29/deb/ /' | sudo tee /etc/apt/sources.list.d/kubernetes.list
+sudo apt-get update
+sudo apt-get install -y kubelet kubeadm kubectl
+sudo apt-mark hold kubelet kubeadm kubectl
+
 sudo swapoff -a
 if [ -z ${K8S_VERSION+x} ]; then K8S_VERSION="--kubernetes-version=stable-1"; else K8S_VERSION="--kubernetes-version=$K8S_VERSION"; fi
 sudo kubeadm init --cri-socket=unix:///var/run/containerd/containerd.sock $K8S_VERSION
