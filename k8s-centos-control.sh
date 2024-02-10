@@ -79,5 +79,6 @@ sudo kubeadm init
 mkdir -p "$HOME"/.kube
 sudo cp -i /etc/kubernetes/admin.conf "$HOME"/.kube/config
 sudo chown "$(id -u)":"$(id -g)" "$HOME"/.kube/config
+kubectl patch node $(hostname) -p '{"spec":{"taints":[]}}'
 
 kubectl apply -f https://raw.githubusercontent.com/weaveworks/weave/2.8/prog/weave-kube/weave-daemonset-k8s-1.11.yaml
