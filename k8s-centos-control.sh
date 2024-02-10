@@ -64,7 +64,7 @@ EOF
 
 
 # Install kubeadm
-sudo yum install -y kubelet kubeadm kubectl
+sudo yum install -y kubelet kubeadm kubectl  nfs-utils iscsi-initiator-utils
 
 
 # Ensure Kubelet starts up on restart
