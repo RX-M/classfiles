@@ -1,17 +1,17 @@
-# Script to install a single node K8s cluster on an RX-M Lab VM
+#!/bin/bash
 #
-# To use:  $ curl https://raw.githubusercontent.com/RX-M/classfiles/master/k8s.sh | sh
+# Script to install a single node K8s cluster on an RX-M Lab VM for certification exams
 #
-# N.B. The script turns off swap for the K8s control plane install but does
-#      not disable swap permenantly. Please comment out any swap volumes in
-#      the /etc/fstab before rebooting the VM.
+# Usage:  $ curl https://raw.githubusercontent.com/RX-M/classfiles/master/k8s-exam.sh | sh
 #
-#      This script will fail to run if the apt db is locked (wait 10 mins
-#      and retry or reboot and retry).
+# N.B. The script turns off swap for the K8s control plane install but does not disable swap permenantly.
+#      Please comment out any swap volumes in the /etc/fstab before rebooting the VM.
+#
+#      This script will fail to run if the apt db is locked (wait 10 mins and retry or reboot and retry).
 #
 #      Kubernetes single node clusters require a 4GB ram VM to run properly.
 #
-# Copyright (c) 2021-2023 RX-M LLC
+# Copyright (c) 2021-2024 RX-M LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -27,10 +27,16 @@
 
 set -e
 
-export K8S_VERSION=1.28.0
+# Defaults
+K8S_VERSION="v1.28.0"
+K8S_REPO="https://pkgs.k8s.io/core:/stable:/v1.28/deb"
+WEAVE_VER="v2.8.1"
+WEAVE_DS="weave-daemonset-k8s-1.11.yaml"
+WEAVE_REPO="https://github.com/weaveworks/weave/releases/download"
 
 # Install Docker
 wget -qO- https://get.docker.com/ | sh
+
 sudo mkdir -p /etc/docker
 cat <<EOF | sudo tee /etc/docker/daemon.json
 {
@@ -51,18 +57,23 @@ sudo sed -i -e 's/SystemdCgroup = false/SystemdCgroup = true/' /etc/containerd/c
 sudo systemctl restart containerd
 
 # Initialize a control plane node
-curl -fsSL https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo gpg --dearmor -o /etc/apt/keyrings/kubernetes-archive-keyring.gpg
-echo "deb [signed-by=/etc/apt/keyrings/kubernetes-archive-keyring.gpg] https://apt.kubernetes.io/ kubernetes-xenial main" | sudo tee /etc/apt/sources.list.d/kubernetes.list
+sudo apt-get update
+sudo apt-get install -y apt-transport-https ca-certificates curl gpg
+sudo mkdir -p -m 755 /etc/apt/keyrings
+curl -fsSL "${K8S_REPO}/Release.key" | sudo gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg
+echo "deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] ${K8S_REPO}/ /" | sudo tee /etc/apt/sources.list.d/kubernetes.list
 sudo apt-get update
 sudo apt-get install -y kubeadm=$K8S_VERSION-00 kubectl=$K8S_VERSION-00 kubelet=$K8S_VERSION-00
+
 sudo swapoff -a
-if [ -z ${K8S_VERSION+x} ]; then K8S_VERSION="--kubernetes-version=stable-1" ; else K8S_VERSION="--kubernetes-version=$K8S_VERSION"; fi
-sudo kubeadm init --cri-socket=unix:///var/run/containerd/containerd.sock  $K8S_VERSION
+if [ -z "${K8S_VERSION+x}" ]; then K8S_VERSION="stable-1"; fi
+
+sudo kubeadm init --cri-socket=unix:///var/run/containerd/containerd.sock --kubernetes-version="${K8S_VERSION}"
 mkdir -p $HOME/.kube
 sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
 sudo chown $(id -u):$(id -g) $HOME/.kube/config
-kubectl apply -f https://github.com/weaveworks/weave/releases/download/v2.8.1/weave-daemonset-k8s-1.11.yaml
-kubectl patch node $(hostname) -p '{"spec":{"taints":[]}}'
+kubectl apply -f "${WEAVE_REPO}/${WEAVE_VER}/${WEAVE_DS}"
+kubectl patch node "$(hostname)" -p '{"spec":{"taints":[]}}'
 
 # Install the latest crictl (cni-tools package is not always the latest)
 CRICTL_VERSION=$(curl -s https://api.github.com/repos/kubernetes-sigs/cri-tools/releases/latest|grep tag_name | cut -d '"' -f 4 | cut -b 2-)
