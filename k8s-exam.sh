@@ -28,7 +28,7 @@
 set -e
 
 # Defaults
-K8S_VERSION="v1.28.0"
+K8S_VERSION="1.28.0"
 K8S_REPO="https://pkgs.k8s.io/core:/stable:/v1.28/deb"
 WEAVE_VER="v2.8.1"
 WEAVE_DS="weave-daemonset-k8s-1.11.yaml"
@@ -63,7 +63,7 @@ sudo mkdir -p -m 755 /etc/apt/keyrings
 curl -fsSL "${K8S_REPO}/Release.key" | sudo gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg
 echo "deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] ${K8S_REPO}/ /" | sudo tee /etc/apt/sources.list.d/kubernetes.list
 sudo apt-get update
-sudo apt-get install -y kubeadm=$K8S_VERSION-00 kubectl=$K8S_VERSION-00 kubelet=$K8S_VERSION-00
+sudo apt-get install -y kubeadm=$K8S_VERSION-1.1 kubectl=$K8S_VERSION-1.1 kubelet=$K8S_VERSION-1.1
 
 sudo swapoff -a
 if [ -z "${K8S_VERSION+x}" ]; then K8S_VERSION="stable-1"; fi
