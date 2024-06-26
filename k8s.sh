@@ -56,6 +56,7 @@ sudo systemctl restart docker
 sudo cp /etc/containerd/config.toml /etc/containerd/config.bak
 sudo containerd config default | sudo tee /etc/containerd/config.toml
 sudo sed -i -e 's/SystemdCgroup = false/SystemdCgroup = true/' /etc/containerd/config.toml
+sudo sed -i -e 's/pause:3.6/pause:3.9/' /etc/containerd/config.toml
 sudo systemctl restart containerd
 
 # Initialize a control plane node
