@@ -153,7 +153,7 @@ spec:
         - name: http
           containerPort: 80
         - name: https
-          containerPort: 443          
+          containerPort: 443
         env:
         - name: POD_NAMESPACE
           valueFrom:
@@ -213,3 +213,12 @@ spec:
 status:
   loadBalancer: {}
 # Not for Production Use!
+---
+apiVersion: networking.k8s.io/v1
+kind: IngressClass
+metadata:
+  name: nginx
+  annotations:
+    ingressclass.kubernetes.io/is-default-class: "true"
+spec:
+  controller: k8s.io/ingress-nginx
