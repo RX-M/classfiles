@@ -29,9 +29,9 @@
 set -e
 
 # Defaults
-DOCKER_VER="25.0.2"
+DOCKER_VER="26.1.1"
 K8S_VERSION="v1.30.4"
-K8S_REPO="https://pkgs.k8s.io/core:/stable:/v1.29/deb"
+K8S_REPO="https://pkgs.k8s.io/core:/stable:/v1.30/deb"
 WEAVE_VER="v2.8.1"
 WEAVE_DS="weave-daemonset-k8s-1.11.yaml"
 WEAVE_REPO="https://github.com/weaveworks/weave/releases/download"
@@ -56,6 +56,7 @@ sudo systemctl restart docker
 sudo cp /etc/containerd/config.toml /etc/containerd/config.bak
 sudo containerd config default | sudo tee /etc/containerd/config.toml
 sudo sed -i -e 's/SystemdCgroup = false/SystemdCgroup = true/' /etc/containerd/config.toml
+sudo sed -i -e 's/pause:3.6/pause:3.9/' /etc/containerd/config.toml
 sudo systemctl restart containerd
 
 # Initialize a control plane node
@@ -75,7 +76,17 @@ sudo kubeadm init --cri-socket=unix:///var/run/containerd/containerd.sock --kube
 mkdir -p "${HOME}/.kube"
 sudo cp -i /etc/kubernetes/admin.conf "${HOME}/.kube/config"
 sudo chown "$(id -u):$(id -g)" "${HOME}/.kube/config"
-kubectl apply -f "${WEAVE_REPO}/${WEAVE_VER}/${WEAVE_DS}"
+
+# Install Cilium CNI
+CILIUM_CLI_VERSION=$(curl -s https://raw.githubusercontent.com/cilium/cilium-cli/main/stable.txt)
+CLI_ARCH=amd64
+if [ "$(uname -m)" = "aarch64" ]; then CLI_ARCH=arm64; fi
+curl -L --fail --remote-name-all https://github.com/cilium/cilium-cli/releases/download/${CILIUM_CLI_VERSION}/cilium-linux-${CLI_ARCH}.tar.gz{,.sha256sum}
+sha256sum --check cilium-linux-${CLI_ARCH}.tar.gz.sha256sum
+sudo tar xzvfC cilium-linux-${CLI_ARCH}.tar.gz /usr/local/bin
+rm cilium-linux-${CLI_ARCH}.tar.gz.sha256sum cilium-linux-${CLI_ARCH}.tar.gz
+cilium install --version 1.15.6
+
 kubectl patch node "$(hostname)" -p '{"spec":{"taints":[]}}'
 
 # Install the latest crictl (cni-tools package is not always the latest)
