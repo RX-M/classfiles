@@ -30,7 +30,7 @@ set -e
 
 # Defaults
 DOCKER_VER="25.0.2"
-K8S_VERSION="v1.29.4"
+K8S_VERSION="v1.30.4"
 K8S_REPO="https://pkgs.k8s.io/core:/stable:/v1.29/deb"
 WEAVE_VER="v2.8.1"
 WEAVE_DS="weave-daemonset-k8s-1.11.yaml"
