@@ -17,7 +17,7 @@ The RX-M lab VM can be run on any virtualization platform compatible with VMware
 
 #### Download the VM
 
-The RX-M **VMware** configured lab virtual machine is 1.7GB in 7z compressed format and can be downloaded here: https://rx-m-vms.s3.us-west-1.amazonaws.com/rx-m-lab-vm-ubuntu-2404-vmware.7z (sha256 0b970f8938edf5f5ce6eb066da303df7a16c4cf99e392301b90166b3fa4b80ee)
+The RX-M **VMware** configured lab virtual machine is 1.6GB in 7z compressed format and can be downloaded here: https://rx-m-vms.s3.us-west-1.amazonaws.com/rx-m-lab-vm-ubuntu-2404-vmware.7z (sha256 aca0328bf72fd36cde81ea62b1c72131c5f7bc936beae93e392adf67acf3fd64)
 
 The RX-M **VirtualBox** configured lab virtual machine is 2.3 GB in OVA compressed format and can be downloaded here: https://rx-m-vms.s3.us-west-1.amazonaws.com/rx-m-lab-vm-ubuntu-2404-virtualbox.7z (sha256 d8701f1134ac84332b57ab423b882eee3041d4ae661a2e3b1adb5c26c1309d76)
 
