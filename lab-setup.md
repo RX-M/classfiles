@@ -1,26 +1,25 @@
 # RX-M - Lab System Setup
 
 The lab exercises for RX-M courses are designed for completion on a base Ubuntu 64 bit system (ideally the latest LTS
-version). The system should have 2+ CPUs, 2+ GBs of RAM and 30+ GB of disk. Students who have access to an appropriate
-existing system (e.g. a typical cloud instance) can perform the lab exercises on that system, however, RX-M provides a
-prebuilt lab VM which offers a more reliable and safe environment for experimentation.
+version). The system should have 2+ CPUs, 4+ GBs of RAM and 50+ GB of disk. Students who have access to an appropriate
+existing system (e.g. a typical cloud instance or wsl2 ubuntu) can perform the lab exercises on that system, however, 
+RX-M provides a prebuilt lab VM which offers a reliable and safe environment for experimentation.
 
 
 #### Supported Platforms
 
-The RX-M lab VM can be run on any of these virtualization platforms:
+The RX-M lab VM can be run on any virtualization platform compatible with VMware or OVA vm formats:
 
-- VMware Workstation Player (free) [Windows/Linux] https://my.vmware.com/web/vmware/downloads/info/slug/desktop_end_user_computing/vmware_workstation_player/16_0
-- VMware Workstation (requires a commercial license) [Windows]
-- VMware Fusion Player (Free for personal use but requires a VMWare Account) [Mac]
-- VMware Fusion (requires a commercial license) [Mac]
+- VMware Workstation Pro (free for personal use but requires a Broadcom account) [Windows/Linux]: [https://my.vmware.com/web/vmware/downloads/info/slug/desktop_end_user_computing/vmware_workstation_player/16_0](https://support.broadcom.com/group/ecx/productdownloads?subfamily=VMware%20Workstation%20Pro)
+- VMware Fusion Pro (Free for personal use but requires a Broadcom Account) [Mac]: https://support.broadcom.com/group/ecx/productdownloads?subfamily=VMware%20Fusion
 -  Virtual Box (free) [Mac/Windows/Linux] https://www.virtualbox.org/wiki/Downloads
+
 
 #### Download the VM
 
-The RX-M **VMware** configured lab virtual machine is 1.3GB in 7z compressed format and can be downloaded here: https://rx-m-vms.s3.us-west-1.amazonaws.com/rx-m-lab-vm.7z (sha256 0bd8e76b38f9ba56403a151eff7a62d3ccfb044af656a1418282e1a7e6482386)
+The RX-M **VMware** configured lab virtual machine is 1.6GB in 7z compressed format and can be downloaded here: https://rx-m-vms.s3.us-west-1.amazonaws.com/rx-m-lab-vm-ubuntu-2404-vmware.7z (sha256 aca0328bf72fd36cde81ea62b1c72131c5f7bc936beae93e392adf67acf3fd64)
 
-The RX-M **VirtualBox** configured lab virtual machine is 1GB in OVA compressed format and can be downloaded here: https://rx-m-vms.s3.us-west-1.amazonaws.com/rx-m-lab-ubuntu-20.04-virtualbox.7z (sha256 58BEE8A0E23FAF300FB2F687B16C9DD900CEC51DDEB490D9EFAD0DD99FC374CB)
+The RX-M **VirtualBox** configured lab virtual machine is 2.3 GB in OVA compressed format and can be downloaded here: https://rx-m-vms.s3.us-west-1.amazonaws.com/rx-m-lab-vm-ubuntu-2404-virtualbox.7z (sha256 d8701f1134ac84332b57ab423b882eee3041d4ae661a2e3b1adb5c26c1309d76)
 
 
 #### Run the VM
