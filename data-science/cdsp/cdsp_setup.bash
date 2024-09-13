@@ -4,6 +4,7 @@
 # Tested on AWS t3.medium / 50GB disk / Ubuntu 24.04
 
 
+echo '>>>> -----------------------------------------------'
 echo '>>>> Configuring and starting CDSP Jupyter Server'
 echo '>>>> ... this will take a minute or two'
 echo '>>>> -----------------------------------------------'
@@ -11,7 +12,9 @@ echo '>>>> -----------------------------------------------'
 
 echo '>>>> Installing needed system packages'
 echo '>>>> -----------------------------------------------'
-sudo apt update && sudo apt install -y python3-pip unzip font-manager
+sudo apt update && sudo apt install -y python3-pip unzip # font-manager
+echo "ttf-mscorefonts-installer msttcorefonts/accepted-mscorefonts-eula select true" | sudo debconf-set-selections
+sudo DEBIAN_FRONTEND=noninteractive apt-get -y install --no-install-recommends ttf-mscorefonts-installer
 
 
 echo '>>>> -----------------------------------------------'
