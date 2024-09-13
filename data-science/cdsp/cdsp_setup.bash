@@ -47,6 +47,8 @@ openssl req -x509 -newkey rsa:4096 -keyout key.pem -out cert.pem -sha256 -days 3
 mkdir -p ~/.jupyter
 wget -q https://raw.githubusercontent.com/RX-M/classfiles/master/data-science/cdsp/jupyter_server_config.json -O ~/.jupyter/jupyter_server_config.json
 
+echo '>>>> Starting Jupyter Server'
+echo '>>>> -----------------------------------------------'
 echo Jupyter URL: https://`curl -s http://checkip.amazonaws.com`:8080/
 echo Password is: rx-m2024
 echo
