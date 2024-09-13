@@ -40,6 +40,12 @@ fi
 python3 -c 'import nltk; nltk.download("punkt", download_dir = "nltk_data")'
 
 
+echo '>>>> Installing class files'
+echo '>>>> -----------------------------------------------'
+wget -q https://github.com/RX-M/classfiles/raw/master/data-science/cdsp/CNX0020Data.tar -O CNX0020Data.tar
+tar -xf CNX0020Data.tar
+
+
 echo '>>>> Installing Jupyter cert/key/password'
 echo '>>>> -----------------------------------------------'
 # n.b. `jupyter server password` generates a new pwd in jupyter_server_config.json
