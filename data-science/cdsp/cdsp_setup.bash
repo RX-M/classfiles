@@ -11,12 +11,14 @@ echo '>>>> -----------------------------------------------'
 
 echo '>>>> Installing needed system packages'
 echo '>>>> -----------------------------------------------'
-sudo apt update && sudo apt install -y python3-pip unzip
+sudo apt update && sudo apt install -y python3-pip unzip font-manager
 
 
 echo '>>>> Installing CDSP Python requirements'
 echo '>>>> -----------------------------------------------'
-mkdir -p ~/cdsp && cd $_
+sudo mkdir -p /home/student
+sudo chown ubuntu:ubuntu /home/student
+cd /home/student
 wget -q https://raw.githubusercontent.com/RX-M/classfiles/master/data-science/cdsp/requirements.txt -O requirements.txt
 pip3 install -r requirements.txt --break-system-packages
 source ~/.profile     # updates the PATH
@@ -42,8 +44,8 @@ python3 -c 'import nltk; nltk.download("punkt", download_dir = "nltk_data")'
 
 echo '>>>> Installing class files'
 echo '>>>> -----------------------------------------------'
-wget -q https://github.com/RX-M/classfiles/raw/master/data-science/cdsp/CNX0020Data.zip -O CNX0020Data.zip
-unzip CNX0020Data.zip
+wget -q https://github.com/RX-M/classfiles/raw/master/data-science/cdsp/CDSP.zip -O CDSP.zip
+unzip CDSP.zip
 
 
 echo '>>>> Installing Jupyter cert/key/password'
@@ -52,6 +54,7 @@ echo '>>>> -----------------------------------------------'
 openssl req -x509 -newkey rsa:4096 -keyout key.pem -out cert.pem -sha256 -days 3650 -nodes -subj "/C=US/ST=Florida/L=Miami/O=RX-M/OU=Training/CN=rx-m.com"
 mkdir -p ~/.jupyter
 wget -q https://raw.githubusercontent.com/RX-M/classfiles/master/data-science/cdsp/jupyter_server_config.json -O ~/.jupyter/jupyter_server_config.json
+
 
 echo '>>>> Starting Jupyter Server'
 echo '>>>> -----------------------------------------------'
