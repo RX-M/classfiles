@@ -25,16 +25,18 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-
 set -e
+
+# Increase inotify limits
+sudo sysctl fs.inotify.max_user_watches=524288
+sudo sysctl fs.inotify.max_user_instances=512
+echo "sysctl fs.inotify.max_user_watches=524288" | sudo tee -a /etc/sysctl.conf
+echo "sysctl fs.inotify.max_user_instances=512" | sudo tee -a /etc/sysctl.conf
 
 # Defaults
 DOCKER_VER="26.1.1"
 K8S_VERSION="v1.30.2"
 K8S_REPO="https://pkgs.k8s.io/core:/stable:/v1.30/deb"
-WEAVE_VER="v2.8.1"
-WEAVE_DS="weave-daemonset-k8s-1.11.yaml"
-WEAVE_REPO="https://github.com/weaveworks/weave/releases/download"
 
 # Install Docker
 curl -fsSL https://get.docker.com -o /tmp/install-docker.sh && sh /tmp/install-docker.sh --version $DOCKER_VER
@@ -59,7 +61,7 @@ sudo sed -i -e 's/SystemdCgroup = false/SystemdCgroup = true/' /etc/containerd/c
 sudo sed -i -e 's/pause:3.6/pause:3.9/' /etc/containerd/config.toml
 sudo systemctl restart containerd
 
-# Initialize a control plane node
+# Initialize the system as a Kubernetes node
 sudo apt-get update
 sudo apt-get install -y apt-transport-https ca-certificates curl gpg
 sudo mkdir -p -m 755 /etc/apt/keyrings
@@ -68,10 +70,10 @@ echo "deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] ${K8S_REPO}/ 
 sudo apt-get update
 sudo apt-get install -y kubelet kubeadm kubectl
 sudo apt-mark hold kubelet kubeadm kubectl
-
 sudo swapoff -a
-if [ -z "${K8S_VERSION+x}" ]; then K8S_VERSION="stable-1"; fi
 
+# Install the Kubernetes control plane
+if [ -z "${K8S_VERSION+x}" ]; then K8S_VERSION="stable-1"; fi
 sudo kubeadm init --cri-socket=unix:///var/run/containerd/containerd.sock --kubernetes-version="${K8S_VERSION}"
 mkdir -p "${HOME}/.kube"
 sudo cp -i /etc/kubernetes/admin.conf "${HOME}/.kube/config"
@@ -87,6 +89,7 @@ sudo tar xzvfC cilium-linux-${CLI_ARCH}.tar.gz /usr/local/bin
 rm cilium-linux-${CLI_ARCH}.tar.gz.sha256sum cilium-linux-${CLI_ARCH}.tar.gz
 cilium install --version 1.15.6
 
+# Untaint the control plane node so that normal pods can run
 kubectl patch node "$(hostname)" -p '{"spec":{"taints":[]}}'
 
 # Install the latest crictl (cni-tools package is not always the latest)
@@ -95,3 +98,9 @@ wget "https://github.com/kubernetes-sigs/cri-tools/releases/download/v${crictl_v
 sudo tar zxvf "crictl-v${crictl_ver}-linux-amd64.tar.gz" -C /usr/local/bin
 rm -f "crictl-v${crictl_ver}-linux-amd64.tar.gz"
 echo "runtime-endpoint: unix:///run/containerd/containerd.sock" | sudo tee /etc/crictl.yaml
+
+# Scale CoreDNS down to 1 pod
+kubectl scale deployment.apps/coredns --replicas=1 -n kube-system
+
+# Add kubectl command completion
+source <(kubectl completion bash)
