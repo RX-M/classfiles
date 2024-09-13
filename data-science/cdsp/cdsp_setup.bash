@@ -42,8 +42,8 @@ python3 -c 'import nltk; nltk.download("punkt", download_dir = "nltk_data")'
 
 echo '>>>> Installing class files'
 echo '>>>> -----------------------------------------------'
-wget -q https://github.com/RX-M/classfiles/raw/master/data-science/cdsp/CNX0020Data.tar -O CNX0020Data.tar
-tar -xf CNX0020Data.tar
+wget -q https://github.com/RX-M/classfiles/raw/master/data-science/cdsp/CNX0020Data.zip -O CNX0020Data.zip
+unzip CNX0020Data.zip
 
 
 echo '>>>> Installing Jupyter cert/key/password'
