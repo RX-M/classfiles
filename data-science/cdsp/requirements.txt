@@ -16,7 +16,7 @@ blinker==1.7.0
 blis==0.7.11
 catalogue==2.0.10
 category-encoders==2.6.3
-certifi==2023.11.17
+certifi==2024.7.4
 cffi==1.17.1
 chardet==5.2.0
 click==8.1.6
