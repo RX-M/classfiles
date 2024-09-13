@@ -52,7 +52,7 @@ httpx==0.27.2
 hyperlink==21.0.0
 idna==3.7
 imbalanced-learn==0.12.3
-incremental==22.10.0
+incremental==24.7.0
 ipykernel==6.29.5
 ipython==8.27.0
 ipywidgets==8.1.5
