@@ -153,7 +153,7 @@ scipy==1.14.1
 seaborn==0.13.2
 Send2Trash==1.8.3
 service-identity==24.1.0
-setuptools==68.1.2
+setuptools==70.0.0
 shellingham==1.5.4
 six==1.16.0
 smart-open==7.0.4
