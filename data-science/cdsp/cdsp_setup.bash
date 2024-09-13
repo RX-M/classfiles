@@ -14,16 +14,18 @@ echo '>>>> -----------------------------------------------'
 sudo apt update && sudo apt install -y python3-pip unzip font-manager
 
 
+echo '>>>> -----------------------------------------------'
 echo '>>>> Installing CDSP Python requirements'
 echo '>>>> -----------------------------------------------'
 sudo mkdir -p /home/student
 sudo chown ubuntu:ubuntu /home/student
 cd /home/student
 wget -q https://raw.githubusercontent.com/RX-M/classfiles/master/data-science/cdsp/requirements.txt -O requirements.txt
-pip3 install -r requirements.txt --break-system-packages
+pip3 install -r requirements.txt --break-system-packages --no-warn-script-location
 source ~/.profile     # updates the PATH
 
 
+echo '>>>> -----------------------------------------------'
 echo '>>>> Installing spacy_data'
 echo '>>>> -----------------------------------------------'
 # original file: https://github.com/explosion/spacy-models/releases/download/en_core_web_sm-3.7.1/en_core_web_sm-3.7.1-py3-none-any.whl
@@ -34,6 +36,7 @@ fi
 unzip en_core_web_sm-3.7.1-py3-none-any.whl -d spacy_data
 
 
+echo '>>>> -----------------------------------------------'
 echo '>>>> Installing nltk_data'
 echo '>>>> -----------------------------------------------'
 if [ -d nltk_data ]; then
@@ -42,12 +45,19 @@ fi
 python3 -c 'import nltk; nltk.download("punkt", download_dir = "nltk_data")'
 
 
+echo '>>>> -----------------------------------------------'
 echo '>>>> Installing class files'
 echo '>>>> -----------------------------------------------'
 wget -q https://github.com/RX-M/classfiles/raw/master/data-science/cdsp/CDSP.zip -O CDSP.zip
+if [ -d CDSP ]; then
+  rm -rf CDSP
+fi
 unzip CDSP.zip
+# Patch required to move code from scikit-learn 1.2 to 1.5
+sed -i 's/affinity/metric/g' /home/student/CDSP/Clustering/Solutions/*.ipynb
 
 
+echo '>>>> -----------------------------------------------'
 echo '>>>> Installing Jupyter cert/key/password'
 echo '>>>> -----------------------------------------------'
 # n.b. `jupyter server password` generates a new pwd in jupyter_server_config.json
@@ -56,6 +66,7 @@ mkdir -p ~/.jupyter
 wget -q https://raw.githubusercontent.com/RX-M/classfiles/master/data-science/cdsp/jupyter_server_config.json -O ~/.jupyter/jupyter_server_config.json
 
 
+echo '>>>> -----------------------------------------------'
 echo '>>>> Starting Jupyter Server'
 echo '>>>> -----------------------------------------------'
 echo Jupyter URL: https://`curl -s http://checkip.amazonaws.com`:8080/
