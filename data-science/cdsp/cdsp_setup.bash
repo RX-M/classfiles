@@ -45,7 +45,8 @@ echo '>>>> -----------------------------------------------'
 if [ -d nltk_data ]; then
   rm -rf nltk_data
 fi
-python3 -c 'import nltk; nltk.download("punkt", download_dir = "nltk_data")'
+#python3 -c 'import nltk; nltk.download("punkt", download_dir = "nltk_data")'
+python3 -c 'import nltk; nltk.download("punkt_tab", download_dir = "nltk_data")'
 
 
 echo '>>>> -----------------------------------------------'
