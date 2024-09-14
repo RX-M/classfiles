@@ -6,13 +6,13 @@
 
 echo '>>>> -----------------------------------------------'
 echo '>>>> Configuring and starting CDSP Jupyter Server'
-echo '>>>> ... this will take a minute or two'
+echo '>>>> ... this will take 4-5 minutes'
 echo '>>>> -----------------------------------------------'
 
 
-echo '>>>> Installing needed system packages'
+echo '>>>> Installing needed system packages and fonts'
 echo '>>>> -----------------------------------------------'
-sudo apt update && sudo apt install -y python3-pip unzip # font-manager
+sudo apt update && sudo apt install -y python3-pip unzip
 echo "ttf-mscorefonts-installer msttcorefonts/accepted-mscorefonts-eula select true" | sudo debconf-set-selections
 sudo DEBIAN_FRONTEND=noninteractive apt-get -y install --no-install-recommends ttf-mscorefonts-installer
 
@@ -42,11 +42,10 @@ unzip en_core_web_sm-3.7.1-py3-none-any.whl -d spacy_data
 echo '>>>> -----------------------------------------------'
 echo '>>>> Installing nltk_data'
 echo '>>>> -----------------------------------------------'
-if [ -d nltk_data ]; then
-  rm -rf nltk_data
+if [ -d /home/ubuntu/nltk_data ]; then
+  rm -rf /home/ubuntu/nltk_data
 fi
-#python3 -c 'import nltk; nltk.download("punkt", download_dir = "nltk_data")'
-python3 -c 'import nltk; nltk.download("punkt_tab", download_dir = "nltk_data")'
+python3 -c 'import nltk; nltk.download("punkt_tab", download_dir = "/home/ubuntu/nltk_data")'
 
 
 echo '>>>> -----------------------------------------------'
@@ -57,8 +56,8 @@ if [ -d CDSP ]; then
   rm -rf CDSP
 fi
 unzip CDSP.zip
-# Patch required to move code from scikit-learn 1.2 to 1.5
-sed -i 's/affinity/metric/g' /home/student/CDSP/Clustering/Solutions/*.ipynb
+sed -i 's/affinity/metric/g' /home/student/CDSP/Clustering/Solutions/*.ipynb                   # Move from sklearn 1.2 to 1.5
+sed -i 's/app.run(/app.run(host=\\"0.0.0.0\\"/g' /home/student/CDSP/Web*/Demonstrating*.ipynb  # All interfaces for remote access
 
 
 echo '>>>> -----------------------------------------------'
