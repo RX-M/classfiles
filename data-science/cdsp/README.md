@@ -4,17 +4,29 @@
 # Certified Data Science Practitioner
 
 This is the lab system setup README for the CDSPv2 course, circa 9/15/2024.
-All lab work except the Fine Tuning Module can be completed on a system equivalent
-to the following cloud instance:
+All lab work except the Fine Tuning Module can be completed on a standard RX-M
+lab system, equivalent to the following cloud instance:
 
 - AWS t3.medium (2 CPU/4GB RAM)
 - 50GB root volume
 - Ubuntu 24.04 AMI
 
-The Fine Tuning Module training step requires a t3.xlarge (4 CPU/16GB RAM)
-to complete, and will run out of memory on systems with less than 12GB of RAM.
-The installation consumes almost 14GB of disk so 20GB of disk space is probably
-a reasonable minimum.
+The Fine Tuning Module training step requires about 12GB of RAM. A t3.xlarge
+(4 CPU/16GB RAM @ $0.1664/hour) will provide the necessary memory but is 4x
+more expensive than a t3.medium ($0.0416/hour). Two possible compromises:
+
+- Use t3.mediums, then run a second t3.xlarge for just the fine tuning lab
+- Use t3.large machines (2 CPU/8GB RAM @ $0.0832/hour) and add an 8GB swap file
+
+> n.b. the solution will run **much** slower on 2 cores with memory swapping
+
+To add an 8GB swap file to the system, run the add_swap.bash script.
+
+    - `wget -qO- https://raw.githubusercontent.com/RX-M/classfiles/master/data-science/cdsp/add_swap.bash | bash`
+
+The software installation consumes almost 14GB of disk so 20GB of disk space is
+probably a reasonable minimum, unless using Swap, in which case 30GB is probably a
+good minimum.
 
 
 ## Lab system setup
