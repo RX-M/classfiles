@@ -13,6 +13,8 @@ to the following cloud instance:
 
 The Fine Tuning Module training step requires a t3.xlarge (4 CPU/16GB RAM)
 to complete, and will run out of memory on systems with less than 12GB of RAM.
+The installation consumes almost 14GB of disk so 20GB of disk space is probably
+a reasonable minimum.
 
 
 ## Lab system setup
