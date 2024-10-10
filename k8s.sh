@@ -35,8 +35,8 @@ echo "sysctl fs.inotify.max_user_instances=512" | sudo tee -a /etc/sysctl.conf
 
 # Defaults
 DOCKER_VER="26.1.1"
-K8S_VERSION="v1.30.2"
-K8S_REPO="https://pkgs.k8s.io/core:/stable:/v1.30/deb"
+K8S_VERSION="v1.31.1"
+K8S_REPO="https://pkgs.k8s.io/core:/stable:/v1.31/deb"
 
 # Install Docker
 curl -fsSL https://get.docker.com -o /tmp/install-docker.sh && sh /tmp/install-docker.sh --version $DOCKER_VER
