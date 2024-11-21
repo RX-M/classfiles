@@ -46,12 +46,12 @@ sudo systemctl restart docker
 sudo cp /etc/containerd/config.toml /etc/containerd/config.bak
 sudo containerd config default | sudo tee /etc/containerd/config.toml
 sudo sed -i -e 's/SystemdCgroup = false/SystemdCgroup = true/' /etc/containerd/config.toml
-sudo sed -i -e 's/pause:3.6/pause:3.9/' /etc/containerd/config.toml
+sudo sed -i -e 's/pause:3.8/pause:3.10/' /etc/containerd/config.toml
 sudo systemctl restart containerd
 
 # Prepare the binaries to init a control plane node
-curl -fsSL https://pkgs.k8s.io/core:/stable:/v1.30/deb/Release.key | sudo gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg
-echo 'deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/v1.29/deb/ /' | sudo tee /etc/apt/sources.list.d/kubernetes.list
+curl -fsSL https://pkgs.k8s.io/core:/stable:/v1.31/deb/Release.key | sudo gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg
+echo 'deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/v1.30/deb/ /' | sudo tee /etc/apt/sources.list.d/kubernetes.list
 sudo apt-get update
 sudo apt-get install -y kubeadm kubectl kubelet
 
