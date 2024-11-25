@@ -103,5 +103,4 @@ echo "runtime-endpoint: unix:///run/containerd/containerd.sock" | sudo tee /etc/
 kubectl scale deployment.apps/coredns --replicas=1 -n kube-system
 
 # Add kubectl command completion
-kubectl completion bash > ~/.kube/completion.bash.inc
-echo 'source $HOME/.kube/completion.bash.inc' >> $HOME/.bash_profile
+echo "source <(kubectl completion bash)" >> ~/.bashrc
