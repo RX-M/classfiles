@@ -21,13 +21,11 @@
 
 set -e
 
+# Can set version such as `export K8S_VERSION=v1.30.1 && bash -x node.sh`; for DOCKER_VERSION and K8S_VERSION
 # Defaults
-DOCKER_VER="26.1.1"
-K8S_VERSION="v1.31.1"
-K8S_REPO="https://pkgs.k8s.io/core:/stable:/v1.31/deb"
-WEAVE_VER="v2.8.1"
-WEAVE_DS="weave-daemonset-k8s-1.11.yaml"
-WEAVE_REPO="https://github.com/weaveworks/weave/releases/download"
+DOCKER_VER="${DOCKER_VERSION:-"26.1.1"}"
+K8S_VERSION="${K8S_VERSION:-"v1.31.1"}"
+K8S_REPO="https://pkgs.k8s.io/core:/stable:/${K8S_VERSION%.*}/deb"
 
 # Install Docker
 curl -fsSL https://get.docker.com -o /tmp/install-docker.sh && sh /tmp/install-docker.sh --version $DOCKER_VER
@@ -63,6 +61,5 @@ sudo apt-get install -y kubelet kubeadm kubectl
 sudo apt-mark hold kubelet kubeadm kubectl
 
 sudo swapoff -a
-if [ -z "${K8S_VERSION+x}" ]; then K8S_VERSION="stable-1"; fi
 
 printf "Run this command on CP node - kubeadm token create --print-join-command - runs its output on worker node(s)"
