@@ -1,4 +1,4 @@
-#!/bin/bash
+!/bin/bash
 #
 # Script to install a single node K8s cluster on an RX-M Lab VM
 #
@@ -34,12 +34,14 @@ echo "sysctl fs.inotify.max_user_watches=524288" | sudo tee -a /etc/sysctl.conf
 echo "sysctl fs.inotify.max_user_instances=512" | sudo tee -a /etc/sysctl.conf
 
 # Defaults
-DOCKER_VER="26.1.1"
-K8S_VERSION="v1.31.1"
-K8S_REPO="https://pkgs.k8s.io/core:/stable:/v1.31/deb"
+#DOCKER_VER="26.1.1"
+DOCKER_VERSION="${DOCKER_VERSION:-"26.1.1"}"
+#K8S_VERSION="v1.31.1"
+K8S_VERSION="${K8S_VERSION:-"v1.31.1"}"
+K8S_REPO="https://pkgs.k8s.io/core:/stable:/${K8S_VERSION%.*}/deb"
 
 # Install Docker
-curl -fsSL https://get.docker.com -o /tmp/install-docker.sh && sh /tmp/install-docker.sh --version $DOCKER_VER
+curl -fsSL https://get.docker.com -o /tmp/install-docker.sh && sh /tmp/install-docker.sh --version $DOCKER_VERSION
 
 sudo mkdir -p /etc/docker
 cat <<EOF | sudo tee /etc/docker/daemon.json
@@ -72,14 +74,15 @@ sudo apt-get install -y kubelet kubeadm kubectl
 sudo apt-mark hold kubelet kubeadm kubectl
 sudo swapoff -a
 
+# e.g. to set K8s version `export K8S_VERSION=v1.30.1 && bash -x k8s.sh`
 # Install the Kubernetes control plane
-if [ -z "${K8S_VERSION+x}" ]; then K8S_VERSION="stable-1"; fi
 sudo kubeadm init --cri-socket=unix:///var/run/containerd/containerd.sock --kubernetes-version="${K8S_VERSION}"
 mkdir -p "${HOME}/.kube"
 sudo cp -i /etc/kubernetes/admin.conf "${HOME}/.kube/config"
 sudo chown "$(id -u):$(id -g)" "${HOME}/.kube/config"
 
 # Install Cilium CNI
+CILIUM_VERSION="${CILIUM_VERSION:-1.16.5}"
 CILIUM_CLI_VERSION=$(curl -s https://raw.githubusercontent.com/cilium/cilium-cli/main/stable.txt)
 CLI_ARCH=amd64
 if [ "$(uname -m)" = "aarch64" ]; then CLI_ARCH=arm64; fi
@@ -87,7 +90,7 @@ curl -L --fail --remote-name-all https://github.com/cilium/cilium-cli/releases/d
 sha256sum --check cilium-linux-${CLI_ARCH}.tar.gz.sha256sum
 sudo tar xzvfC cilium-linux-${CLI_ARCH}.tar.gz /usr/local/bin
 rm cilium-linux-${CLI_ARCH}.tar.gz.sha256sum cilium-linux-${CLI_ARCH}.tar.gz
-cilium install --version 1.15.6
+cilium install --version ${CILIUM_VERSION} 
 
 # Untaint the control plane node so that normal pods can run
 kubectl patch node "$(hostname)" -p '{"spec":{"taints":[]}}'
