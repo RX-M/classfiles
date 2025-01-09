@@ -34,9 +34,7 @@ echo "sysctl fs.inotify.max_user_watches=524288" | sudo tee -a /etc/sysctl.conf
 echo "sysctl fs.inotify.max_user_instances=512" | sudo tee -a /etc/sysctl.conf
 
 # Defaults
-#DOCKER_VER="26.1.1"
 DOCKER_VERSION="${DOCKER_VERSION:-"26.1.1"}"
-#K8S_VERSION="v1.31.1"
 K8S_VERSION="${K8S_VERSION:-"v1.31.1"}"
 K8S_REPO="https://pkgs.k8s.io/core:/stable:/${K8S_VERSION%.*}/deb"
 
