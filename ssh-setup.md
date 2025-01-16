@@ -1,29 +1,37 @@
 # RX-M - SSH setup for Cloud Lab Access
 
-RX-M courses can be delivered in conjunction with a cloud based lab environment. To access a cloud lab system, students
-will  need to have an ssh client installed on their computer and internet ssh access (port 22).
+RX-M courses are delivered in conjunction with a cloud hosted lab system. To access the cloud lab system, students
+use an ssh client.
+
+In most cases this is three simple steps:
+
+1. Download the ssh key provided by your instructor to your laptop
+2. Change the ssh key file permissions to owner/read-only on your laptop:
+     - `$ chmod 400 key.pem`
+3. Ssh to your assigned lab system from your laptop (ip provided by instructor):
+     - `$ ssh -i key.pem ubuntu@my.lab.ip.addr`
+
+> The lab systems are Ubuntu Linux and the user "ubuntu" is used to login. The systems are protected with keys
+> rather than passwords and the "-i" switch is used to pass the private keyfile to ssh. You must replace the
+> "my.lab.ip.addr" text above with your assigned IP address. If you fail to restrict the permissions on the key
+> file the ssh client may produce and error message (e.g. "Error public key").
+
+Detailed instructions for different systems below.
 
 
-## macOS/Linux SSH client & key permissions
+## Mac/Linux/Git-Bash
 
-Any mainstream ssh client will work and macOS/Linux computer systems have a good ssh client preinstalled.
-
-In order to use private key files with ssh on Linux systems, you must change the security attributes so that you alone
-have READ-ONLY access. Use the following bash command to achieve this result:
-
-```
-$ chmod 400 key.pem
-```
-
-The file will retain these permissions after you perform this step once.
-
-Next, start an ssh session with a [shell](https://github.com/RX-M/classfiles/blob/master/ssh-setup.md#macoslinux--or--windows-gitbash-command-prompt-or-powershell-ssh).
+Mac/Linux systems have a good ssh client preinstalled that works perfectly for lab system access, as does Git Bash, which
+can be installed on Mac/Linux/Windows. Using one of these you can simply open a terminal, make the key file private and
+run the appropriate ssh command as outlined above.
 
 
-## Windows SSH client(s) & key permissions
+## Windows
 
-Windows 10 supports ssh natively via Command Prompt and PowerShell but also supports 3rd party ssh client tools (you do
-_not_ need to install any or all of them; use what works best for you).
+Windows 10/11 systems typically provide a native ssh client accessible at the Command or PowerShell prompt.
+Third party ssh client tools are also frequently used on Windows (choose what works best for you).
+
+> N.B. RX-M reccomends GitBash and MobaXTerm
 
 Links to 3rd party installers:
 
@@ -31,18 +39,17 @@ Links to 3rd party installers:
 - MobaXTerm (free and paid) [Windows] https://mobaxterm.mobatek.net/download.html
 - PuTTY (free) [Windows] https://www.putty.org/
 
-Next, configure SSH key permissions based on your platform of choice:
+If you are using any of the third party tools you do not need to adjust the permissions on your key file, you
+can simply ssh from the tool into your assigned lab system. Detailed instructions can be found below.
 
-- [Command Prompt or PowerShell](https://github.com/RX-M/classfiles/blob/master/ssh-setup.md#windows-ssh-key-permissions-command-prompt-and-powershell)
-- [GitBash](https://github.com/RX-M/classfiles/blob/master/ssh-setup.md#windows-ssh-key-permissions-gitbash--mobaxterm)
-- [MobaXTerm](https://github.com/RX-M/classfiles/blob/master/ssh-setup.md#windows-ssh-key-permissions-gitbash--mobaxterm)
-- [PuTTY](https://github.com/RX-M/classfiles/blob/master/ssh-setup.md#windows-ssh-key-permissions-putty)
+If you will be using the built in Windows ssh client, you will need to configure SSH key permissions as described
+in the next section:
 
 
-### Windows SSH key permissions: Command Prompt and PowerShell
+### Windows native SSH
 
-In order to use private key files with ssh with Windows _Command Prompt_ or _PowerShell_, you must change the security
-attributes so that you alone have READ-ONLY access. Use the following procedure to achieve this result:
+In order to use private key files with Windows native ssh you must change the security
+attributes so that you alone have READ-ONLY access. Instructions follow:
 
 - Locate the pem file in Windows Explorer, right-click on it then select "Properties".
 
@@ -108,22 +115,30 @@ retain these permissions after you perform this step once.
 Next, start an ssh session with a [shell](https://github.com/RX-M/classfiles/blob/master/ssh-setup.md#macoslinux--or--windows-gitbash-command-prompt-or-powershell-ssh).
 
 
-### Windows SSH key permissions: GitBash & MobaXTerm
+### Windows MobaXTerm
 
-Both GitBash and MobaXTerm understand the PEM format; no configuration necessary.
+To use MobaXTerm for ssh, start MobaXTerm and add a new session by clicking on the "Session" icon in the top-left corner
+or by selecting the "Sessions" menu and clicking "New session".
 
-Next, start an ssh session:
+In the "Session settings" window, click on SSH and enter the following information:
 
-- [GitBash shell](https://github.com/RX-M/classfiles/blob/master/ssh-setup.md#macoslinux--or--windows-gitbash-command-prompt-or-powershell-ssh)
-- [MobaXTerm](https://github.com/RX-M/classfiles/blob/master/ssh-setup.md#windows-mobaxterm-ssh)
+1. In the "Remote host" text box, enter the IP address assigned to you (sent via email or assigned in class)
+  - Check the box next to "Specify username" and enter `ubuntu`
+2. Click on the "Advanced SSH settings" tab
+3. Check the box next to "Use private key" and type the path to your .pem file or click on the browse icon which will
+let you navigate to the location where you saved it using Windows explorer.
+
+<img alt="auth" width="700px" src="./images/m01.png"/>
+
+Click on the [ OK ] button to start your SSH session.
 
 
-### Windows SSH key permissions: PuTTY
+### Windows PuTTY
 
-PuTTY does not natively support the PEM format that cloud environments use, so you need to convert your PEM file to a
-PPK file (PPK = PuTTY Private Key) before gaining access. To do this, you use the PuTTYgen utility.
+PuTTY does not support the PEM format used by cloud environments. You can convert PEM files to Putty's
+PPK format (PPK = PuTTY Private Key) using the PuTTYgen utility.
 
-To start PuTTYgen the utility you can type `puttygen` in the Windows start dialog box.
+To start the PuTTYgen utility you can type `puttygen` in the Windows start dialog box.
 
 <img alt="start" width="350px" src="./images/p01.png"/>
 
@@ -152,48 +167,6 @@ Name the private key file and save it to a path that is easy to remember (we wil
 
 Next, start an ssh session with [PuTTY](https://github.com/RX-M/classfiles/blob/master/ssh-setup.md#windows-putty-ssh).
 
-
-## SSH
-
-
-### macOS/Linux -OR- Windows GitBash, Command Prompt, or PowerShell SSH
-
-Command line clients like a Linux shell, the macOS Terminal app, or Windows GitBash, Command Prompt, or PowerShell can
-generally access the cloud lab site by opening the related app/shell and typing a command like this:
-
-```
-$ ssh -i key.pem ubuntu@host.ip.ad.dr
-```
-
-Where:
-
-- The `-i` switch (for identity) is typically required and allows you to pass a key file to the ssh client ("`key.pem`"
-  in the example) for extra security.
-- "`ubuntu`" is the default username (the instructor may supply students with a different username in class)
-- "`host.ip.ad.dr`" is the host IP address of the student lab system supplied by the instructor during class (e.g.
-  54.23.87.45).
-
-
-### Windows MobaXTerm SSH
-
-Start MobaXTerm and add a new session by clicking on the "Session" icon in the top-left corner or by selecting the
-"Sessions" menu and clicking on "New session".
-
-In the "Session settings" window, click on SSH and enter the following information:
-
-1. In the "Remote host" text box, enter the IP address assigned to you (sent via email or assigned in class)
-  - Check the box next to "Specify username" and enter `ubuntu`
-2. Click on the "Advanced SSH settings" tab
-3. Check the box next to "Use private key" and type the path to your .pem file or click on the browse icon which will
-let you navigate to the location where you saved it using Windows explorer.
-
-<img alt="auth" width="700px" src="./images/m01.png"/>
-
-Click on the [ OK ] button to start your SSH session.
-
-
-### Windows PuTTY SSH
-
 Once you have converted the pem file to a ppk file, you are ready to use PuTTY. Open putty and type connection
 information in the "Host Name" text field:
 
@@ -220,71 +193,32 @@ After setting the path to the private key file, you can _optionally_ return to t
 Click the [ Open ] button to start your SSH session.
 
 
-## OPTIONAL X11 Server
+## SSH Port Forwarding
 
-_DO NOT follow these instructions unless explicitly instructed to do so._
+Some environments (ZScaler, etc.) may block browser (HTTP) access from your laptop to the cloud lab system. You can
+easily and securily bypass this restriction with port forwarding through an ssh tunnel.
 
-To support browser GUI sessions over ssh the "X Window System" (X11 or simply X), a windowing system for bitmap
-displays, is required.
+For example, imagine you are running a lab which requires you to access a web GUI on port 8080 on your cloud based
+lab system. If your local or corporate environment blocks this access you can open a tunnel on your laptop to the lab
+system web GUI as follows:
 
-#### X11 server on macOS
-
-X11 is no longer included with Mac systems (see [this support article](https://support.apple.com/en-us/HT201341)), but
-X11 server and  client libraries are available from the [XQuartz project](https://www.xquartz.org/), which Apple created
-and contribues to.
-
-1. Open a browser and navigate to https://www.xquartz.org/
-2. Download the .dmg file and install
-3. Any time an SSH session is launched with the `-X` argument in the normal macOS terminal, the xQuartz program will automatically launch to support the X window.
-
-
-#### X11 server on Windows
-
-Windows does not include built in X support. Solutions are per client.
-
-- Mobaxterm: X11 is supported natively by mobaxterm and does not require any further installation.
-- putty: Requires an external xserver and enabling via: Connection->SSH->X11->Enable X11 Forwarding
-- git bash ssh: Requires an external xserver.
-
-Windows X servers:
-
-- VcXsrv: Free Windows X-server based on xorg git sources (like xming or cygwin's xwin, build with Visual Studio) https://sourceforge.net/projects/vcxsrv/files/
-- XMing: Freemium Windows X-server based on xorg git sources: https://sourceforge.net/projects/xming/files/Xming/
-
-
-#### macOS/Linux -OR- Windows Command Prompt or PowerShell with X11 Server
-
-Command line clients can generally access the cloud lab using X11 server with a command like this:
 
 ```
-$ ssh -i key.pem -X ubuntu@host.ip.ad.dr
+$ ssh -i key.pem -L 127.0.0.1:1234:127.0.0.1:8080 ubuntu@my.lab.ip.addr
 ```
 
-Where "ubuntu" is the default user name (the instructor may supply students with a different user name  in class) and
-"host.ip.ad.dr" is the host IP address of the student lab system supplied by the instructor during class (e.g.
-54.23.87.45).
+Taking this command apart:
 
-- The `-i` switch (for identity) is typically required in classes. This allows you to pass a key file to the ssh client
-  ("key.pem" in the example) for extra security.
-- The `-X` switch enables the X11 Window System for using remote GUI applications.
+- `ssh` - invokes the ssh command, which in this case will create an ssh session while also opening the requested tunnel
+- `-i key.pem` - this provides the private key needed to create the ssh tunnel
+- `-L 127.0.0.1:1234:127.0.0.1:8080` - this is the Local port forwarding command:
+    - `127.0.0.1:1234` - this causes the ssh command to forward localhost laptop connections targeting port "1234"
+    - `127.0.0.1:8080` - this completes the connection to the remote cloud system localhost port "8080"
+- `ubuntu@my.lab.ip.addr` - this logs you in as "ubuntu" on the system with ip address "my.lab.ip.addr"
 
+After issueing this command you can open a browser on your **laptop** using the url `http://127.0.0.1:1234/`
+to reach the web GUI running on your **lab system** at `127.0.0.1:8080`.
 
-#### X11 server on remote VMs
-
-If using GUI applications on the remote server, on the remote machine export the `DISPLAY` variable:
-
-```
-ubuntu@remote-host:~$ export DISPLAY=localhost:10
-```
-
-Install, and launch firefox
-
-```
-ubuntu@remote-host:~$ sudo apt-get install firefox -y
-
-...
-
-ubuntu@remote-host:~$ firefox &
-```
-
-A window on your local system should open with an instance of the Firefox browser from the remote system.
+If you need to browse to multiple ports on your lab system you can use multiple `-L` switches. You must select a unique
+local port that is not in use on your laptop with each `-L` port forwarding ("1234" was used in the example above, so
+you could forward "1235" to a second port on the lab system, for example).
