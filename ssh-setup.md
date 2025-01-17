@@ -8,7 +8,7 @@ In most cases this is three simple steps:
 1. Download the ssh key provided by your instructor to your laptop
 2. Change the ssh key file permissions to owner/read-only on your laptop:
      - `$ chmod 400 key.pem`
-3. Ssh to your assigned lab system from your laptop (ip provided by instructor):
+3. SSH to your assigned lab system from your laptop (ip provided by instructor):
      - `$ ssh -i key.pem ubuntu@my.lab.ip.addr`
 
 > The lab systems are Ubuntu Linux and the user "ubuntu" is used to login. The systems are protected with keys
@@ -31,25 +31,27 @@ run the appropriate ssh command as outlined above.
 Windows 10/11 systems typically provide a native ssh client accessible at the Command or PowerShell prompt.
 Third party ssh client tools are also frequently used on Windows (choose what works best for you).
 
-> N.B. RX-M reccomends GitBash and MobaXTerm
+> N.B. RX-M recommends GitBash and MobaXterm
 
 Links to 3rd party installers:
 
 - GitBash ssh command line client (free, part of Git distribution) [Windows/OSX/Linux] https://git-scm.com/downloads
-- MobaXTerm (free and paid) [Windows] https://mobaxterm.mobatek.net/download.html
-- PuTTY (free) [Windows] https://www.putty.org/
+- MobaXterm (free and paid) [Windows] https://MobaXterm.mobatek.net/download.html
+- [PuTTY](https://github.com/RX-M/classfiles/blob/master/ssh-setup.md#windows-putty) (free) [Windows] https://www.putty.org/
 
-If you are using any of the third party tools you do not need to adjust the permissions on your key file, you
-can simply ssh from the tool into your assigned lab system. Detailed instructions can be found below.
+If you are using any of the third party tools _you do not need to adjust the permissions on your key file_, you can
+simply ssh from the tool into your assigned lab system. Detailed instructions can be found below based on your client of
+choice:
 
-If you will be using the built in Windows ssh client, you will need to configure SSH key permissions as described
-in the next section:
+- [Windows native SSH](https://github.com/RX-M/classfiles/blob/master/ssh-setup.md#windows-native-ssh)
+- [MobaXterm](https://github.com/RX-M/classfiles/blob/master/ssh-setup.md#windows-MobaXterm)
+- [PuTTY](https://github.com/RX-M/classfiles/blob/master/ssh-setup.md#windows-putty)
 
 
 ### Windows native SSH
 
-In order to use private key files with Windows native ssh you must change the security
-attributes so that you alone have READ-ONLY access. Instructions follow:
+In order to use private key files with Windows native ssh you must change the security attributes so that you alone have
+READ-ONLY access. Instructions follow:
 
 - Locate the pem file in Windows Explorer, right-click on it then select "Properties".
 
@@ -115,9 +117,9 @@ retain these permissions after you perform this step once.
 Next, start an ssh session with a [shell](https://github.com/RX-M/classfiles/blob/master/ssh-setup.md#macoslinux--or--windows-gitbash-command-prompt-or-powershell-ssh).
 
 
-### Windows MobaXTerm
+### Windows MobaXterm
 
-To use MobaXTerm for ssh, start MobaXTerm and add a new session by clicking on the "Session" icon in the top-left corner
+To use MobaXterm for ssh, start MobaXterm and add a new session by clicking on the "Session" icon in the top-left corner
 or by selecting the "Sessions" menu and clicking "New session".
 
 In the "Session settings" window, click on SSH and enter the following information:
@@ -137,6 +139,13 @@ Click on the [ OK ] button to start your SSH session.
 
 PuTTY does not support the PEM format used by cloud environments. You can convert PEM files to Putty's
 PPK format (PPK = PuTTY Private Key) using the PuTTYgen utility.
+
+Converting a PEM key is typically not necessary in an RX-M course; your instructor has likely provided a PPK-formatted
+key and you skip to the section
+[SSH with PuTTY](https://github.com/RX-M/classfiles/blob/master/ssh-setup.md#ssh-with-putty).
+
+
+#### PuTTYgen
 
 To start the PuTTYgen utility you can type `puttygen` in the Windows start dialog box.
 
@@ -165,7 +174,8 @@ As the notice states, click on [ Save private key ]:
 
 Name the private key file and save it to a path that is easy to remember (we will use the path to the file in putty).
 
-Next, start an ssh session with [PuTTY](https://github.com/RX-M/classfiles/blob/master/ssh-setup.md#windows-putty-ssh).
+
+#### SSH with PuTTY
 
 Once you have converted the pem file to a ppk file, you are ready to use PuTTY. Open putty and type connection
 information in the "Host Name" text field:
@@ -179,13 +189,29 @@ The format should look similar to: `ubuntu@15.16.17.18` (substituting your assig
 
 Next, in the "Category" column on the left, click on the "`+`" icon next to the SSH field to expand the section.
 
+The newly expanded section will have an "Auth" subcategory. How you proceed from here depends on your PuTTY version.
+
+**PuTTY >= v0.78**
+
+In the newly expanded section, expand the "Auth" subcategory and click on "Credentials".
+
+In the "Private key file for authentication" text field, either type the path to your ppk file or click on the
+[ Browse... ] button to open the "Select private key file" dialog which will let you navigate to the location where you
+saved it using Windows explorer.
+
+<img alt="credentials" width="550px" src="./images/p07.png"/>
+
+<br>
+
+**PuTTY < v0.78**
+
 In the newly expanded section, click on "Auth".
 
 In the "Private key file for authentication" text field, either type the path to your ppk file or click on the
 [ Browse... ] button to open the "Select private key file" dialog which will let you navigate to the location where you
 saved it using Windows explorer.
 
-<img alt="auth" width="550px" src="./images/p07.png"/>
+<img alt="auth" width="550px" src="./images/p08.png"/>
 
 After setting the path to the private key file, you can _optionally_ return to the "Session" category, and under the
 "Saved Sessions" text box you can name your session and save it by clicking the [ Save ] button.
@@ -193,10 +219,10 @@ After setting the path to the private key file, you can _optionally_ return to t
 Click the [ Open ] button to start your SSH session.
 
 
-## SSH Port Forwarding
+## SSH tunneling / port forwarding
 
 Some environments (ZScaler, etc.) may block browser (HTTP) access from your laptop to the cloud lab system. You can
-easily and securily bypass this restriction with port forwarding through an ssh tunnel.
+easily and securely bypass this restriction with port forwarding through an ssh tunnel.
 
 For example, imagine you are running a lab which requires you to access a web GUI on port 8080 on your cloud based
 lab system. If your local or corporate environment blocks this access you can open a tunnel on your laptop to the lab
@@ -213,12 +239,76 @@ Taking this command apart:
 - `-i key.pem` - this provides the private key needed to create the ssh tunnel
 - `-L 127.0.0.1:1234:127.0.0.1:8080` - this is the Local port forwarding command:
     - `127.0.0.1:1234` - this causes the ssh command to forward localhost laptop connections targeting port "1234"
-    - `127.0.0.1:8080` - this completes the connection to the remote cloud system localhost port "8080"
+    - `127.0.0.1:8080` - this completes the connection to the remote cloud system's localhost port "8080"
 - `ubuntu@my.lab.ip.addr` - this logs you in as "ubuntu" on the system with ip address "my.lab.ip.addr"
 
-After issueing this command you can open a browser on your **laptop** using the url `http://127.0.0.1:1234/`
+After issuing this command you can open a browser **on your laptop** using the url `http://127.0.0.1:1234/`
 to reach the web GUI running on your **lab system** at `127.0.0.1:8080`.
 
 If you need to browse to multiple ports on your lab system you can use multiple `-L` switches. You must select a unique
 local port that is not in use on your laptop with each `-L` port forwarding ("1234" was used in the example above, so
 you could forward "1235" to a second port on the lab system, for example).
+
+
+### SSH tunneling / port forwarding with MobaXterm
+
+To use MobaXterm for ssh tunneling, start MobaXterm and add a new tunnel by clicking on the "Tunneling" icon on the top ribbon.
+
+The "MobaSSHTunnel" pop-up window will appear. In the bottom-left corner, click on [ New SSH Tunnel ]
+
+The graphical port forwarding builder window will appear. Enter the following information into the UI:
+
+- My computer with MobaXterm (bottom left) 
+  - Forwarded port text box - enter the port you will be using with the browser **on your laptop** (e.g. 1234)
+- Remote server (top right)
+  - Remote server text box - `127.0.0.1` 
+  - Remote port text box - the port on the **lab system** (e.g. 8080)
+- SSH server (bottom right)
+  - SSH server text box - the IP of your lab system
+  - SSH login text box - `ubuntu`
+  - SSH port text box - `22`
+
+<img alt="graphical port forwarding builder" width="700px" src="./images/p12.png"/>
+
+Click [ Save ] and the graphical builder will close and a new entry will be saved in the "MobaSSHTunnel" window. Click
+on the key icon for your tunnel to add your ssh key to its configuration using Windows explorer.
+
+Once the key is added, click the play icon for your tunnel and MobaXterm will establish your tunnel in the background.
+
+After starting the tunnel you can open a browser **on your laptop** using the url `http://127.0.0.1:1234/` to
+reach the web GUI running on your **lab system** at `127.0.0.1:8080`.
+
+If you need to browse to multiple ports on your lab system you can add and use multiple tunnel configs concurrently. You
+must select a unique local port that is not in use on your laptop with each forwarded port ("1234" was used in the
+example above, so you could forward "1235" to a second port on the lab system, for example).
+
+
+### SSH tunneling / port forwarding with PuTTY
+
+In the "Category" column on the left, click on the "`+`" icon next to the SSH field to expand the section.
+
+In the newly expanded section, click on "Tunnels", and fill out the options as follows:
+
+- In the "Source port" text field, put in the port you will be using with the browser **on your laptop** (e.g. 1234)
+- In the "Destination" text field, put in the localhost IP `127.0.0.1` followed by the port on the **lab system**
+
+Click the [ Add ] button to add the configuration:
+
+<img alt="tunnels" width="550px" src="./images/p09.png"/>
+
+Once the configuration has been added, you will see it under the "Forwarded ports" list:
+
+<img alt="tunnel config added" width="550px" src="./images/p10.png"/>
+
+After clicking [ Open ] you can open a browser **on your laptop** using the url `http://127.0.0.1:1234/` to reach the
+web GUI running on your **lab system** at `127.0.0.1:8080`.
+
+If you need to browse to multiple ports on your lab system you can add multiple entries to the "Forwarded ports" list.
+You must select a unique local port that is not in use on your laptop with each entry ("1234" was used in the example
+above, so you could forward "1235" to a second port on the lab system), for example:
+
+<img alt="multiple ports" width="550px" src="./images/p11.png"/>
+
+<br>
+
+_Copyright (c) 2012-2025 RX-M LLC, Cloud Native & AI Training and Consulting, all rights reserved_
