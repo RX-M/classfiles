@@ -26,7 +26,19 @@
 # limitations under the License.
 
 # This script assumes you have Docker already installed
+
 set -e
+
+# Increase inotify limits
+sudo sysctl fs.inotify.max_user_watches=524288
+sudo sysctl fs.inotify.max_user_instances=512
+echo "sysctl fs.inotify.max_user_watches=524288" | sudo tee -a /etc/sysctl.conf
+echo "sysctl fs.inotify.max_user_instances=512" | sudo tee -a /etc/sysctl.conf
+
+# Defaults
+DOCKER_VERSION="${DOCKER_VERSION:-"26.1.1"}"
+K8S_VERSION="${K8S_VERSION:-"v1.31.1"}"
+K8S_REPO="https://pkgs.k8s.io/core:/stable:/${K8S_VERSION%.*}/deb"
 
 # Configure Docker's bundled containerd to enable cni & use systemd for cgroups
 sudo cp /etc/containerd/config.toml /etc/containerd/config.bak
