@@ -1,4 +1,4 @@
-!/bin/bash
+#!/bin/bash
 #
 # Script to install a single node K8s cluster on an RX-M Lab VM
 #
