@@ -11,7 +11,7 @@
 #
 #      Kubernetes single node clusters require a 4GB ram VM to run properly.
 #
-# Copyright (c) 2021-2023 RX-M LLC
+# Copyright (c) 2021-2025 RX-M LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -32,25 +32,50 @@ set -e
 sudo cp /etc/containerd/config.toml /etc/containerd/config.bak
 sudo containerd config default | sudo tee /etc/containerd/config.toml
 sudo sed -i -e 's/SystemdCgroup = false/SystemdCgroup = true/' /etc/containerd/config.toml
+sudo sed -i -e 's/pause:3.8/pause:3.10/' /etc/containerd/config.toml
 sudo systemctl restart containerd
 
-# Initialize a control plane node
-curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -
-echo "deb http://apt.kubernetes.io/ kubernetes-xenial main" | sudo tee -a /etc/apt/sources.list.d/kubernetes.list
+# Initialize the system as a Kubernetes node
 sudo apt-get update
-sudo apt-get install -y kubeadm
+sudo apt-get install -y apt-transport-https ca-certificates curl gpg
+sudo mkdir -p -m 755 /etc/apt/keyrings
+curl -fsSL "${K8S_REPO}/Release.key" | sudo gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg
+echo "deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] ${K8S_REPO}/ /" | sudo tee /etc/apt/sources.list.d/kubernetes.list
+sudo apt-get update
+sudo apt-get install -y kubelet kubeadm kubectl
+sudo apt-mark hold kubelet kubeadm kubectl
 sudo swapoff -a
-if [ -z ${K8S_VERSION+x} ]; then K8S_VERSION="--kubernetes-version=stable-1" ; else K8S_VERSION="--kubernetes-version=$K8S_VERSION"; fi
-sudo kubeadm init --cri-socket=unix:///var/run/containerd/containerd.sock  $K8S_VERSION
-mkdir -p $HOME/.kube
-sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
-sudo chown $(id -u):$(id -g) $HOME/.kube/config
-kubectl apply -f https://github.com/weaveworks/weave/releases/download/v2.8.1/weave-daemonset-k8s-1.11.yaml
-kubectl patch node $(hostname) -p '{"spec":{"taints":[]}}'
+
+# e.g. to set K8s version `export K8S_VERSION=v1.30.1 && bash -x k8s.sh`
+# Install the Kubernetes control plane
+sudo kubeadm init --cri-socket=unix:///var/run/containerd/containerd.sock --kubernetes-version="${K8S_VERSION}"
+mkdir -p "${HOME}/.kube"
+sudo cp -i /etc/kubernetes/admin.conf "${HOME}/.kube/config"
+sudo chown "$(id -u):$(id -g)" "${HOME}/.kube/config"
+
+# Install Cilium CNI
+CILIUM_VERSION="${CILIUM_VERSION:-1.16.5}"
+CILIUM_CLI_VERSION=$(curl -s https://raw.githubusercontent.com/cilium/cilium-cli/main/stable.txt)
+CLI_ARCH=amd64
+if [ "$(uname -m)" = "aarch64" ]; then CLI_ARCH=arm64; fi
+curl -L --fail --remote-name-all https://github.com/cilium/cilium-cli/releases/download/${CILIUM_CLI_VERSION}/cilium-linux-${CLI_ARCH}.tar.gz{,.sha256sum}
+sha256sum --check cilium-linux-${CLI_ARCH}.tar.gz.sha256sum
+sudo tar xzvfC cilium-linux-${CLI_ARCH}.tar.gz /usr/local/bin
+rm cilium-linux-${CLI_ARCH}.tar.gz.sha256sum cilium-linux-${CLI_ARCH}.tar.gz
+cilium install --version ${CILIUM_VERSION} 
+
+# Untaint the control plane node so that normal pods can run
+kubectl patch node "$(hostname)" -p '{"spec":{"taints":[]}}'
 
 # Install the latest crictl (cni-tools package is not always the latest)
-CRICTL_VERSION=$(curl -s https://api.github.com/repos/kubernetes-sigs/cri-tools/releases/latest|grep tag_name | cut -d '"' -f 4 | cut -b 2-)
-wget https://github.com/kubernetes-sigs/cri-tools/releases/download/v$CRICTL_VERSION/crictl-v$CRICTL_VERSION-linux-amd64.tar.gz
-sudo tar zxvf crictl-v$CRICTL_VERSION-linux-amd64.tar.gz -C /usr/local/bin
-rm -f crictl-v$CRICTL_VERSION-linux-amd64.tar.gz
+crictl_ver=$(curl -s https://api.github.com/repos/kubernetes-sigs/cri-tools/releases/latest | grep tag_name | cut -d '"' -f 4 | cut -b 2-)
+wget "https://github.com/kubernetes-sigs/cri-tools/releases/download/v${crictl_ver}/crictl-v${crictl_ver}-linux-amd64.tar.gz"
+sudo tar zxvf "crictl-v${crictl_ver}-linux-amd64.tar.gz" -C /usr/local/bin
+rm -f "crictl-v${crictl_ver}-linux-amd64.tar.gz"
 echo "runtime-endpoint: unix:///run/containerd/containerd.sock" | sudo tee /etc/crictl.yaml
+
+# Scale CoreDNS down to 1 pod
+kubectl scale deployment.apps/coredns --replicas=1 -n kube-system
+
+# Add kubectl command completion
+echo "source <(kubectl completion bash)" >> ~/.bashrc
