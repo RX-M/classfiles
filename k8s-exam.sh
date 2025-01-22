@@ -30,11 +30,11 @@ set -e
 
 # Defaults
 DOCKER_VER="26.1.1"
-K8S_VERSION="v1.29.6"
-K8S_REPO="https://pkgs.k8s.io/core:/stable:/v1.29/deb"
+K8S_VERSION="v1.31.5"
+K8S_REPO="https://pkgs.k8s.io/core:/stable:/v1.31/deb"
 CILIUM_CLI_VERSION=$(curl -s https://raw.githubusercontent.com/cilium/cilium-cli/main/stable.txt)
 CLI_ARCH=amd64
-CILIUM_VERSION=1.15.6
+CILIUM_VERSION=1.16.5
 
 # Install Docker
 curl -fsSL https://get.docker.com -o /tmp/install-docker.sh && sh /tmp/install-docker.sh --version $DOCKER_VER
@@ -56,7 +56,7 @@ sudo systemctl restart docker
 sudo cp /etc/containerd/config.toml /etc/containerd/config.bak
 sudo containerd config default | sudo tee /etc/containerd/config.toml
 sudo sed -i -e 's/SystemdCgroup = false/SystemdCgroup = true/' /etc/containerd/config.toml
-sudo sed -i -e 's/pause:3.6/pause:3.9/' /etc/containerd/config.toml
+sudo sed -i -e 's/pause:3.8/pause:3.10/' /etc/containerd/config.toml
 sudo systemctl restart containerd
 
 # Initialize a control plane node
