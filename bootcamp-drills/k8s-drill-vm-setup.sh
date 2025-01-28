@@ -1,6 +1,6 @@
-# Script to install a single node K8s cluster on an RX-M Lab VM
+# Script to install tools for certification bootcamps on an RX-M Lab VM
 #
-# To use:  $ curl https://raw.githubusercontent.com/RX-M/classfiles/master/k8s.sh | sh
+# To use:  $ curl https://raw.githubusercontent.com/RX-M/classfiles/master/bootcamp-drills/k8s-drill-vm-setup.sh | sh
 #
 # N.B. The script turns off swap for the K8s control plane install but does
 #      not disable swap permenantly. Please comment out any swap volumes in
@@ -11,7 +11,7 @@
 #
 #      Kubernetes single node clusters require a 4GB ram VM to run properly.
 #
-# Copyright (c) 2021 RX-M LLC
+# Copyright (c) 2025 RX-M LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -51,7 +51,7 @@ sudo systemctl restart containerd
 
 # Prepare the binaries to init a control plane node
 curl -fsSL https://pkgs.k8s.io/core:/stable:/v1.31/deb/Release.key | sudo gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg
-echo 'deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/v1.30/deb/ /' | sudo tee /etc/apt/sources.list.d/kubernetes.list
+echo 'deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/v1.31/deb/ /' | sudo tee /etc/apt/sources.list.d/kubernetes.list
 sudo apt-get update
 sudo apt-get install -y kubeadm kubectl kubelet
 
@@ -65,7 +65,7 @@ sudo tar xzvfC cilium-linux-${CLI_ARCH}.tar.gz /usr/local/bin
 rm cilium-linux-${CLI_ARCH}.tar.gz.sha256sum cilium-linux-${CLI_ARCH}.tar.gz
 
 # Add etcdctl and etcdutl to the machine
-wget https://github.com/etcd-io/etcd/releases/download/v3.5.12/etcd-v3.5.12-linux-amd64.tar.gz
+wget https://github.com/etcd-io/etcd/releases/download/v3.5.16/etcd-v3.5.16-linux-amd64.tar.gz
 tar xzf etcd-*-linux-amd64.tar.gz --strip-components=1
 sudo cp etcdctl /usr/bin/
 sudo cp etcdutl /usr/bin/
