@@ -80,7 +80,7 @@ sudo cp -i /etc/kubernetes/admin.conf "${HOME}/.kube/config"
 sudo chown "$(id -u):$(id -g)" "${HOME}/.kube/config"
 
 # Install Cilium CNI
-CILIUM_VERSION="${CILIUM_VERSION:-1.17.0}"
+CILIUM_VERSION="${CILIUM_VERSION:-1.18.3}"
 CILIUM_CLI_VERSION=$(curl -s https://raw.githubusercontent.com/cilium/cilium-cli/main/stable.txt)
 CLI_ARCH=amd64
 if [ "$(uname -m)" = "aarch64" ]; then CLI_ARCH=arm64; fi
