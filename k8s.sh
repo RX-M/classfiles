@@ -34,9 +34,12 @@ echo "sysctl fs.inotify.max_user_watches=524288" | sudo tee -a /etc/sysctl.conf
 echo "sysctl fs.inotify.max_user_instances=512" | sudo tee -a /etc/sysctl.conf
 
 # Defaults
-DOCKER_VERSION="${DOCKER_VERSION:-"26.1.1"}"
-K8S_VERSION="${K8S_VERSION:-"v1.32.1"}"
+DOCKER_VERSION="${DOCKER_VERSION:-"28.3.2"}"
+K8S_VERSION="${K8S_VERSION:-"v1.33.3"}"
 K8S_REPO="https://pkgs.k8s.io/core:/stable:/${K8S_VERSION%.*}/deb"
+CILIUM_VERSION="${CILIUM_VERSION:-1.17.6}"
+CILIUM_CLI_VERSION=$(curl -s https://raw.githubusercontent.com/cilium/cilium-cli/main/stable.txt)
+CLI_ARCH=amd64
 
 # Install Docker
 curl -fsSL https://get.docker.com -o /tmp/install-docker.sh && sh /tmp/install-docker.sh --version $DOCKER_VERSION
@@ -72,7 +75,7 @@ sudo apt-get install -y kubelet kubeadm kubectl
 sudo apt-mark hold kubelet kubeadm kubectl
 sudo swapoff -a
 
-# e.g. to set K8s version `export K8S_VERSION=v1.32.1 && bash -x k8s.sh`
+# e.g. to set K8s version `export K8S_VERSION=v1.33.3 && bash -x k8s.sh`
 # Install the Kubernetes control plane
 sudo kubeadm init --cri-socket=unix:///var/run/containerd/containerd.sock --kubernetes-version="${K8S_VERSION}"
 mkdir -p "${HOME}/.kube"
@@ -80,9 +83,6 @@ sudo cp -i /etc/kubernetes/admin.conf "${HOME}/.kube/config"
 sudo chown "$(id -u):$(id -g)" "${HOME}/.kube/config"
 
 # Install Cilium CNI
-CILIUM_VERSION="${CILIUM_VERSION:-1.17.3}"
-CILIUM_CLI_VERSION=$(curl -s https://raw.githubusercontent.com/cilium/cilium-cli/main/stable.txt)
-CLI_ARCH=amd64
 if [ "$(uname -m)" = "aarch64" ]; then CLI_ARCH=arm64; fi
 curl -L --fail --remote-name-all https://github.com/cilium/cilium-cli/releases/download/${CILIUM_CLI_VERSION}/cilium-linux-${CLI_ARCH}.tar.gz{,.sha256sum}
 sha256sum --check cilium-linux-${CLI_ARCH}.tar.gz.sha256sum
