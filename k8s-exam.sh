@@ -2,7 +2,7 @@
 #
 # Script to install a single node K8s cluster on an RX-M Lab VM
 #
-# Usage:  $ curl https://raw.githubusercontent.com/RX-M/classfiles/master/k8s1.32.sh | sh
+# Usage:  $ curl https://raw.githubusercontent.com/RX-M/classfiles/master/k8s-exam.sh | sh
 #
 # N.B. The script turns off swap for the K8s control plane install but does not disable swap permanently.
 #      Please comment out any swap volumes in the /etc/fstab before rebooting the VM.
