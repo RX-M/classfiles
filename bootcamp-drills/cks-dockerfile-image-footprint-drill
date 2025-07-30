@@ -1,0 +1,5 @@
+FROM golang:1.22 AS build-env
+WORKDIR /go/src/trash-levels/
+COPY ./main.go /go/src/trash-levels/
+RUN go get github.com/gorilla/mux/
+RUN ["go","build","-tags","netgo"]

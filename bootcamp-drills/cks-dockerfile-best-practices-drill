@@ -1,0 +1,10 @@
+FROM docker.io/golang:1.22
+WORKDIR /go/src/trash-levels/
+COPY ./main.go /go/src/trash-levels/
+RUN go get github.com/gorilla/mux/
+RUN go get github.com/prometheus/client_golang/prometheus
+RUN go get github.com/prometheus/client_golang/prometheus/promhttp
+RUN ["go","build","-tags","netgo"]
+EXPOSE 80
+USER root
+ENTRYPOINT ["./trash-levels"]

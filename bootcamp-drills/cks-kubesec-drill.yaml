@@ -1,0 +1,21 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: lint-challenge-2
+  labels:
+    app: trash-levels
+    component: trash-levels-web
+    vendor: rx-m
+spec:
+  containers:
+  - image: httpd:latest
+    name: httpd
+    livenessProbe:
+      httpGet:
+        path: /
+        port: 80
+      initialDelaySeconds: 2
+    command:
+    - /bin/sh
+    - -c
+    - "httpd-foreground 2>&1 | tee -a /log/webserver.log"

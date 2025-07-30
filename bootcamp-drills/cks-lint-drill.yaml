@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    run: lint-challenge
+  name: lint-challenge
+spec:
+  containers:
+  - image: nginx
+    name: lint-challenge
+    resources:
+      limits:
+        cpu: 100m
+        memory: 512M
+    securityContext:
+      readOnlyRootFilesystem: true
