@@ -34,9 +34,12 @@ echo "sysctl fs.inotify.max_user_watches=524288" | sudo tee -a /etc/sysctl.conf
 echo "sysctl fs.inotify.max_user_instances=512" | sudo tee -a /etc/sysctl.conf
 
 # Defaults
-DOCKER_VER="26.1.1"
-K8S_VERSION="v1.30.2"
-K8S_REPO="https://pkgs.k8s.io/core:/stable:/v1.30/deb"
+DOCKER_VERSION="${DOCKER_VERSION:-"28.3.2"}"
+K8S_VERSION="${K8S_VERSION:-"v1.33.3"}"
+K8S_REPO="https://pkgs.k8s.io/core:/stable:/${K8S_VERSION%.*}/deb"
+CILIUM_VERSION="${CILIUM_VERSION:-1.17.6}"
+CILIUM_CLI_VERSION=$(curl -s https://raw.githubusercontent.com/cilium/cilium-cli/main/stable.txt)
+CLI_ARCH=amd64
 
 # Install Docker
 curl -fsSL https://get.docker.com -o /tmp/install-docker.sh && sh /tmp/install-docker.sh --version $DOCKER_VER
@@ -80,14 +83,12 @@ sudo cp -i /etc/kubernetes/admin.conf "${HOME}/.kube/config"
 sudo chown "$(id -u):$(id -g)" "${HOME}/.kube/config"
 
 # Install Cilium CNI
-CILIUM_CLI_VERSION=$(curl -s https://raw.githubusercontent.com/cilium/cilium-cli/main/stable.txt)
-CLI_ARCH=amd64
 if [ "$(uname -m)" = "aarch64" ]; then CLI_ARCH=arm64; fi
 curl -L --fail --remote-name-all https://github.com/cilium/cilium-cli/releases/download/${CILIUM_CLI_VERSION}/cilium-linux-${CLI_ARCH}.tar.gz{,.sha256sum}
 sha256sum --check cilium-linux-${CLI_ARCH}.tar.gz.sha256sum
 sudo tar xzvfC cilium-linux-${CLI_ARCH}.tar.gz /usr/local/bin
 rm cilium-linux-${CLI_ARCH}.tar.gz.sha256sum cilium-linux-${CLI_ARCH}.tar.gz
-cilium install --version 1.15.6
+cilium install --version ${CILIUM_VERSION}
 
 # Untaint the control plane node so that normal pods can run
 kubectl patch node "$(hostname)" -p '{"spec":{"taints":[]}}'
