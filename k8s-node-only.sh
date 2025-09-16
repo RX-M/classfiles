@@ -1,10 +1,18 @@
 #!/bin/bash
 #
-# Script to install a single K8s node K8s. This pairs with https://raw.githubusercontent.com/RX-M/classfiles/master/k8s.sh used to setup control plane node.
+# Script to install a single K8s node K8s. This pairs with:
+# https://raw.githubusercontent.com/RX-M/classfiles/master/k8s.sh used to setup a control plane node.
 #
 # Usage:  $ curl https://raw.githubusercontent.com/RX-M/classfiles/master/k8s-node-ony.sh | sh
 #
-# Copyright (c) 2021-2024 RX-M LLC
+# N.B. The script turns off swap for the K8s control plane install but does not disable swap permanently.
+#      Please comment out any swap volumes in the /etc/fstab before rebooting the VM.
+#
+#      This script will fail to run if the apt db is locked (wait 10 mins and retry or reboot and retry).
+#
+#      Kubernetes single node clusters require a 4GB ram VM to run properly.
+#
+# Copyright (c) 2021-2025 RX-M LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -21,14 +29,19 @@
 
 set -e
 
-# Can set version such as `export K8S_VERSION=v1.30.1 && bash -x node.sh`; for DOCKER_VERSION and K8S_VERSION
+# Increase inotify limits
+sudo sysctl fs.inotify.max_user_watches=524288
+sudo sysctl fs.inotify.max_user_instances=512
+echo "sysctl fs.inotify.max_user_watches=524288" | sudo tee -a /etc/sysctl.conf
+echo "sysctl fs.inotify.max_user_instances=512" | sudo tee -a /etc/sysctl.conf
+
 # Defaults
-DOCKER_VER="${DOCKER_VERSION:-"26.1.1"}"
-K8S_VERSION="${K8S_VERSION:-"v1.31.1"}"
+DOCKER_VERSION="${DOCKER_VERSION:-"28.3.2"}"
+K8S_VERSION="${K8S_VERSION:-"v1.33.3"}"
 K8S_REPO="https://pkgs.k8s.io/core:/stable:/${K8S_VERSION%.*}/deb"
 
 # Install Docker
-curl -fsSL https://get.docker.com -o /tmp/install-docker.sh && sh /tmp/install-docker.sh --version $DOCKER_VER
+curl -fsSL https://get.docker.com -o /tmp/install-docker.sh && sh /tmp/install-docker.sh --version $DOCKER_VERSION
 
 sudo mkdir -p /etc/docker
 cat <<EOF | sudo tee /etc/docker/daemon.json
@@ -47,10 +60,10 @@ sudo systemctl restart docker
 sudo cp /etc/containerd/config.toml /etc/containerd/config.bak
 sudo containerd config default | sudo tee /etc/containerd/config.toml
 sudo sed -i -e 's/SystemdCgroup = false/SystemdCgroup = true/' /etc/containerd/config.toml
-sudo sed -i -e 's/pause:3.6/pause:3.9/' /etc/containerd/config.toml
+sudo sed -i -e 's/pause:3.8/pause:3.10/' /etc/containerd/config.toml
 sudo systemctl restart containerd
 
-# Initialize a control plane node
+# Initialize the system as a Kubernetes node
 sudo apt-get update
 sudo apt-get install -y apt-transport-https ca-certificates curl gpg
 sudo mkdir -p -m 755 /etc/apt/keyrings
@@ -59,7 +72,6 @@ echo "deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] ${K8S_REPO}/ 
 sudo apt-get update
 sudo apt-get install -y kubelet kubeadm kubectl
 sudo apt-mark hold kubelet kubeadm kubectl
-
 sudo swapoff -a
 
-printf "Run this command on CP node - kubeadm token create --print-join-command - runs its output on worker node(s)"
+printf "Run this command on CP node - kubeadm token create --print-join-command - and run its output on your worker node(s)"
