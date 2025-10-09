@@ -2,7 +2,7 @@
 #
 # Script to install a single node K8s cluster on a Lab VM
 #
-# Usage:  $ curl https://raw.githubusercontent.com/RX-M/classfiles/master/k8s-multicluster-prem.sh | sh
+# Usage:  $ curl https://raw.githubusercontent.com/RX-M/classfiles/master/k8s-multicluster-cloud.sh | sh
 #
 # N.B. The script turns off swap for the K8s control plane install but does not disable swap permanently.
 #      Please comment out any swap volumes in the /etc/fstab before rebooting the VM.
@@ -75,7 +75,7 @@ sudo apt-get install -y kubelet kubeadm kubectl
 sudo apt-mark hold kubelet kubeadm kubectl
 sudo swapoff -a
 
-# Install the Kubernetes control plane using the designated IP ranges and DNS suffix of prem.local
+# Install the Kubernetes control plane using the designated IP ranges and DNS suffix of cloud.local
 sudo kubeadm init --cri-socket=unix:///var/run/containerd/containerd.sock --kubernetes-version="${K8S_VERSION}" \
   --pod-network-cidr "10.130.0.0/16" --service-cidr "10.230.0.0/16" --service-dns-domain "cloud.local"
 mkdir -p "${HOME}/.kube"
