@@ -42,20 +42,25 @@ CILIUM_CLI_VERSION=$(curl -s https://raw.githubusercontent.com/cilium/cilium-cli
 CLI_ARCH=amd64
 
 # Install Docker
-curl -fsSL https://get.docker.com -o /tmp/install-docker.sh && sh /tmp/install-docker.sh --version $DOCKER_VERSION
+if command -v docker >/dev/null 2>&1; then
+    echo "Docker is already installed, skipping Docker installation"
+else
+    curl -fsSL https://get.docker.com -o /tmp/install-docker.sh && sh /tmp/install-docker.sh --version $DOCKER_VERSION
+    sudo mkdir -p /etc/docker
 
-sudo mkdir -p /etc/docker
-cat <<EOF | sudo tee /etc/docker/daemon.json
+    cat <<EOF | sudo tee /etc/docker/daemon.json
 {
-  "exec-opts": ["native.cgroupdriver=systemd"],
-  "log-driver": "json-file",
-  "log-opts": {
-    "max-size": "100m"
-  },
-  "storage-driver": "overlay2"
+    "exec-opts": ["native.cgroupdriver=systemd"],
+    "log-driver": "json-file",
+    "log-opts": {
+        "max-size": "100m"
+    },
+    "storage-driver": "overlay2"
 }
 EOF
-sudo systemctl restart docker
+
+    sudo systemctl restart docker
+fi
 
 # Configure Docker's bundled containerd to enable cni & use systemd for cgroups
 sudo cp /etc/containerd/config.toml /etc/containerd/config.bak
