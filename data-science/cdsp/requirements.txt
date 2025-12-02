@@ -50,7 +50,7 @@ executing==2.1.0
 fastjsonschema==2.20.0
 filelock==3.16.0
 Flask==3.0.3
-fonttools==4.53.1
+fonttools==4.61.0
 fqdn==1.5.1
 frozenlist==1.4.1
 fsspec==2024.6.1
