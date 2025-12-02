@@ -54,7 +54,7 @@ fonttools==4.53.1
 fqdn==1.5.1
 frozenlist==1.4.1
 fsspec==2024.6.1
-h11==0.14.0
+h11==0.16.0
 hibagent==1.0.1
 httpcore==1.0.5
 httplib2==0.20.4
