@@ -10,6 +10,8 @@ In most cases this is three simple steps:
      - `$ chmod 400 key.pem`
 3. SSH to your assigned lab system from your laptop (ip provided by instructor):
      - `$ ssh -i key.pem ubuntu@my.lab.ip.addr`
+       - If you receive an error related to "too many identities", adding the `-o IdentitiesOnly=yes` flag forces ssh to
+         only use the provided keyfile instead of cycling through all of the keys in your `~/.ssh` directory.
 
 > The lab systems are Ubuntu Linux and the user "ubuntu" is used to login. The systems are protected with keys
 > rather than passwords and the "-i" switch is used to pass the private keyfile to ssh. You must replace the
@@ -311,4 +313,4 @@ above, so you could forward "1235" to a second port on the lab system), for exam
 
 <br>
 
-_Copyright (c) 2012-2025 RX-M LLC, Cloud Native & AI Training and Consulting, all rights reserved_
+_Copyright (c) 2012-2026 RX-M LLC, Cloud Native & AI Training and Consulting, all rights reserved_
