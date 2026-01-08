@@ -11,7 +11,7 @@
 #
 #      Kubernetes single node clusters require a 4GB ram VM to run properly.
 #
-# Copyright (c) 2021-2024 RX-M LLC
+# Copyright (c) 2026 RX-M LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -34,10 +34,10 @@ echo "sysctl fs.inotify.max_user_watches=524288" | sudo tee -a /etc/sysctl.conf
 echo "sysctl fs.inotify.max_user_instances=512" | sudo tee -a /etc/sysctl.conf
 
 # Defaults
-DOCKER_VERSION="${DOCKER_VERSION:-"28.3.2"}"
-K8S_VERSION="${K8S_VERSION:-"v1.34.3"}"
+DOCKER_VERSION="${DOCKER_VERSION:-"29.1.3"}"
+K8S_VERSION="${K8S_VERSION:-"v1.35.0"}"
 K8S_REPO="https://pkgs.k8s.io/core:/stable:/${K8S_VERSION%.*}/deb"
-CILIUM_VERSION="${CILIUM_VERSION:-1.17.11}"
+CILIUM_VERSION="${CILIUM_VERSION:-1.18.3}"
 CILIUM_CLI_VERSION=$(curl -s https://raw.githubusercontent.com/cilium/cilium-cli/main/stable.txt)
 CLI_ARCH=amd64
 
@@ -66,7 +66,7 @@ fi
 sudo cp /etc/containerd/config.toml /etc/containerd/config.bak
 sudo containerd config default | sudo tee /etc/containerd/config.toml
 sudo sed -i -e 's/SystemdCgroup = false/SystemdCgroup = true/' /etc/containerd/config.toml
-sudo sed -i -e 's/pause:3.8/pause:3.10/' /etc/containerd/config.toml
+sudo sed -i -e 's/pause:3.8/pause:3.10.1/' /etc/containerd/config.toml
 sudo systemctl restart containerd
 
 # Initialize the system as a Kubernetes node
@@ -80,7 +80,7 @@ sudo apt-get install -y kubelet kubeadm kubectl
 sudo apt-mark hold kubelet kubeadm kubectl
 sudo swapoff -a
 
-# e.g. to set K8s version `export K8S_VERSION=v1.33.3 && bash -x k8s.sh`
+# e.g. to set K8s version `export K8S_VERSION=v1.35.0 && bash -x k8s.sh`
 # Install the Kubernetes control plane
 sudo kubeadm init --cri-socket=unix:///var/run/containerd/containerd.sock --kubernetes-version="${K8S_VERSION}"
 mkdir -p "${HOME}/.kube"
