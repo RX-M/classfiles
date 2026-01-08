@@ -4,7 +4,7 @@
 #
 # Usage:  $ curl https://raw.githubusercontent.com/RX-M/classfiles/master/k8s.sh | sh
 #
-# N.B. The script turns off swap for the K8s control plane install but does not disable swap permenantly.
+# N.B. The script turns off swap for the K8s control plane install but does not disable swap permanently.
 #      Please comment out any swap volumes in the /etc/fstab before rebooting the VM.
 #
 #      This script will fail to run if the apt db is locked (wait 10 mins and retry or reboot and retry).
