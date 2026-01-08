@@ -34,10 +34,10 @@ echo "sysctl fs.inotify.max_user_watches=524288" | sudo tee -a /etc/sysctl.conf
 echo "sysctl fs.inotify.max_user_instances=512" | sudo tee -a /etc/sysctl.conf
 
 # Defaults
-DOCKER_VERSION="${DOCKER_VERSION:-"28.3.2"}"
-K8S_VERSION="${K8S_VERSION:-"v1.32.0"}"
+DOCKER_VERSION="${DOCKER_VERSION:-"29.1.3"}"
+K8S_VERSION="${K8S_VERSION:-"v1.35.0"}"
 K8S_REPO="https://pkgs.k8s.io/core:/stable:/${K8S_VERSION%.*}/deb"
-CILIUM_VERSION="${CILIUM_VERSION:-1.17.6}"
+CILIUM_VERSION="${CILIUM_VERSION:-1.18.3}"
 CILIUM_CLI_VERSION=$(curl -s https://raw.githubusercontent.com/cilium/cilium-cli/main/stable.txt)
 CLI_ARCH=amd64
 
