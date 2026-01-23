@@ -226,7 +226,7 @@ webcolors==24.8.0
 webencodings==0.5.1
 websocket-client==1.8.0
 Werkzeug==3.1.4
-wheel==0.42.0
+wheel==0.46.2
 widgetsnbextension==4.0.13
 wrapt==1.16.0
 xgboost==2.1.1
