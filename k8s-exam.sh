@@ -65,6 +65,7 @@ sudo sed -i -e 's/pause:3.8/pause:3.10.1/' /etc/containerd/config.toml
 sudo systemctl restart containerd
 
 # Initialize the system as a Kubernetes node
+sudo swapoff -a
 sudo apt-get update
 sudo apt-get install -y apt-transport-https ca-certificates curl gpg
 sudo mkdir -p -m 755 /etc/apt/keyrings
@@ -72,8 +73,6 @@ curl -fsSL "${K8S_REPO}/Release.key" | sudo gpg --dearmor -o /etc/apt/keyrings/k
 echo "deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] ${K8S_REPO}/ /" | sudo tee /etc/apt/sources.list.d/kubernetes.list
 sudo apt-get update
 sudo apt-get install -y kubelet kubeadm kubectl
-sudo apt-mark hold kubelet kubeadm kubectl
-sudo swapoff -a
 
 # e.g. to set K8s version `export K8S_VERSION=v1.34.0 && bash -x k8s.sh`
 # Install the Kubernetes control plane
