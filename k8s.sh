@@ -28,10 +28,12 @@
 set -e
 
 # Increase inotify limits
-sudo sysctl fs.inotify.max_user_watches=524288
-sudo sysctl fs.inotify.max_user_instances=512
-echo "sysctl fs.inotify.max_user_watches=524288" | sudo tee -a /etc/sysctl.conf
-echo "sysctl fs.inotify.max_user_instances=512" | sudo tee -a /etc/sysctl.conf
+sudo sysctl fs.inotify.max_user_watches=5242880
+sudo sysctl fs.inotify.max_user_instances=5120
+echo "fs.inotify.max_user_watches=5242880" | sudo tee -a /etc/sysctl.conf
+echo "fs.inotify.max_user_instances=5120" | sudo tee -a /etc/sysctl.conf
+sudo systemctl restart systemd-sysctl
+sysctl fs.inotify.max_user_watches fs.inotify.max_user_instances fs.inotify.max_queued_events
 
 # Defaults
 DOCKER_VERSION="${DOCKER_VERSION:-"29.1.3"}"
