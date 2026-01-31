@@ -21,7 +21,7 @@
 set -e
 
 # Create working directory
-mkdir -p /home/ubuntu/ing-tls && cd /home/ubuntu/ing-tls
+mkdir -p /home/ubuntu/tls-challenge && cd /home/ubuntu/tls-challenge
 
 # Create a dummy CA
 openssl rand -out ~/.rnd -writerand ~/.rnd
