@@ -30,14 +30,16 @@
 set -e
 
 # Increase inotify limits
-sudo sysctl fs.inotify.max_user_watches=524288
-sudo sysctl fs.inotify.max_user_instances=512
-echo "sysctl fs.inotify.max_user_watches=524288" | sudo tee -a /etc/sysctl.conf
-echo "sysctl fs.inotify.max_user_instances=512" | sudo tee -a /etc/sysctl.conf
+sudo sysctl fs.inotify.max_user_watches=5242880
+sudo sysctl fs.inotify.max_user_instances=5120
+echo "fs.inotify.max_user_watches=5242880" | sudo tee -a /etc/sysctl.conf
+echo "fs.inotify.max_user_instances=5120" | sudo tee -a /etc/sysctl.conf
+sudo systemctl restart systemd-sysctl
+sysctl fs.inotify.max_user_watches fs.inotify.max_user_instances fs.inotify.max_queued_events
 
 # Defaults
-DOCKER_VERSION="${DOCKER_VERSION:-"28.3.2"}"
-K8S_VERSION="${K8S_VERSION:-"v1.33.3"}"
+DOCKER_VERSION="${DOCKER_VERSION:-"29.1.3"}"
+K8S_VERSION="${K8S_VERSION:-"v1.35.0"}"
 K8S_REPO="https://pkgs.k8s.io/core:/stable:/${K8S_VERSION%.*}/deb"
 
 # Install Docker
@@ -60,7 +62,7 @@ sudo systemctl restart docker
 sudo cp /etc/containerd/config.toml /etc/containerd/config.bak
 sudo containerd config default | sudo tee /etc/containerd/config.toml
 sudo sed -i -e 's/SystemdCgroup = false/SystemdCgroup = true/' /etc/containerd/config.toml
-sudo sed -i -e 's/pause:3.8/pause:3.10/' /etc/containerd/config.toml
+sudo sed -i -e 's/pause:3.8/pause:3.10.1/' /etc/containerd/config.toml
 sudo systemctl restart containerd
 
 # Initialize the system as a Kubernetes node
