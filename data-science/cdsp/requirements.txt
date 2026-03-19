@@ -113,7 +113,7 @@ nest-asyncio==1.6.0
 netaddr==0.8.0
 netifaces==0.11.0
 networkx==3.3
-nltk==3.9.1
+nltk==3.9.3
 notebook==7.2.2
 notebook_shim==0.2.4
 numpy==1.26.4
